@@ -16,16 +16,16 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="# 解决hexo无法显示使用相对路径的图床图片  问题情况本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下  原因http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个referrer值后">
+    <meta name="description" content="解决hexo无法显示使用相对路径的图床图片问题情况本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下  原因http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个referrer值后就可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决hexo无法显示使用相对路径的图床图片">
 <meta property="og:url" content="http://example.com/2024/06/25/%E8%A7%A3%E5%86%B3hexo%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E5%9B%BE%E5%BA%8A%E5%9B%BE%E7%89%87/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="# 解决hexo无法显示使用相对路径的图床图片  问题情况本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下  原因http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个referrer值后">
+<meta property="og:description" content="解决hexo无法显示使用相对路径的图床图片问题情况本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下  原因http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个referrer值后就可">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png">
 <meta property="article:published_time" content="2024-06-25T15:50:13.000Z">
-<meta property="article:modified_time" content="2024-06-25T16:50:10.415Z">
+<meta property="article:modified_time" content="2024-06-25T17:06:37.339Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="hexo图片问题">
 <meta name="twitter:card" content="summary_large_image">
@@ -291,9 +291,9 @@
               <div class="markdown-body">
                 
                 <meta name="referrer" content="no-referrer" />
-# 解决hexo无法显示使用相对路径的图床图片
 
-<h2 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h2><p>本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下</p>
+
+<h1 id="解决hexo无法显示使用相对路径的图床图片"><a href="#解决hexo无法显示使用相对路径的图床图片" class="headerlink" title="解决hexo无法显示使用相对路径的图床图片"></a>解决hexo无法显示使用相对路径的图床图片</h1><h2 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h2><p>本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240626004028362"></p>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。</p>
 <p>服务器端在拿到这个referrer值后就可以进行相关的处理，比如图片资源，可以通过referrer值判断请求是否来自本站，若不是则返回403或者重定向返回其他信息，从而实现图片的防盗链。上面出现403就是因为，请求的是别人服务器上的资源，但把自己的referrer信息带过去了，被对方服务器拦截返回了403。</p>
