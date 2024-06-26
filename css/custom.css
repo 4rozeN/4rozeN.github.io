@@ -1,10 +1,23 @@
-.markdown-body code, .markdown-body pre {
-    font-family: 'Fira Code',monospace !important;
-    font-size: 90% !important;
+.markdown-body code,
+.markdown-body pre {
+  font-family: "Fira Code", monospace !important;
+  font-size: 90% !important;
 }
 
 @media not print {
   [data-user-color-scheme="dark"] {
     --highlight-bg-color: #51596330;
   }
+}
+
+.markdown-body blockquote {
+  font-family: SourceHanSerifCN-Medium, Times, serif;
+  color: #bfbfbf;
+  background-color: #51596330;
+  border-left: 0.25rem solid #428bca;
+  border-radius: 0.25rem;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  -ms-border-radius: 0.25rem;
+  -o-border-radius: 0.25rem;
 }
