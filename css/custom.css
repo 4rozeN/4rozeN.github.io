@@ -2,3 +2,9 @@
     font-family: 'Fira Code',monospace !important;
     font-size: 90% !important;
 }
+
+@media not print {
+  [data-user-color-scheme="dark"] {
+    --highlight-bg-color: #51596330;
+  }
+}
