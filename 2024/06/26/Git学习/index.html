@@ -16,22 +16,24 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog">
   
-    <meta name="description" content="首先登录qq群网页版在控制台中运行js脚本提取qq号码: 1234567891011121314151617181920var qq_sl&#x3D;document.getElementById(&quot;groupMemberNum&quot;);var qq_js&#x3D;Math.trunc(qq_sl.innerHTML&#x2F;21);var qq_number&#x3D;0;window.scrollTo(0,d">
+    <meta name="description" content="Git学习Git能做什么？Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：  代码回溯 版本切换 多人协作 远程备份  什么是本地仓库？远程仓库？本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。 Git全局配置安装Git只需">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网页爬取qq群的用户qq号">
-<meta property="og:url" content="https://4rozen.github.io/2024/06/25/%E7%BD%91%E9%A1%B5%E7%88%AC%E5%8F%96qq%E7%BE%A4%E7%9A%84%E7%94%A8%E6%88%B7qq%E5%8F%B7/index.html">
+<meta property="og:title" content="Git学习">
+<meta property="og:url" content="https://4rozen.github.io/2024/06/26/Git%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="首先登录qq群网页版在控制台中运行js脚本提取qq号码: 1234567891011121314151617181920var qq_sl&#x3D;document.getElementById(&quot;groupMemberNum&quot;);var qq_js&#x3D;Math.trunc(qq_sl.innerHTML&#x2F;21);var qq_number&#x3D;0;window.scrollTo(0,d">
+<meta property="og:description" content="Git学习Git能做什么？Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：  代码回溯 版本切换 多人协作 远程备份  什么是本地仓库？远程仓库？本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。 Git全局配置安装Git只需">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-25T15:46:35.000Z">
-<meta property="article:modified_time" content="2024-06-25T16:36:13.958Z">
+<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png">
+<meta property="article:published_time" content="2024-06-26T10:12:39.000Z">
+<meta property="article:modified_time" content="2024-06-26T12:39:11.281Z">
 <meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png">
   
   
   
-  <title>网页爬取qq群的用户qq号 - 4rozeN&#39;s blog</title>
+  <title>Git学习 - 4rozeN&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -201,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="网页爬取qq群的用户qq号"></span>
+            <span id="subtitle" data-typed-text="Git学习"></span>
           
         </div>
 
@@ -212,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-25 23:46" pubdate>
-          2024年6月25日 晚上
+        <time datetime="2024-06-26 18:12" pubdate>
+          2024年6月26日 晚上
         </time>
       </span>
     
@@ -225,7 +227,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          144 字
+          1.7k 字
         
       </span>
     
@@ -237,7 +239,7 @@
         
         
           <!-- compatible with older versions-->
-          2 分钟
+          15 分钟
         
       </span>
     
@@ -274,13 +276,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">网页爬取qq群的用户qq号</h1>
+            <h1 id="seo-header">Git学习</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年6月26日 凌晨
+                    本文最后更新于：2024年6月26日 晚上
                   
                 
               </p>
@@ -290,10 +292,175 @@
                 
                 <meta name="referrer" content="no-referrer" />
 
-<p>首先登录<a target="_blank" rel="noopener" href="https://qun.qq.com/member.html">qq群网页版</a><br>在控制台中运行js脚本提取qq号码:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> qq_sl=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;groupMemberNum&quot;</span>);<br><span class="hljs-keyword">var</span> qq_js=<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">trunc</span>(qq_sl.<span class="hljs-property">innerHTML</span>/<span class="hljs-number">21</span>);<br><span class="hljs-keyword">var</span> qq_number=<span class="hljs-number">0</span>;<br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">scrollTo</span>(<span class="hljs-number">0</span>,<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">scrollHeight</span>);<br><span class="hljs-keyword">var</span> qq_ds=<span class="hljs-built_in">setInterval</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">scrollTo</span>(<span class="hljs-number">0</span>,<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">scrollHeight</span>);<br>qq_number++;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;正在加载所有页面：&quot;</span>+qq_number+<span class="hljs-string">&quot;/&quot;</span>+qq_js);<br><span class="hljs-keyword">if</span>(qq_js&lt;=qq_number)&#123;<br><span class="hljs-built_in">clearInterval</span>(qq_ds);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;加载完毕，正在获取页面所有QQ号码...&quot;</span>);<br><span class="hljs-keyword">var</span> classan =<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByClassName</span>(<span class="hljs-string">&quot;mb&quot;</span>);<br><span class="hljs-keyword">var</span> number= classan.<span class="hljs-property">length</span>;<br><span class="hljs-keyword">for</span>(nr=<span class="hljs-number">0</span>; nr&lt; number ; nr++)&#123;<br><span class="hljs-keyword">var</span> class_qq=classan[nr].<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&quot;class&quot;</span>);<br><span class="hljs-keyword">var</span> qq=qq+<span class="hljs-string">&quot;\n&quot;</span>+class_qq.<span class="hljs-title function_">substring</span>(<span class="hljs-number">5</span>);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(qq);<br>&#125;<br>&#125;,<span class="hljs-number">500</span>);<br></code></pre></td></tr></table></figure>
 
-<p>生成字典，自行手动储存。</p>
+
+<h1 id="Git学习"><a href="#Git学习" class="headerlink" title="Git学习"></a>Git学习</h1><h2 id="Git能做什么？"><a href="#Git能做什么？" class="headerlink" title="Git能做什么？"></a>Git能做什么？</h2><p>Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：</p>
+<ul>
+<li>代码回溯</li>
+<li>版本切换</li>
+<li>多人协作</li>
+<li>远程备份</li>
+</ul>
+<h2 id="什么是本地仓库？远程仓库？"><a href="#什么是本地仓库？远程仓库？" class="headerlink" title="什么是本地仓库？远程仓库？"></a>什么是本地仓库？远程仓库？</h2><p>本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。</p>
+<h2 id="Git全局配置"><a href="#Git全局配置" class="headerlink" title="Git全局配置"></a>Git全局配置</h2><p>安装Git只需找到官网然后一路下一步即可。</p>
+<p>在安装之后可以将git加入环境变量方便使用，然后我们进行全局配置：配置用户名和email地址。之后的每次Git提交都会使用此配置信息。</p>
+<p>在Git命令行中执行以下命令</p>
+<ul>
+<li>设置用户信息</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;Your Email Address&quot;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看配置信息</li>
+</ul>
+<p>配置好上面的信息后执行下面的命令进行检查</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --list<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：上面设置的用户信息的user.name和user.email并不一定要注册仓库的账号名和邮箱地址</p>
+</blockquote>
+<h2 id="Git命令"><a href="#Git命令" class="headerlink" title="Git命令"></a>Git命令</h2><h3 id="本地仓库"><a href="#本地仓库" class="headerlink" title="本地仓库"></a>本地仓库</h3><ol>
+<li>在任意目录下创建一个空目录（如repo1）作为本地Git仓库</li>
+<li>进入这个目录中，Git bash here</li>
+<li>执行命令<code>git init</code></li>
+</ol>
+<p>如果在当前目录中可找到<code>.git</code>文件夹（此文件夹为隐藏文件夹）则说明Git仓库创建成功</p>
+<p>除了上述方法生成本地仓库，还可以克隆<code>git clone repoAddress</code> 远程仓库到本地，这样也能拥有一个本地仓库，注意一个目录下只能存在一个仓库，且不用再准备一个空的目录，因为克隆下来的仓库会将仓库封装到以仓库名为名字的文件夹下</p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th align="left">git status</th>
+<th align="left">查看文件状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">git add</td>
+<td align="left">将文件的修改假如暂存区</td>
+</tr>
+<tr>
+<td align="left">git reset</td>
+<td align="left">将暂存区的文件取消暂存或者是切换到指定的版本git reset –hard version</td>
+</tr>
+<tr>
+<td align="left">git commit</td>
+<td align="left">将暂存区的文件修改提交到版本库</td>
+</tr>
+<tr>
+<td align="left">git log</td>
+<td align="left">查看日志</td>
+</tr>
+</tbody></table>
+<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><blockquote>
+<p>看到克隆或创建的仓库的<code>.git</code>文件夹你可能会好奇这到底是什么？</p>
+</blockquote>
+<ul>
+<li>版本库：其实该<code>.git</code>文件夹就是版本库，版本库汇总存储了很多配置信息、日志信息、文件版本信息等</li>
+<li>工作区：包含<code>.git</code>文件夹的目录就是工作区，也成为工作目录，主要存放开发的代码文件</li>
+<li>暂存区：<code>.git</code>文件夹文件夹中有很多文件，当你新增一个文件（如1.txt）与.git文件夹同级，此时<code>1.txt</code>已经在工作区，但他还未被Git进行版本管理，Git进行版本控制的流程为：&#x3D;&#x3D;工作区-&gt;暂存区-&gt;版本库&#x3D;&#x3D;。所以此时要进行<code>git add fileName1 filename2 ...</code>操作将其添加到暂存区，此操作将会使得<code>.git</code>目录下出现一个<code>index</code>文件，也可以叫做stage，也就是暂存区了。然后执行<code>git commit -m &quot;HintMsg&quot; fileName</code>即可将其提交到版本库中进行管理</li>
+</ul>
+<blockquote>
+<p>那么工作区那么多文件，我该如何分辨哪些是被版本控制的哪些没有呢？</p>
+</blockquote>
+<p>Git工作区中的文件存在两种状态：</p>
+<ul>
+<li>untracked 未跟踪（未被纳入版本控制）</li>
+<li>tracked 已跟踪 （已被纳入版本控制）<ul>
+<li>Unmodified 为修改状态</li>
+<li>Modified 已修改状态</li>
+<li>Staged 已暂存状态</li>
+</ul>
+</li>
+</ul>
+<p>可以执行指令<code>git status</code>查看当前仓库是否存在可提交的文件，并展示文件状态</p>
+<p>注意：当一个文件已经被tracked，之后只是进行了修改，是无需重新进行<code>git add</code>操作的，可以直接commit，未被commit前它的状态是Modified属于tracked当中，可使用上述命令查看验证。</p>
+<h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><table>
+<thead>
+<tr>
+<th align="left">git remote</th>
+<th align="left">查看远程仓库，查看详细信息git remote -v</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">git remote add <shortName> <url></td>
+<td align="left">添加本地仓库关联的远程仓库，shortName为别名一般为origin</td>
+</tr>
+<tr>
+<td align="left">git clone</td>
+<td align="left">从远程仓库克隆</td>
+</tr>
+<tr>
+<td align="left">git pull</td>
+<td align="left">从远程仓库拉取</td>
+</tr>
+<tr>
+<td align="left">git push <shorName> branchName</td>
+<td align="left">推送到远程仓库</td>
+</tr>
+</tbody></table>
+<h2 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h2><p>分支是Git 使用过程中非常重要的概念。使用分支意味着你可以把你的工作从开发主线上分离开来，以免影响开发主线。<br>同一个仓库可以有多个分支，各个分支相互独立，互不干扰。<br>通过<code>git init </code>命令创建本地仓库时默认会创建一个master分支。</p>
+<table>
+<thead>
+<tr>
+<th align="left">git branch</th>
+<th align="left">查看分支，-r 列出所有远程分支，-a 列出所有本地分支和远程分支</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">git branch [name]</td>
+<td align="left">创建分支</td>
+</tr>
+<tr>
+<td align="left">git checkout [name]</td>
+<td align="left">切换分支</td>
+</tr>
+<tr>
+<td align="left">git push [shortName] [name]</td>
+<td align="left">推送至远程仓库分支</td>
+</tr>
+<tr>
+<td align="left">git merge [name]</td>
+<td align="left">合并分支，将指定分支合并至当前分支</td>
+</tr>
+<tr>
+<td align="left">git branch -d [name]</td>
+<td align="left">删除分支</td>
+</tr>
+</tbody></table>
+<h2 id="Git标签"><a href="#Git标签" class="headerlink" title="Git标签"></a>Git标签</h2><p>GIt标签类似快照，存储着某一时刻的代码内容、状态等。可类比为版本号v1.0、v2.0等</p>
+<table>
+<thead>
+<tr>
+<th align="left">git tag</th>
+<th align="left">列出已有的标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">git tag [name]</td>
+<td align="left">创建标签</td>
+</tr>
+<tr>
+<td align="left">git push [shortName] [name]</td>
+<td align="left">将标签推送到远程仓库</td>
+</tr>
+<tr>
+<td align="left">git checkout -b [branch] [name]</td>
+<td align="left">检出标签</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意：检出标签必须使用-b指定检出的分支名，由于标签不是分支，所以切换到某个标签只能将其检出为一个分支，如：<code>git checkout -b bv1 v1.0</code></p>
+</blockquote>
+<h2 id="Git-IDEA配置"><a href="#Git-IDEA配置" class="headerlink" title="Git &amp; IDEA配置"></a>Git &amp; IDEA配置</h2><p>打开IDEA的设置，找到版本控制（Version Control）-&gt;Git，将Git的本地可执行文件路径（Path to Git executable）补充正确，如果自动检测可用也是可以的，点击右边的测试（Test）如果出现Git的版本号就可以，别忘了点击应用</p>
+<p>之后只需要在一个打开的项目中，点击IDEA上方导航栏的VCS-&gt;创建Git仓库（Create Git Repository），选择你要进行管理的项目父文件夹，如：demo-project下有src、pom.xml等文件，就可以选择demo-project作为仓库文件夹，<code>.git</code>版本库会出现在和src同级的目录中。此后VCS就会变成Git了。</p>
+<p>注：IDEA已帮你省略add到暂存区的操作，可以直接选择要提交的文件进行commit即可</p>
+<p>当你进行commit操作时可能会出现显示可提交的文件的视图而不是我们常看到的目录-文件等结构，这时你可以点击上方的小按钮进行选择，选择目录即可</p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240626203148193"></p>
+<p>在提交时，提交源码和必要的配置文件即可，无需提交字节码、target文件夹等</p>
+<p>那么文件那么多，我怎么选择性的提交呢？</p>
+<p>这就是<code>.gitignore</code>文件的作用之处了，这个文件可配置哪些文件是我们不需要进行提交的，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs .gitignore"># Maven #<br>target/<br><br># IDEA #<br>.idea/<br>*.iml<br><br># Eclipse #<br>.settings/<br>.classpath<br>.project<br></code></pre></td></tr></table></figure>
+
+<p>带<code>/</code>的名字表示是一个文件夹而非文件</p>
 
                 
               </div>
@@ -306,7 +473,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/JavaScript/" class="print-no-link">#JavaScript</a>
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
       
     </div>
   
@@ -318,8 +485,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>网页爬取qq群的用户qq号</div>
-      <div>https://4rozen.github.io/2024/06/25/网页爬取qq群的用户qq号/</div>
+      <div>Git学习</div>
+      <div>https://4rozen.github.io/2024/06/26/Git学习/</div>
     </div>
     <div class="license-meta">
       
@@ -331,7 +498,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月25日</div>
+          <div>2024年6月26日</div>
         </div>
       
       
@@ -363,18 +530,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/25/%E8%A7%A3%E5%86%B3%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E9%97%AE%E9%A2%98%EF%BC%9A%E6%82%A8%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%B1%E8%B4%B5%E7%BB%84%E7%BB%87%E6%89%98%E7%AE%A1%E8%A7%A3%E5%86%B3/" title="解决谷歌浏览器问题：您的浏览器由贵组织托管解决">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">解决谷歌浏览器问题：您的浏览器由贵组织托管解决</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/06/25/python%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E7%AE%80%E6%98%93http%E6%9C%8D%E5%8A%A1/" title="python快速创建简易http服务">
-                        <span class="hidden-mobile">python快速创建简易http服务</span>
+                      <a href="/2024/06/25/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-dino3d/" title="DASCTF X CBCTF 2022九月挑战赛 dino3d">
+                        <span class="hidden-mobile">DASCTF X CBCTF 2022九月挑战赛 dino3d</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

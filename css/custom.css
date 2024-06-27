@@ -10,14 +10,22 @@
   }
 }
 
+/* .markdown-body blockquote {
+  font-family: SourceHanSerifCN-Medium, Times, serif;
+  color: #90908d;
+  border: 0.25px solid #e3e3e3;
+  border-left-color: #428bca;
+  border-left: 5px solid #428bca;
+  border-radius: 0.25rem;
+} */
+
+
 .markdown-body blockquote {
   font-family: SourceHanSerifCN-Medium, Times, serif;
-  color: #bfbfbf;
-  background-color: #51596330;
-  border-left: 0.25rem solid #428bca;
+  color: #90908d;
+  border-left-color: #428bca;
+  border-left: 5px solid #428bca;
   border-radius: 0.25rem;
-  -webkit-border-radius: 0.25rem;
-  -moz-border-radius: 0.25rem;
-  -ms-border-radius: 0.25rem;
-  -o-border-radius: 0.25rem;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* 增加阴影效果 */
+  /* text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); 添加文字阴影 */
 }
