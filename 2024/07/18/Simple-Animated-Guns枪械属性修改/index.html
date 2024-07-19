@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=dark>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
@@ -34,6 +34,7 @@
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721245438657.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721245633177.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721245988951.png">
+<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721381736298.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721247100101.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721247279794.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721248383896.png">
@@ -49,7 +50,7 @@
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/2024-07-18_05.07.31.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721252012398.png">
 <meta property="article:published_time" content="2024-07-18T06:26:29.000Z">
-<meta property="article:modified_time" content="2024-07-19T04:00:30.878Z">
+<meta property="article:modified_time" content="2024-07-19T09:35:52.333Z">
 <meta property="article:author" content="4rozeN">
 <meta property="article:tag" content="Minecraft">
 <meta name="twitter:card" content="summary_large_image">
@@ -259,7 +260,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.9k 字
+          3.6k 字
         
       </span>
     
@@ -271,7 +272,7 @@
         
         
           <!-- compatible with older versions-->
-          33 分钟
+          30 分钟
         
       </span>
     
@@ -314,7 +315,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年7月19日 中午
+                    本文最后更新于：2024年7月19日 下午
                   
                 
               </p>
@@ -407,8 +408,7 @@
 
 <p>当然旧版本会少对应的属性参数，而新版本的1.20.1则是增加了持枪动作类型和枪口等附件的支持的。</p>
 <h3 id="构造函数解析"><a href="#构造函数解析" class="headerlink" title="构造函数解析"></a>构造函数解析</h3><p>GunItem构造函数的具体参数要求如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">GunItem</span><span class="hljs-params">(Settings settings, // 注册，不用管</span><br><span class="hljs-params">					 String gunID, // 枪械ID，字符串类型，如：abc上马*&amp;%（】</span><br><span class="hljs-params">                   String animationID, // 动画ID，字符串类型，同上</span><br><span class="hljs-params">                   <span class="hljs-type">float</span> gunDamage, // 枪械伤害，浮点类型，如：<span class="hljs-number">9.5f</span>、<span class="hljs-number">9.5F</span></span><br><span class="hljs-params">                   <span class="hljs-type">int</span> rateOfFire, // 射速，整数类型，如：<span class="hljs-number">10</span>、<span class="hljs-number">70</span></span><br><span class="hljs-params">                   <span class="hljs-type">int</span> magSize, // 弹匣容量，整数类型，同上</span><br><span class="hljs-params">                   Item ammoType, // Item枚举类型，非必要不修改 </span><br><span class="hljs-params">                   <span class="hljs-type">int</span> reloadCooldown, // 重新装填时间，整数类型</span><br><span class="hljs-params">                   <span class="hljs-type">float</span>[] bulletSpread, // 子弹扩散范围，浮点数组，非专业人士请勿修改对应的值</span><br><span class="hljs-params">                   <span class="hljs-type">float</span>[] gunRecoil, // 同上</span><br><span class="hljs-params">                   <span class="hljs-type">int</span> pelletCount, // 每次击发的子弹数，整数类型</span><br><span class="hljs-params">                   LoadingType loadingType, // 装填方式，枚举类型，请勿修改</span><br><span class="hljs-params">                   SoundEvent reloadSoundStart, // 声音事件，请勿修改</span><br><span class="hljs-params">                   SoundEvent reloadSoundMagOut,</span><br><span class="hljs-params">                   SoundEvent reloadSoundMagIn,</span><br><span class="hljs-params">                   SoundEvent reloadSoundEnd,</span><br><span class="hljs-params">                   SoundEvent shootSound,</span><br><span class="hljs-params">                   SoundEvent postShootSound,</span><br><span class="hljs-params">                   <span class="hljs-type">int</span> reloadCycles, // 重新装填涉及的所有步骤的循环次数，整数类型</span><br><span class="hljs-params">                   </span><br><span class="hljs-params">               	   // 是否具有瞄准镜。布尔类型，取值只有<span class="hljs-literal">true</span>和<span class="hljs-literal">false</span>，标识状态</span><br><span class="hljs-params">               	   <span class="hljs-type">boolean</span> isScoped,</span><br><span class="hljs-params">                   // 是否在射击后取消瞄准状态，布尔类型，同上</span><br><span class="hljs-params">                   <span class="hljs-type">boolean</span> unscopeAfterShot,</span><br><span class="hljs-params">               </span><br><span class="hljs-params">                   <span class="hljs-type">int</span> reloadStage1, // 重新装填阶段<span class="hljs-number">1</span>的持续时间，整数类型，请勿修改</span><br><span class="hljs-params">                   <span class="hljs-type">int</span> reloadStage2,</span><br><span class="hljs-params">                   <span class="hljs-type">int</span> reloadStage3,</span><br><span class="hljs-params">               </span><br><span class="hljs-params">                   FiringType firingType, // 射击方式，请勿修改</span><br><span class="hljs-params">                   ArmType armType, // 装备方式，请勿修改</span><br><span class="hljs-params">               </span><br><span class="hljs-params">               	   // 可装备附件，属性值，可注册。非必要请勿修改</span><br><span class="hljs-params">                   AttachmentItem.AttachType[] acceptedAttachmentTypes)</span><br></code></pre></td></tr></table></figure>
-
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721381736298.png" srcset="/img/loading/loading.gif" lazyload alt="1721381736298"></p>
 <p>上面的构造函数参数类型要求请千万做到心中明确。</p>
 <p>如果你学过Java或者其他编程语言，这部分你可以跳过，但是也请稍微留意一下参数类型要求。<del>否则修改一时爽，编译（）</del></p>
 <p>好了，收回删除线伏笔，这些枪械可能存在的差异，如：全自动半自动的、装填方式、持枪方式等。我也给大家进行注释解释了，就在：<code>src\main\java\net\elidhan\anim_guns\item\GunItem.java</code>的826行开始：</p>
@@ -879,6 +879,10 @@
   <script  src="/js/local-search.js" ></script>
 
 
+
+
+  
+<script src="/js/custom.js"></script>
 
 
 

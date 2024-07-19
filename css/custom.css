@@ -1,12 +1,12 @@
 .markdown-body code,
 .markdown-body pre {
   font-family: "Fira Code", monospace !important;
-  font-size: 90% !important;
+  font-size: 100% !important;
 }
 
 @media not print {
   [data-user-color-scheme="dark"] {
-    --highlight-bg-color: #2e3741;
+    --highlight-bg-color: #1e1e1e;
   }
 }
 
