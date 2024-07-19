@@ -6,7 +6,7 @@
 
 @media not print {
   [data-user-color-scheme="dark"] {
-    --highlight-bg-color: #2D3640;
+    --highlight-bg-color: #2e3741;
   }
 }
 
@@ -22,7 +22,6 @@
 
 .markdown-body blockquote {
   font-family: SourceHanSerifCN-Medium, Times, serif;
-  color: #90908d;
   border-left-color: #428bca;
   border-left: 5px solid #428bca;
   border-radius: 0.25rem;
