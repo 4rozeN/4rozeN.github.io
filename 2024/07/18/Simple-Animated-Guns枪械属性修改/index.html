@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/2024-07-18_05.07.31.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/QQ_1721252012398.png">
 <meta property="article:published_time" content="2024-07-18T06:26:29.000Z">
-<meta property="article:modified_time" content="2024-07-19T03:49:07.176Z">
+<meta property="article:modified_time" content="2024-07-19T04:00:30.878Z">
 <meta property="article:author" content="4rozeN">
 <meta property="article:tag" content="Minecraft">
 <meta name="twitter:card" content="summary_large_image">
@@ -259,7 +259,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.7k 字
+          3.9k 字
         
       </span>
     
@@ -271,7 +271,7 @@
         
         
           <!-- compatible with older versions-->
-          31 分钟
+          33 分钟
         
       </span>
     
@@ -467,6 +467,14 @@
 </ul>
 <h2 id="勘误-补充"><a href="#勘误-补充" class="headerlink" title="勘误&amp;补充"></a>勘误&amp;补充</h2><p>2024年7月18日21:54勘误，补上原作者全版本源码链接。</p>
 <p>2024年7月19日11:43补充，在属性值部分补充关于构造函数的参数要求。</p>
+<h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><ul>
+<li>编译的时候显示：<code>Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target</code></li>
+</ul>
+<p>​	请检查是否开启了系统代理。关闭后再尝试编译。</p>
+<ul>
+<li>编译时报错： 不兼容的类型: 从double转换到float可能会有损失 &amp; 错误: 找不到符号 &amp; 构造器 (FabricItemSettings,String,String,double,int,int,Item,int,float[],float[],int,LoadingType,&lt;空值&gt;,SoundEvent,SoundEvent,SoundEvent,SoundEvent,&lt;空值&gt;,int,boolean,boolean,int,int,int,FiringType,ArmType,AttachType[])</li>
+</ul>
+<p>​	请检查属性值是否符合参数要求，如：9.5默认为double类型，而构造函数要求为float。请改为9.5f或9.5F</p>
 
                 
               </div>
