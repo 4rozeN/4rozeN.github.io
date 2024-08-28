@@ -61,25 +61,6 @@
   
   
   <entry>
-    <title>DOH启用</title>
-    <link href="/2024/06/25/DOH%E7%9A%84%E5%90%AF%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/"/>
-    <url>/2024/06/25/DOH%E7%9A%84%E5%90%AF%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/</url>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer" /><h1 id="Windows设置中启用DOH"><a href="#Windows设置中启用DOH" class="headerlink" title="Windows设置中启用DOH"></a>Windows设置中启用DOH</h1><blockquote><p>适用环境：Windows11（Win10可以开启浏览器的DOH）<br>DNS检测工具：<a href="https://www.nstool.netease.com/">网易DNS在线检测</a><br>参考文章：</p><ul><li>网络设置DOH：<a href="https://zhuanlan.zhihu.com/p/590105276">Windows 11 22H2开启 DoH（DNS over HTTPS）</a></li><li>检测：<a href="https://wkings.blog/archives/1253">DNS、DoT、DoH协议测试方法</a></li></ul></blockquote><h1 id="Google浏览器和Firefox浏览器启用DOH"><a href="#Google浏览器和Firefox浏览器启用DOH" class="headerlink" title="Google浏览器和Firefox浏览器启用DOH"></a>Google浏览器和Firefox浏览器启用DOH</h1><blockquote><p>Google浏览器版本：123.0.6312.86（正式版本） （64 位）<br>Firefox浏览器版本：123.0.1 (64 位)</p></blockquote><h2 id="Google浏览器"><a href="#Google浏览器" class="headerlink" title="Google浏览器"></a>Google浏览器</h2><p>找到<code>设置-&gt;隐私和安全-&gt;安全-&gt;高级</code>在高级区启用使用安全DNS，并填写DNS提供商即可。<br /><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905304052-6ab911ae-a57d-433f-9295-726ca12cf59d.png#averageHue=%2325272b&clientId=u46ce7476-c18b-4&from=paste&height=542&id=u7e72b470&originHeight=723&originWidth=1437&originalType=binary&ratio=1&rotation=0&showTitle=false&size=76344&status=done&style=none&taskId=u66ac412b-9daf-4157-97cb-359a6bb90d3&title=&width=1078" alt="image.png"><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905398251-83fc3bce-72de-4982-b6fc-00fda7a52c36.png#averageHue=%232d2e31&clientId=u46ce7476-c18b-4&from=paste&height=425&id=u8e9fd09e&originHeight=566&originWidth=689&originalType=binary&ratio=1&rotation=0&showTitle=false&size=37874&status=done&style=none&taskId=ud8be3634-e5fe-48df-9622-8b69db22293&title=&width=517" alt="image.png"><br />DNS提供商填写<a href="https://zhuanlan.zhihu.com/p/590105276">网络设置DOH</a>这篇参考文章中的就好。<br />所有设置妥当之后请调用cmd输入<code>ipconfig /flushdns</code>该命令使得设置生效。</p><h2 id="Firefox浏览器"><a href="#Firefox浏览器" class="headerlink" title="Firefox浏览器"></a>Firefox浏览器</h2><p>在设置页面直接搜索<code>dns</code>即可。设置如图：<br /><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905924937-6e642b87-9294-4a5b-bcf4-567904db0425.png#averageHue=%23293741&clientId=u46ce7476-c18b-4&from=paste&height=716&id=ubbcb1742&originHeight=955&originWidth=683&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64012&status=done&style=none&taskId=ue1c01ceb-bcd1-4f4e-92bd-ca3db108d44&title=&width=512" alt="image.png"><br />DNS提供商填写<a href="https://zhuanlan.zhihu.com/p/590105276">网络设置DOH</a>这篇参考文章中的就好。<br />所有设置妥当之后请调用cmd输入<code>ipconfig /flushdns</code>该命令使得设置生效。</p><h1 id="检测是否成功开启DOH"><a href="#检测是否成功开启DOH" class="headerlink" title="检测是否成功开启DOH"></a>检测是否成功开启DOH</h1><blockquote><p>涉及工具：<a href="https://dns.lookup.dog/#installation">dog工具</a><br>协议：<br>-U, –udp Use the DNS protocol over UDP<br>-T, –tcp Use the DNS protocol over TCP<br>-S, –tls Use the DNS-over-TLS protocol<br>-H, –https Use the DNS-over-HTTPS protocol</p></blockquote><p>命令示例：<code>dog.exe -H @[https://dns.alidns.com/dns-query](https://dns.alidns.com/dns-query) bilibili.com</code></p><p>先写到这，想起什么了再补充。2024.4.1</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>DOH</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>CTFSHOW-WEB-WP</title>
     <link href="/2024/06/25/CTFSHOW_WP/"/>
     <url>/2024/06/25/CTFSHOW_WP/</url>
@@ -91,6 +72,25 @@
     <tags>
       
       <tag>CTF-WP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>DOH启用</title>
+    <link href="/2024/06/25/DOH%E7%9A%84%E5%90%AF%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/"/>
+    <url>/2024/06/25/DOH%E7%9A%84%E5%90%AF%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer" /><h1 id="Windows设置中启用DOH"><a href="#Windows设置中启用DOH" class="headerlink" title="Windows设置中启用DOH"></a>Windows设置中启用DOH</h1><blockquote><p>适用环境：Windows11（Win10可以开启浏览器的DOH）<br>DNS检测工具：<a href="https://www.nstool.netease.com/">网易DNS在线检测</a><br>参考文章：</p><ul><li>网络设置DOH：<a href="https://zhuanlan.zhihu.com/p/590105276">Windows 11 22H2开启 DoH（DNS over HTTPS）</a></li><li>检测：<a href="https://wkings.blog/archives/1253">DNS、DoT、DoH协议测试方法</a></li></ul></blockquote><h1 id="Google浏览器和Firefox浏览器启用DOH"><a href="#Google浏览器和Firefox浏览器启用DOH" class="headerlink" title="Google浏览器和Firefox浏览器启用DOH"></a>Google浏览器和Firefox浏览器启用DOH</h1><blockquote><p>Google浏览器版本：123.0.6312.86（正式版本） （64 位）<br>Firefox浏览器版本：123.0.1 (64 位)</p></blockquote><h2 id="Google浏览器"><a href="#Google浏览器" class="headerlink" title="Google浏览器"></a>Google浏览器</h2><p>找到<code>设置-&gt;隐私和安全-&gt;安全-&gt;高级</code>在高级区启用使用安全DNS，并填写DNS提供商即可。<br /><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905304052-6ab911ae-a57d-433f-9295-726ca12cf59d.png#averageHue=%2325272b&clientId=u46ce7476-c18b-4&from=paste&height=542&id=u7e72b470&originHeight=723&originWidth=1437&originalType=binary&ratio=1&rotation=0&showTitle=false&size=76344&status=done&style=none&taskId=u66ac412b-9daf-4157-97cb-359a6bb90d3&title=&width=1078" alt="image.png"><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905398251-83fc3bce-72de-4982-b6fc-00fda7a52c36.png#averageHue=%232d2e31&clientId=u46ce7476-c18b-4&from=paste&height=425&id=u8e9fd09e&originHeight=566&originWidth=689&originalType=binary&ratio=1&rotation=0&showTitle=false&size=37874&status=done&style=none&taskId=ud8be3634-e5fe-48df-9622-8b69db22293&title=&width=517" alt="image.png"><br />DNS提供商填写<a href="https://zhuanlan.zhihu.com/p/590105276">网络设置DOH</a>这篇参考文章中的就好。<br />所有设置妥当之后请调用cmd输入<code>ipconfig /flushdns</code>该命令使得设置生效。</p><h2 id="Firefox浏览器"><a href="#Firefox浏览器" class="headerlink" title="Firefox浏览器"></a>Firefox浏览器</h2><p>在设置页面直接搜索<code>dns</code>即可。设置如图：<br /><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905924937-6e642b87-9294-4a5b-bcf4-567904db0425.png#averageHue=%23293741&clientId=u46ce7476-c18b-4&from=paste&height=716&id=ubbcb1742&originHeight=955&originWidth=683&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64012&status=done&style=none&taskId=ue1c01ceb-bcd1-4f4e-92bd-ca3db108d44&title=&width=512" alt="image.png"><br />DNS提供商填写<a href="https://zhuanlan.zhihu.com/p/590105276">网络设置DOH</a>这篇参考文章中的就好。<br />所有设置妥当之后请调用cmd输入<code>ipconfig /flushdns</code>该命令使得设置生效。</p><h1 id="检测是否成功开启DOH"><a href="#检测是否成功开启DOH" class="headerlink" title="检测是否成功开启DOH"></a>检测是否成功开启DOH</h1><blockquote><p>涉及工具：<a href="https://dns.lookup.dog/#installation">dog工具</a><br>协议：<br>-U, –udp Use the DNS protocol over UDP<br>-T, –tcp Use the DNS protocol over TCP<br>-S, –tls Use the DNS-over-TLS protocol<br>-H, –https Use the DNS-over-HTTPS protocol</p></blockquote><p>命令示例：<code>dog.exe -H @[https://dns.alidns.com/dns-query](https://dns.alidns.com/dns-query) bilibili.com</code></p><p>先写到这，想起什么了再补充。2024.4.1</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>DOH</tag>
       
     </tags>
     
