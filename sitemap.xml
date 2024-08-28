@@ -126,6 +126,20 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/DOH/</loc>
+    <lastmod>2024-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/Git/</loc>
+    <lastmod>2024-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/Minecraft/</loc>
     <lastmod>2024-08-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -147,21 +161,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/DOH/</loc>
-    <lastmod>2024-08-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/Git/</loc>
-    <lastmod>2024-08-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://4rozen.github.io/tags/%E5%B4%A9%E5%9D%8F/</loc>
+    <lastmod>2024-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/JavaScript/</loc>
     <lastmod>2024-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -183,13 +190,6 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
-    <lastmod>2024-08-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/JavaScript/</loc>
     <lastmod>2024-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
