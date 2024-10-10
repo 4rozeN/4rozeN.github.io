@@ -27,10 +27,10 @@
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410110255530.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410110259820.png">
 <meta property="article:published_time" content="2023-06-26T15:46:35.000Z">
-<meta property="article:modified_time" content="2024-10-10T19:33:39.924Z">
+<meta property="article:modified_time" content="2024-10-10T19:39:46.714Z">
 <meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="笔记">
 <meta property="article:tag" content="Vue">
+<meta property="article:tag" content="笔记">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410102158577.png">
   
@@ -238,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.9k 字
+          3k 字
         
       </span>
     
@@ -376,7 +376,7 @@
 <p>为什么说满足以上条件就会触发这个问题呢？</p>
 <p>这是因为当你第一次访问项目，你的访问地址可能是：<code>http://localhost:8088</code>或者<code>http://localhost:8088/</code>而因为你的项目满足第一条，所以你的项目自动重定向到了你指定的某个具体路由页面，比如：<code>http://localhost:8088/home</code></p>
 <p>如果你按照上述方式访问，这个时候为第一次访问，是没有任何问题的，js正常加载，页面正常显示。一旦当你刷新之后，访问地址就变成了<code>http://localhost:8088/home</code></p>
-<p>这是什么地址？浏览器会认为<code>/home</code>是一个后端路由地址将其携带到后端服务器：”嘿哥们，你这儿有这样一个路由地址吗？“，然而后端实际上没有这样一个路由能匹配，于是就造成了<code>404 not found</code>的结果。</p>
+<p>这是什么地址？浏览器会认为<code>/home</code>是一个后端路由地址将其携带到后端服务器：”嘿哥们，你这儿有这样一个路由地址吗？”，拿着这样一个<code>/home</code>的标签就进来了，然而后端实际上没有这样一个路由能匹配，于是就造成了<code>404 not found</code>的结果。</p>
 <p>那为什么别人做的网站&#x2F;项目不会这样呢？当然是因为别人已经配置过了，没有经过正确配置之前，人人都一样的。</p>
 <p>那是不是Hash哈希模式就可以呢？是的，hash模式可以解决这个问题。</p>
 <p>这是因为设置为hash模式后，如果有<code>http://your.domain.com/#/homepage</code>这样一个地址，那么其中的<code>#/homepage</code>就是 <code>hash</code> 值，<code>hash</code> 值只在客户端（如浏览器）中使用，是不会带给服务器的，所以使用 <code>hash</code> 模式时，不存在刷新 <code>404</code> 问题。</p>
@@ -470,9 +470,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
-      
         <a href="/tags/Vue/" class="print-no-link">#Vue</a>
+      
+        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
       
     </div>
   
