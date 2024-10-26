@@ -16,26 +16,26 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog, programming, CTF, Vue, backend, Git, Uni-app">
   
-    <meta name="description" content="解决hexo主题无法显示使用相对路径的图床图片问题情况本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下  原因http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个referrer值">
+    <meta name="description" content="Git学习  Git能做什么？ Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：  代码回溯 版本切换 多人协作 远程备份   什么是本地仓库？远程仓库？ 本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。  Git全局配置 安装">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决hexo主题无法显示使用相对路径的图床图片">
-<meta property="og:url" content="https://4rozen.github.io/archives/notes/%E8%A7%A3%E5%86%B3hexo%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E5%9B%BE%E5%BA%8A%E5%9B%BE%E7%89%87/">
+<meta property="og:title" content="浅略了解团队协作必须的Git的使用">
+<meta property="og:url" content="https://4rozen.github.io/archives/Git/undefined/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="解决hexo主题无法显示使用相对路径的图床图片问题情况本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下  原因http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个referrer值">
+<meta property="og:description" content="Git学习  Git能做什么？ Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：  代码回溯 版本切换 多人协作 远程备份   什么是本地仓库？远程仓库？ 本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。  Git全局配置 安装">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png">
-<meta property="article:published_time" content="2023-03-25T15:50:13.000Z">
-<meta property="article:modified_time" content="2024-10-17T07:52:32.659Z">
+<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png">
+<meta property="article:published_time" content="2022-06-26T10:12:39.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:51:22.655Z">
 <meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="hexo图片问题">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png">
+<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png">
   
   
   
     <meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88" /><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29" />
   
-  <title>解决hexo主题无法显示使用相对路径的图床图片 - 4rozeN&#39;s blog</title>
+  <title>浅略了解团队协作必须的Git的使用 - 4rozeN&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -46,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" />
 
 
 
@@ -208,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="解决hexo主题无法显示使用相对路径的图床图片"></span>
+            <span id="subtitle" data-typed-text="浅略了解团队协作必须的Git的使用"></span>
           
         </div>
 
@@ -224,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-25 23:50" pubdate>
-          2023年3月25日 晚上
+        <time datetime="2022-06-26 18:12" pubdate>
+          2022年6月26日 晚上
         </time>
       </span>
     
@@ -237,7 +239,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          535 字
+          1.7k 字
         
       </span>
     
@@ -249,7 +251,7 @@
         
         
           <!-- compatible with older versions-->
-          5 分钟
+          15 分钟
         
       </span>
     
@@ -286,7 +288,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">解决hexo主题无法显示使用相对路径的图床图片</h1>
+            <h1 id="seo-header">浅略了解团队协作必须的Git的使用</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
@@ -301,24 +303,195 @@
               <div class="markdown-body">
                 
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer" />
-
-<meta name='description' content='解决hexo主题无法显示使用相对路径的图床图片'>
-
-<h1 id="解决hexo主题无法显示使用相对路径的图床图片"><a href="#解决hexo主题无法显示使用相对路径的图床图片" class="headerlink" title="解决hexo主题无法显示使用相对路径的图床图片"></a>解决hexo主题无法显示使用相对路径的图床图片</h1><h2 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h2><p>本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下</p>
-<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240626004028362"></p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。</p>
-<p>服务器端在拿到这个referrer值后就可以进行相关的处理，比如图片资源，可以通过referrer值判断请求是否来自本站，若不是则返回403或者重定向返回其他信息，从而实现图片的防盗链。上面出现403就是因为，请求的是别人服务器上的资源，但把自己的referrer信息带过去了，被对方服务器拦截返回了403。</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>前端可以通过meta来设置referrer policy(来源策略)，具体参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy">这里</a>。浏览器中referrer默认的值是<code>no-referrer-when-downgrade</code>，就是除了降级请求的情况以外都会带上referrer信息。降级请求是指https协议的地址去请求http协议，所以403的情况可以将请求的图片地址换成http协议，这样降级请求也不会带上referrer。另一种推荐的方法是把referrer设置成<code>no-referrer</code>，这样发送请求不会带上referrer信息，对方服务器也就无法拦截。</p>
-<p>由于我个人使用的主题为<code>fluid</code>，暂未找到可以直接修改的配置文件进行添加配置项配置meta，所以采用的是每次写md文档时，在开头加上</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;referrer&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;no-referrer&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>无需额外设置，如果使用的是typora会直接识别</p>
-<p>如果你的主题可以找到配置文件进行meta项的添加修改，可以加上下面这句</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">meta(<span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;referrer&quot;</span> <span class="hljs-attribute">content</span>=<span class="hljs-string">&quot;no-referrer&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-
-
-<p>最后别忘了使用<code>hexo g</code>重新生成一下，确认可行之后使用<code>hexo d</code>同步即可</p>
+<h1 id="git学习"><a class="markdownIt-Anchor" href="#git学习"></a> Git学习</h1>
+<h2 id="git能做什么"><a class="markdownIt-Anchor" href="#git能做什么"></a> Git能做什么？</h2>
+<p>Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：</p>
+<ul>
+<li>代码回溯</li>
+<li>版本切换</li>
+<li>多人协作</li>
+<li>远程备份</li>
+</ul>
+<h2 id="什么是本地仓库远程仓库"><a class="markdownIt-Anchor" href="#什么是本地仓库远程仓库"></a> 什么是本地仓库？远程仓库？</h2>
+<p>本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。</p>
+<h2 id="git全局配置"><a class="markdownIt-Anchor" href="#git全局配置"></a> Git全局配置</h2>
+<p>安装Git只需找到官网然后一路下一步即可。</p>
+<p>在安装之后可以将git加入环境变量方便使用，然后我们进行全局配置：配置用户名和email地址。之后的每次Git提交都会使用此配置信息。</p>
+<p>在Git命令行中执行以下命令</p>
+<ul>
+<li>设置用户信息</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;Your Email Address&quot;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>查看配置信息</li>
+</ul>
+<p>配置好上面的信息后执行下面的命令进行检查</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --list<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注：上面设置的用户信息的user.name和user.email并不一定要注册仓库的账号名和邮箱地址</p>
+</blockquote>
+<h2 id="git命令"><a class="markdownIt-Anchor" href="#git命令"></a> Git命令</h2>
+<h3 id="本地仓库"><a class="markdownIt-Anchor" href="#本地仓库"></a> 本地仓库</h3>
+<ol>
+<li>在任意目录下创建一个空目录（如repo1）作为本地Git仓库</li>
+<li>进入这个目录中，Git bash here</li>
+<li>执行命令<code>git init</code></li>
+</ol>
+<p>如果在当前目录中可找到<code>.git</code>文件夹（此文件夹为隐藏文件夹）则说明Git仓库创建成功</p>
+<p>除了上述方法生成本地仓库，还可以克隆<code>git clone repoAddress</code> 远程仓库到本地，这样也能拥有一个本地仓库，注意一个目录下只能存在一个仓库，且不用再准备一个空的目录，因为克隆下来的仓库会将仓库封装到以仓库名为名字的文件夹下</p>
+<h4 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">git status</th>
+<th style="text-align:left">查看文件状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">git add</td>
+<td style="text-align:left">将文件的修改加入暂存区</td>
+</tr>
+<tr>
+<td style="text-align:left">git reset</td>
+<td style="text-align:left">将暂存区的文件取消暂存或者是切换到指定的版本git reset --hard version</td>
+</tr>
+<tr>
+<td style="text-align:left">git commit</td>
+<td style="text-align:left">将暂存区的文件修改提交到版本库</td>
+</tr>
+<tr>
+<td style="text-align:left">git log</td>
+<td style="text-align:left">查看日志</td>
+</tr>
+</tbody>
+</table>
+<h4 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h4>
+<blockquote>
+<p>看到克隆或创建的仓库的<code>.git</code>文件夹你可能会好奇这到底是什么？</p>
+</blockquote>
+<ul>
+<li>版本库：其实该<code>.git</code>文件夹就是版本库，版本库汇总存储了很多配置信息、日志信息、文件版本信息等</li>
+<li>工作区：包含<code>.git</code>文件夹的目录就是工作区，也成为工作目录，主要存放开发的代码文件</li>
+<li>暂存区：<code>.git</code>文件夹文件夹中有很多文件，当你新增一个文件（如1.txt）与.git文件夹同级，此时<code>1.txt</code>已经在工作区，但他还未被Git进行版本管理，Git进行版本控制的流程为：<mark>工作区-&gt;暂存区-&gt;版本库</mark>。<br>
+所以此时要进行<code>git add fileName1 filename2 ...</code>操作将其添加到暂存区，此操作将会使得<code>.git</code>目录下出现一个<code>index</code>文件，也可以叫做stage，也就是暂存区了。<br>
+然后执行<code>git commit -m &quot;HintMsg&quot; fileName</code>即可将其提交到版本库中进行管理</li>
+</ul>
+<blockquote>
+<p>那么工作区那么多文件，我该如何分辨哪些是被版本控制的哪些没有呢？</p>
+</blockquote>
+<p>Git工作区中的文件存在两种状态：</p>
+<ul>
+<li>untracked 未跟踪（未被纳入版本控制）</li>
+<li>tracked 已跟踪 （已被纳入版本控制）
+<ul>
+<li>Unmodified 为修改状态</li>
+<li>Modified 已修改状态</li>
+<li>Staged 已暂存状态</li>
+</ul>
+</li>
+</ul>
+<p>可以执行指令<code>git status</code>查看当前仓库是否存在可提交的文件，并展示文件状态</p>
+<p>注意：当一个文件已经被tracked，之后只是进行了修改，是无需重新进行<code>git add</code>操作的，可以直接commit，未被commit前它的状态是Modified属于tracked当中，可使用上述命令查看验证。</p>
+<h3 id="远程仓库"><a class="markdownIt-Anchor" href="#远程仓库"></a> 远程仓库</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">git remote</th>
+<th style="text-align:left">查看远程仓库，查看详细信息git remote -v</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">git remote add <shortName> <url></td>
+<td style="text-align:left">添加本地仓库关联的远程仓库，shortName为别名一般为origin</td>
+</tr>
+<tr>
+<td style="text-align:left">git clone</td>
+<td style="text-align:left">从远程仓库克隆</td>
+</tr>
+<tr>
+<td style="text-align:left">git pull</td>
+<td style="text-align:left">从远程仓库拉取</td>
+</tr>
+<tr>
+<td style="text-align:left">git push <shorName> branchName</td>
+<td style="text-align:left">推送到远程仓库</td>
+</tr>
+</tbody>
+</table>
+<h2 id="git分支"><a class="markdownIt-Anchor" href="#git分支"></a> Git分支</h2>
+<p>分支是Git 使用过程中非常重要的概念。使用分支意味着你可以把你的工作从开发主线上分离开来，以免影响开发主线。<br>
+同一个仓库可以有多个分支，各个分支相互独立，互不干扰。<br>
+通过<code>git init </code>命令创建本地仓库时默认会创建一个master分支。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">git branch</th>
+<th style="text-align:left">查看分支，-r 列出所有远程分支，-a 列出所有本地分支和远程分支</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">git branch [name]</td>
+<td style="text-align:left">创建分支</td>
+</tr>
+<tr>
+<td style="text-align:left">git checkout [name]</td>
+<td style="text-align:left">切换分支</td>
+</tr>
+<tr>
+<td style="text-align:left">git push [shortName] [name]</td>
+<td style="text-align:left">推送至远程仓库分支</td>
+</tr>
+<tr>
+<td style="text-align:left">git merge [name]</td>
+<td style="text-align:left">合并分支，将指定分支合并至当前分支</td>
+</tr>
+<tr>
+<td style="text-align:left">git branch -d [name]</td>
+<td style="text-align:left">删除分支</td>
+</tr>
+</tbody>
+</table>
+<h2 id="git标签"><a class="markdownIt-Anchor" href="#git标签"></a> Git标签</h2>
+<p>GIt标签类似快照，存储着某一时刻的代码内容、状态等。可类比为版本号v1.0、v2.0等</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">git tag</th>
+<th style="text-align:left">列出已有的标签</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">git tag [name]</td>
+<td style="text-align:left">创建标签</td>
+</tr>
+<tr>
+<td style="text-align:left">git push [shortName] [name]</td>
+<td style="text-align:left">将标签推送到远程仓库</td>
+</tr>
+<tr>
+<td style="text-align:left">git checkout -b [branch] [name]</td>
+<td style="text-align:left">检出标签</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：检出标签必须使用-b指定检出的分支名，由于标签不是分支，所以切换到某个标签只能将其检出为一个分支，如：<code>git checkout -b bv1 v1.0</code></p>
+</blockquote>
+<h2 id="git-idea配置"><a class="markdownIt-Anchor" href="#git-idea配置"></a> Git &amp; IDEA配置</h2>
+<p>打开IDEA的设置，找到版本控制（Version Control）-&gt;Git，将Git的本地可执行文件路径（Path to Git executable）补充正确，如果自动检测可用也是可以的，点击右边的测试（Test）如果出现Git的版本号就可以，别忘了点击应用</p>
+<p>之后只需要在一个打开的项目中，点击IDEA上方导航栏的VCS-&gt;创建Git仓库（Create Git Repository），选择你要进行管理的项目父文件夹，如：demo-project下有src、pom.xml等文件，就可以选择demo-project作为仓库文件夹，<code>.git</code>版本库会出现在和src同级的目录中。此后VCS就会变成Git了。</p>
+<p>注：IDEA已帮你省略add到暂存区的操作，可以直接选择要提交的文件进行commit即可</p>
+<p>当你进行commit操作时可能会出现显示可提交的文件的视图而不是我们常看到的目录-文件等结构，这时你可以点击上方的小按钮进行选择，选择目录即可</p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240626203148193"></p>
+<p>在提交时，提交源码和必要的配置文件即可，无需提交字节码、target文件夹等</p>
+<p>那么文件那么多，我怎么选择性的提交呢？</p>
+<p>这就是<code>.gitignore</code>文件的作用之处了，这个文件可配置哪些文件是我们不需要进行提交的，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs .gitignore"># Maven #<br>target/<br><br># IDEA #<br>.idea/<br>*.iml<br><br># Eclipse #<br>.settings/<br>.classpath<br>.project<br></code></pre></td></tr></table></figure>
+<p>带<code>/</code>的名字表示是一个文件夹而非文件</p>
 
                 
               </div>
@@ -337,7 +510,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/notes/" class="category-chain-item">随记</a>
+  <a href="/categories/Git/" class="category-chain-item">Git笔记</a>
   
   
 
@@ -352,7 +525,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/" class="print-no-link">#hexo图片问题</a>
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
       
     </div>
   
@@ -364,8 +537,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>解决hexo主题无法显示使用相对路径的图床图片</div>
-      <div>https://4rozen.github.io/archives/notes/解决hexo无法显示使用相对路径的图床图片/</div>
+      <div>浅略了解团队协作必须的Git的使用</div>
+      <div>https://4rozen.github.io/archives/Git/undefined/</div>
     </div>
     <div class="license-meta">
       
@@ -377,7 +550,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月25日</div>
+          <div>2022年6月26日</div>
         </div>
       
       
@@ -409,9 +582,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/archives/WP/CTFSHOW_WP/" title="CTFSHOW-WEB-WP（未完结）">
+                      <a href="/archives/notes/17306/" title="使用浏览器爬取qq群的用户qq号">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CTFSHOW-WEB-WP（未完结）</span>
+                        <span class="hidden-mobile">使用浏览器爬取qq群的用户qq号</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -419,8 +592,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/archives/notes/%E7%BD%91%E9%A1%B5%E7%88%AC%E5%8F%96qq%E7%BE%A4%E7%9A%84%E7%94%A8%E6%88%B7qq%E5%8F%B7/" title="使用浏览器爬取qq群的用户qq号">
-                        <span class="hidden-mobile">使用浏览器爬取qq群的用户qq号</span>
+                      <a href="/archives/notes/46175/" title="在Windows中启用DOH功能">
+                        <span class="hidden-mobile">在Windows中启用DOH功能</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -438,7 +611,7 @@
     <div id="giscus" class="giscus"></div>
     <script type="text/javascript">
       Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"0","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
+        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"warn","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
         var attributes = {};
         for (let option in options) {
           if (!option.startsWith('theme-')) {
@@ -525,7 +698,6 @@
 
   
   
-
 
 
 
@@ -720,49 +892,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://fastly.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

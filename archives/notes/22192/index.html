@@ -16,26 +16,28 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog, programming, CTF, Vue, backend, Git, Uni-app">
   
-    <meta name="description" content="Git学习Git能做什么？Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：  代码回溯 版本切换 多人协作 远程备份  什么是本地仓库？远程仓库？本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。 Git全局配置安装Git只需">
+    <meta name="description" content="python快速搭建简易http服务器   1、cd命令到你想要起服务的目录 12cd &#x2F;var&#x2F;www&#x2F;html&#x2F;*仅举例*&#x2F;  2、在终端运行 123python3.8 -m http.server 7777（python3）python3.8 -m SimpleHTTPServer 6666（python2） 请将上面的四位数数字端口号替换成你想要的端口，不出意外你会得到  这样就是正常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅略了解团队协作必须的Git的使用">
-<meta property="og:url" content="https://4rozen.github.io/archives/Git/Git%E5%AD%A6%E4%B9%A0/">
+<meta property="og:title" content="使用python创建简易的http服务传递文件">
+<meta property="og:url" content="https://4rozen.github.io/archives/notes/22192/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="Git学习Git能做什么？Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：  代码回溯 版本切换 多人协作 远程备份  什么是本地仓库？远程仓库？本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。 Git全局配置安装Git只需">
+<meta property="og:description" content="python快速搭建简易http服务器   1、cd命令到你想要起服务的目录 12cd &#x2F;var&#x2F;www&#x2F;html&#x2F;*仅举例*&#x2F;  2、在终端运行 123python3.8 -m http.server 7777（python3）python3.8 -m SimpleHTTPServer 6666（python2） 请将上面的四位数数字端口号替换成你想要的端口，不出意外你会得到  这样就是正常">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png">
-<meta property="article:published_time" content="2022-06-26T10:12:39.000Z">
-<meta property="article:modified_time" content="2024-10-17T07:51:22.655Z">
+<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202303111111599.png">
+<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202303111116954.png">
+<meta property="article:published_time" content="2023-06-25T15:37:33.000Z">
+<meta property="article:modified_time" content="2024-10-26T15:55:01.628Z">
 <meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="Git">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png">
+<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202303111111599.png">
   
   
   
     <meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88" /><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29" />
   
-  <title>浅略了解团队协作必须的Git的使用 - 4rozeN&#39;s blog</title>
+  <title>使用python创建简易的http服务传递文件 - 4rozeN&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -46,6 +48,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" />
 
 
 
@@ -208,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="浅略了解团队协作必须的Git的使用"></span>
+            <span id="subtitle" data-typed-text="使用python创建简易的http服务传递文件"></span>
           
         </div>
 
@@ -224,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-26 18:12" pubdate>
-          2022年6月26日 晚上
+        <time datetime="2023-06-25 23:37" pubdate>
+          2023年6月25日 晚上
         </time>
       </span>
     
@@ -237,7 +241,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.7k 字
+          178 字
         
       </span>
     
@@ -249,7 +253,7 @@
         
         
           <!-- compatible with older versions-->
-          15 分钟
+          2 分钟
         
       </span>
     
@@ -286,13 +290,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">浅略了解团队协作必须的Git的使用</h1>
+            <h1 id="seo-header">使用python创建简易的http服务传递文件</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年10月17日 下午
+                    本文最后更新于：2024年10月26日 晚上
                   
                 
               </p>
@@ -301,176 +305,23 @@
               <div class="markdown-body">
                 
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer" />
-
-
-
-<h1 id="Git学习"><a href="#Git学习" class="headerlink" title="Git学习"></a>Git学习</h1><h2 id="Git能做什么？"><a href="#Git能做什么？" class="headerlink" title="Git能做什么？"></a>Git能做什么？</h2><p>Git是一个分布式版本控制工具，主要用于管理文件。学习Git之后可以实现：</p>
-<ul>
-<li>代码回溯</li>
-<li>版本切换</li>
-<li>多人协作</li>
-<li>远程备份</li>
-</ul>
-<h2 id="什么是本地仓库？远程仓库？"><a href="#什么是本地仓库？远程仓库？" class="headerlink" title="什么是本地仓库？远程仓库？"></a>什么是本地仓库？远程仓库？</h2><p>本地仓库和远程仓库都可以顾名思义。当在本地创建了一个本地仓库之后，可以选择不推送到远程，这样也能实现本地文件的版本控制，当推送到远程仓库之后就可以免除换电脑的烦恼，且多人协作也可以流畅进行。</p>
-<h2 id="Git全局配置"><a href="#Git全局配置" class="headerlink" title="Git全局配置"></a>Git全局配置</h2><p>安装Git只需找到官网然后一路下一步即可。</p>
-<p>在安装之后可以将git加入环境变量方便使用，然后我们进行全局配置：配置用户名和email地址。之后的每次Git提交都会使用此配置信息。</p>
-<p>在Git命令行中执行以下命令</p>
-<ul>
-<li>设置用户信息</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;Your Email Address&quot;</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>查看配置信息</li>
-</ul>
-<p>配置好上面的信息后执行下面的命令进行检查</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --list<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注：上面设置的用户信息的user.name和user.email并不一定要注册仓库的账号名和邮箱地址</p>
-</blockquote>
-<h2 id="Git命令"><a href="#Git命令" class="headerlink" title="Git命令"></a>Git命令</h2><h3 id="本地仓库"><a href="#本地仓库" class="headerlink" title="本地仓库"></a>本地仓库</h3><ol>
-<li>在任意目录下创建一个空目录（如repo1）作为本地Git仓库</li>
-<li>进入这个目录中，Git bash here</li>
-<li>执行命令<code>git init</code></li>
-</ol>
-<p>如果在当前目录中可找到<code>.git</code>文件夹（此文件夹为隐藏文件夹）则说明Git仓库创建成功</p>
-<p>除了上述方法生成本地仓库，还可以克隆<code>git clone repoAddress</code> 远程仓库到本地，这样也能拥有一个本地仓库，注意一个目录下只能存在一个仓库，且不用再准备一个空的目录，因为克隆下来的仓库会将仓库封装到以仓库名为名字的文件夹下</p>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><table>
-<thead>
-<tr>
-<th align="left">git status</th>
-<th align="left">查看文件状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">git add</td>
-<td align="left">将文件的修改加入暂存区</td>
-</tr>
-<tr>
-<td align="left">git reset</td>
-<td align="left">将暂存区的文件取消暂存或者是切换到指定的版本git reset –hard version</td>
-</tr>
-<tr>
-<td align="left">git commit</td>
-<td align="left">将暂存区的文件修改提交到版本库</td>
-</tr>
-<tr>
-<td align="left">git log</td>
-<td align="left">查看日志</td>
-</tr>
-</tbody></table>
-<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><blockquote>
-<p>看到克隆或创建的仓库的<code>.git</code>文件夹你可能会好奇这到底是什么？</p>
-</blockquote>
-<ul>
-<li>版本库：其实该<code>.git</code>文件夹就是版本库，版本库汇总存储了很多配置信息、日志信息、文件版本信息等</li>
-<li>工作区：包含<code>.git</code>文件夹的目录就是工作区，也成为工作目录，主要存放开发的代码文件</li>
-<li>暂存区：<code>.git</code>文件夹文件夹中有很多文件，当你新增一个文件（如1.txt）与.git文件夹同级，此时<code>1.txt</code>已经在工作区，但他还未被Git进行版本管理，Git进行版本控制的流程为：&#x3D;&#x3D;工作区-&gt;暂存区-&gt;版本库&#x3D;&#x3D;。<br>所以此时要进行<code>git add fileName1 filename2 ...</code>操作将其添加到暂存区，此操作将会使得<code>.git</code>目录下出现一个<code>index</code>文件，也可以叫做stage，也就是暂存区了。<br>然后执行<code>git commit -m &quot;HintMsg&quot; fileName</code>即可将其提交到版本库中进行管理</li>
-</ul>
-<blockquote>
-<p>那么工作区那么多文件，我该如何分辨哪些是被版本控制的哪些没有呢？</p>
-</blockquote>
-<p>Git工作区中的文件存在两种状态：</p>
-<ul>
-<li>untracked 未跟踪（未被纳入版本控制）</li>
-<li>tracked 已跟踪 （已被纳入版本控制）<ul>
-<li>Unmodified 为修改状态</li>
-<li>Modified 已修改状态</li>
-<li>Staged 已暂存状态</li>
-</ul>
-</li>
-</ul>
-<p>可以执行指令<code>git status</code>查看当前仓库是否存在可提交的文件，并展示文件状态</p>
-<p>注意：当一个文件已经被tracked，之后只是进行了修改，是无需重新进行<code>git add</code>操作的，可以直接commit，未被commit前它的状态是Modified属于tracked当中，可使用上述命令查看验证。</p>
-<h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><table>
-<thead>
-<tr>
-<th align="left">git remote</th>
-<th align="left">查看远程仓库，查看详细信息git remote -v</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">git remote add <shortName> <url></td>
-<td align="left">添加本地仓库关联的远程仓库，shortName为别名一般为origin</td>
-</tr>
-<tr>
-<td align="left">git clone</td>
-<td align="left">从远程仓库克隆</td>
-</tr>
-<tr>
-<td align="left">git pull</td>
-<td align="left">从远程仓库拉取</td>
-</tr>
-<tr>
-<td align="left">git push <shorName> branchName</td>
-<td align="left">推送到远程仓库</td>
-</tr>
-</tbody></table>
-<h2 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h2><p>分支是Git 使用过程中非常重要的概念。使用分支意味着你可以把你的工作从开发主线上分离开来，以免影响开发主线。<br>同一个仓库可以有多个分支，各个分支相互独立，互不干扰。<br>通过<code>git init </code>命令创建本地仓库时默认会创建一个master分支。</p>
-<table>
-<thead>
-<tr>
-<th align="left">git branch</th>
-<th align="left">查看分支，-r 列出所有远程分支，-a 列出所有本地分支和远程分支</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">git branch [name]</td>
-<td align="left">创建分支</td>
-</tr>
-<tr>
-<td align="left">git checkout [name]</td>
-<td align="left">切换分支</td>
-</tr>
-<tr>
-<td align="left">git push [shortName] [name]</td>
-<td align="left">推送至远程仓库分支</td>
-</tr>
-<tr>
-<td align="left">git merge [name]</td>
-<td align="left">合并分支，将指定分支合并至当前分支</td>
-</tr>
-<tr>
-<td align="left">git branch -d [name]</td>
-<td align="left">删除分支</td>
-</tr>
-</tbody></table>
-<h2 id="Git标签"><a href="#Git标签" class="headerlink" title="Git标签"></a>Git标签</h2><p>GIt标签类似快照，存储着某一时刻的代码内容、状态等。可类比为版本号v1.0、v2.0等</p>
-<table>
-<thead>
-<tr>
-<th align="left">git tag</th>
-<th align="left">列出已有的标签</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">git tag [name]</td>
-<td align="left">创建标签</td>
-</tr>
-<tr>
-<td align="left">git push [shortName] [name]</td>
-<td align="left">将标签推送到远程仓库</td>
-</tr>
-<tr>
-<td align="left">git checkout -b [branch] [name]</td>
-<td align="left">检出标签</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>注意：检出标签必须使用-b指定检出的分支名，由于标签不是分支，所以切换到某个标签只能将其检出为一个分支，如：<code>git checkout -b bv1 v1.0</code></p>
-</blockquote>
-<h2 id="Git-IDEA配置"><a href="#Git-IDEA配置" class="headerlink" title="Git &amp; IDEA配置"></a>Git &amp; IDEA配置</h2><p>打开IDEA的设置，找到版本控制（Version Control）-&gt;Git，将Git的本地可执行文件路径（Path to Git executable）补充正确，如果自动检测可用也是可以的，点击右边的测试（Test）如果出现Git的版本号就可以，别忘了点击应用</p>
-<p>之后只需要在一个打开的项目中，点击IDEA上方导航栏的VCS-&gt;创建Git仓库（Create Git Repository），选择你要进行管理的项目父文件夹，如：demo-project下有src、pom.xml等文件，就可以选择demo-project作为仓库文件夹，<code>.git</code>版本库会出现在和src同级的目录中。此后VCS就会变成Git了。</p>
-<p>注：IDEA已帮你省略add到暂存区的操作，可以直接选择要提交的文件进行commit即可</p>
-<p>当你进行commit操作时可能会出现显示可提交的文件的视图而不是我们常看到的目录-文件等结构，这时你可以点击上方的小按钮进行选择，选择目录即可</p>
-<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626203148193.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240626203148193"></p>
-<p>在提交时，提交源码和必要的配置文件即可，无需提交字节码、target文件夹等</p>
-<p>那么文件那么多，我怎么选择性的提交呢？</p>
-<p>这就是<code>.gitignore</code>文件的作用之处了，这个文件可配置哪些文件是我们不需要进行提交的，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs .gitignore"># Maven #<br>target/<br><br># IDEA #<br>.idea/<br>*.iml<br><br># Eclipse #<br>.settings/<br>.classpath<br>.project<br></code></pre></td></tr></table></figure>
-
-<p>带<code>/</code>的名字表示是一个文件夹而非文件</p>
+<h1 id="python快速搭建简易http服务器"><a class="markdownIt-Anchor" href="#python快速搭建简易http服务器"></a> python快速搭建简易http服务器</h1>
+<meta name='description' content='使用python创建简易的http服务传递文件'>
+<h2 id="1-cd命令到你想要起服务的目录"><a class="markdownIt-Anchor" href="#1-cd命令到你想要起服务的目录"></a> 1、cd命令到你想要起服务的目录</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> /var/www/html<br>/*仅举例*/<br></code></pre></td></tr></table></figure>
+<h2 id="2-在终端运行"><a class="markdownIt-Anchor" href="#2-在终端运行"></a> 2、在终端运行</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">python3.8 -m http.server 7777（python3）<br><br>python3.8 -m SimpleHTTPServer 6666（python2）<br></code></pre></td></tr></table></figure>
+<p>请将上面的四位数数字端口号替换成你想要的端口，不出意外你会得到</p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202303111111599.png" srcset="/img/loading/loading.gif" lazyload alt="image-20230311111120223"></p>
+<p>这样就是正常的了。</p>
+<h2 id="3-连接"><a class="markdownIt-Anchor" href="#3-连接"></a> 3、连接</h2>
+<p>Linux系统下：<br>
+如果你是虚拟机，请使用<code>ifconfig</code>查询到你的ip，然后用 <strong>你查询到的ip:端口</strong> 进行连接；<br>
+如果你是公网服务器，直接使用 <strong>你的公网ip:端口</strong> 即可（请记得开放你所需要的端口）</p>
+<p>Win的话，查询<code>ip</code>请使用<code>ipconfig</code><br>
+连接操作和上面一致</p>
+<p>连接效果如下</p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202303111116954.png" srcset="/img/loading/loading.gif" lazyload alt="image-20230311111615917"></p>
 
                 
               </div>
@@ -489,7 +340,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Git/" class="category-chain-item">Git笔记</a>
+  <a href="/categories/notes/" class="category-chain-item">随记</a>
   
   
 
@@ -504,7 +355,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Git/" class="print-no-link">#Git</a>
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+        <a href="/tags/http/" class="print-no-link">#http</a>
       
     </div>
   
@@ -516,8 +369,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>浅略了解团队协作必须的Git的使用</div>
-      <div>https://4rozen.github.io/archives/Git/Git学习/</div>
+      <div>使用python创建简易的http服务传递文件</div>
+      <div>https://4rozen.github.io/archives/notes/22192/</div>
     </div>
     <div class="license-meta">
       
@@ -529,7 +382,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年6月26日</div>
+          <div>2023年6月25日</div>
         </div>
       
       
@@ -561,9 +414,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/archives/notes/%E7%BD%91%E9%A1%B5%E7%88%AC%E5%8F%96qq%E7%BE%A4%E7%9A%84%E7%94%A8%E6%88%B7qq%E5%8F%B7/" title="使用浏览器爬取qq群的用户qq号">
+                      <a href="/archives/Vue/35829/" title="理解闭包理解防抖">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用浏览器爬取qq群的用户qq号</span>
+                        <span class="hidden-mobile">理解闭包理解防抖</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -571,8 +424,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/archives/notes/DOH%E7%9A%84%E5%90%AF%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/" title="在Windows中启用DOH功能">
-                        <span class="hidden-mobile">在Windows中启用DOH功能</span>
+                      <a href="/archives/WP/55980/" title="CTFSHOW-WEB-WP（未完结）">
+                        <span class="hidden-mobile">CTFSHOW-WEB-WP（未完结）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -590,7 +443,7 @@
     <div id="giscus" class="giscus"></div>
     <script type="text/javascript">
       Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"0","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
+        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"warn","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
         var attributes = {};
         for (let option in options) {
           if (!option.startsWith('theme-')) {
@@ -677,7 +530,6 @@
 
   
   
-
 
 
 
@@ -872,49 +724,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://fastly.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

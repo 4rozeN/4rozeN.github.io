@@ -16,28 +16,24 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog, programming, CTF, Vue, backend, Git, Uni-app">
   
-    <meta name="description" content="星铁高等速度论基础 本文旨在介绍星铁的速度机制和探讨0T或追0T的排轴计算。  前置知识 ​	星铁首轮行动值为150，往后的每轮为100。 ​	角色一动需要跑完10000(1万)的路程，两动就是20000(2万)，以此类推。  行动值 星铁的行动值需要在设置中打开。 你可以在ESC设置——其他——战斗功能——战斗中是否显示角色行动值这一选项中将其开启。  什么是行动值？或者说星铁的行动值是">
+    <meta name="description" content="使用浏览器爬取qq群的用户qq号 首先登录qq群网页版 在控制台中运行js脚本提取qq号码: 1234567891011121314151617181920var qq_sl&#x3D;document.getElementById(&quot;groupMemberNum&quot;);var qq_js&#x3D;Math.trunc(qq_sl.innerHTML&#x2F;21);var qq_number&#x3D;0;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对星铁中的速度机制的浅略探讨">
-<meta property="og:url" content="https://4rozen.github.io/archives/Gamer/%E6%98%9F%E9%93%81%E9%AB%98%E7%AD%89%E9%80%9F%E5%BA%A6%E8%AE%BA%E5%9F%BA%E7%A1%80/">
+<meta property="og:title" content="使用浏览器爬取qq群的用户qq号">
+<meta property="og:url" content="https://4rozen.github.io/archives/notes/17306/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="星铁高等速度论基础 本文旨在介绍星铁的速度机制和探讨0T或追0T的排轴计算。  前置知识 ​	星铁首轮行动值为150，往后的每轮为100。 ​	角色一动需要跑完10000(1万)的路程，两动就是20000(2万)，以此类推。  行动值 星铁的行动值需要在设置中打开。 你可以在ESC设置——其他——战斗功能——战斗中是否显示角色行动值这一选项中将其开启。  什么是行动值？或者说星铁的行动值是">
+<meta property="og:description" content="使用浏览器爬取qq群的用户qq号 首先登录qq群网页版 在控制台中运行js脚本提取qq号码: 1234567891011121314151617181920var qq_sl&#x3D;document.getElementById(&quot;groupMemberNum&quot;);var qq_js&#x3D;Math.trunc(qq_sl.innerHTML&#x2F;21);var qq_number&#x3D;0;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/PixPin_2024-01-18_14-12-44.png">
-<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240118171233671.png">
-<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240118172012030.png">
-<meta property="article:published_time" content="2023-10-25T15:50:13.000Z">
-<meta property="article:modified_time" content="2024-10-17T07:53:13.662Z">
+<meta property="article:published_time" content="2022-11-25T15:46:35.000Z">
+<meta property="article:modified_time" content="2024-10-26T15:55:01.646Z">
 <meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="崩坏">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/PixPin_2024-01-18_14-12-44.png">
   
   
   
     <meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88" /><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29" />
   
-  <title>对星铁中的速度机制的浅略探讨 - 4rozeN&#39;s blog</title>
+  <title>使用浏览器爬取qq群的用户qq号 - 4rozeN&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -48,6 +44,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" />
 
 
 
@@ -210,7 +208,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="对星铁中的速度机制的浅略探讨"></span>
+            <span id="subtitle" data-typed-text="使用浏览器爬取qq群的用户qq号"></span>
           
         </div>
 
@@ -226,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-25 23:50" pubdate>
-          2023年10月25日 晚上
+        <time datetime="2022-11-25 23:46" pubdate>
+          2022年11月25日 晚上
         </time>
       </span>
     
@@ -239,7 +237,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.3k 字
+          156 字
         
       </span>
     
@@ -251,7 +249,7 @@
         
         
           <!-- compatible with older versions-->
-          12 分钟
+          2 分钟
         
       </span>
     
@@ -288,13 +286,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">对星铁中的速度机制的浅略探讨</h1>
+            <h1 id="seo-header">使用浏览器爬取qq群的用户qq号</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年10月17日 下午
+                    本文最后更新于：2024年10月26日 晚上
                   
                 
               </p>
@@ -303,55 +301,12 @@
               <div class="markdown-body">
                 
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer" />
-
-<meta name='description' content='对星铁中的速度机制的浅略探讨'>
-
-<h1 id="星铁高等速度论基础"><a href="#星铁高等速度论基础" class="headerlink" title="星铁高等速度论基础"></a>星铁高等速度论基础</h1><blockquote>
-<p>本文旨在介绍星铁的速度机制和探讨0T或追0T的排轴计算。</p>
-</blockquote>
-<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><blockquote>
-<p>​	星铁首轮行动值为150，往后的每轮为100。</p>
-<p>​	角色一动需要跑完10000(1万)的路程，两动就是20000(2万)，以此类推。</p>
-</blockquote>
-<h3 id="行动值"><a href="#行动值" class="headerlink" title="行动值"></a>行动值</h3><blockquote>
-<p>星铁的行动值需要在设置中打开。</p>
-<p>你可以在<code>ESC设置——其他——战斗功能——战斗中是否显示角色行动值</code>这一选项中将其开启。</p>
-</blockquote>
-<p>什么是行动值？或者说星铁的行动值是什么？</p>
-<p>​	行动值 &#x3D; 时间<code>t</code>，该数值显示在战斗界面上左上角的行动轴中，角色、怪物右下角的数字即是行动值。值得注意的是该行动值<strong>并不是路程</strong>。<strong>不是路程而是时间</strong>这一点还请认真记住，以防混淆。</p>
-<p>​	若无特别指明，本文所提及的<code>t</code>均默认为<code>时间或行动值</code>。<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/PixPin_2024-01-18_14-12-44.png" srcset="/img/loading/loading.gif" lazyload style="zoom:50%;" /></p>
-<p>知道行动值有何用？</p>
-<p>​	战斗中决定哪一个角色先动，就是算出的时间谁花费的更少（也就是行动值更少），如果说这个算出来的结果大于150，那么最后这一动就不会在首轮。</p>
-<p>​	<a name="判断公式">判断公式</a> 可以是<br>$$<br>{\color{Green} 时间t&#x3D;\frac{S_1}{V_1}+\frac{S_2}{V_2}+\frac{S_3}{V_3}+…\frac{S_n}{V_n}\le 150 }<br>$$<br>​	<code>t</code>即行动值，大多数时候可以简化<br>$$<br>{\color{Green} 时间t&#x3D;\frac{S_总}{V}\le 150 }<br>$$<br>​	或者是以<code>V</code>来写<br>$$<br>{\color{Green} V\ge  \frac{S_总}{150} }<br>$$<br>​	<a href="#%E5%88%A4%E6%96%AD%E5%85%AC%E5%BC%8F">判断公式</a>的<code>1-&gt;n</code>，<code>n</code>即为你要实现的首轮<code>n</code>动。</p>
-<p>​	这里行动值<code>t</code>分为<code>n</code>份，是考虑每一段的路程和速度都是可能变化的。</p>
-<h3 id="拉条"><a href="#拉条" class="headerlink" title="拉条"></a>拉条</h3><p>​	拉条的作用即是缩短某一动所需要的路程。</p>
-<p>​	比如翁瓦克的开局拉条40%，相当于角色第一动由100000（1万）缩短为6000（6千），第二动路程为6000（6千）。</p>
-<p>​	例如布洛妮娅的行迹天赋8级——发动普通攻击后下一次行动提前26%，相当于拉条2600。这个时候你如果需要布洛妮娅带翁瓦克的情况下首轮<code>AEE</code>三动，设速度为<code>v</code>：<br>$$<br>{\color{Green} 时间t&#x3D;\frac{6000}{v}+\frac{7400}{v}+\frac{10000}{v}\le 150 }<br>$$<br>​	白板角色可以直接解公式，得到<code>v=23400/150=156</code>。</p>
-<p>​	也就是说大于<strong>156</strong>速度，这时布洛妮娅即可首轮带翁瓦克<strong>AEE</strong>完成三动。</p>
-<p>​	此时布洛妮娅升<strong>10级天赋</strong>情况下，<code>v=23000/150=153.33333</code>（一般向上取整，即154速）。</p>
-<p>​	相类似的，精1光锥舞舞舞拉条可减少全队<strong>1600</strong>路程。</p>
-<h3 id="推条"><a href="#推条" class="headerlink" title="推条"></a>推条</h3><p>​	延长角色或怪物某一动所需的路程。主要对追求无伤比较有用。</p>
-<p>​	常见推条如冰冻推条50%，理论上相当于路程+5000，以及瓦尔特的推条，基本都是增加路程。</p>
-<p>​	以威胁较大的丰饶灵兽·长右（猿神）为例，若猿神首轮被冰冻，什么时候会再动？</p>
-<p>​	我们已知冰冻推条+5000，那么路程s为15000，加上猿神速度v可查第三方表，即可得出它的行动值<code>t=15000/v</code>。如果你追求无伤，如何在首轮猿神锤击之前行动？（实际上首轮猿神需要一回合蓄势，不会立即锤击，这里只做探讨用于理解。）</p>
-<p>​	也就是角色行动值<code>t</code>必须满足<code>t_(角色)&lt;t_(猿神)</code></p>
-<h3 id="加速"><a href="#加速" class="headerlink" title="加速"></a>加速</h3><blockquote>
-<p>加速、减速均基于角色速度白值计算，请牢记。</p>
-<p>目前无任何东西能影响速度白值，速度白值为角色固有属性。</p>
-</blockquote>
-<p>红色竖线左边为白值<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240118171233671.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240118171233671" style="zoom:50%;" /></p>
-<p>​	以停云为例，停云行迹分支中就存在给自己加速的情况。<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240118172012030.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240118172012030" style="zoom:50%;" /></p>
-<p>​	<strong>释放战技时，停云自身速度提高20%，持续一回合。</strong></p>
-<p>​	此时，若停云面板为<strong>150</strong>速，白字<strong>112</strong>，释放战技加速20%，实际效果则为：<code>150+112*0.2=172.4</code>速度。</p>
-<p>​	一般的加速都有回合限制。持续1~2回合的加速或减速buff影响尤其大。</p>
-<p>​	比如停云翁瓦克首轮三动，第一次释放战技，第二次也释放战技的流程下，有：<br>$$<br>{\color{Green} 时间t&#x3D;\frac{6000}{v}+\frac{10000}{v+112\times 0.2}+\frac{10000}{v+112\times 0.2}\le 150 }<br>$$<br>​	<code>6000</code>为翁瓦克效果，<code>v+112*0.2</code>为加速效果。</p>
-<p>​	这种需要解方程，比较建议使用excel进行计算。结果是大于等于157速。</p>
-<h2 id="常见算例"><a href="#常见算例" class="headerlink" title="常见算例"></a>常见算例</h2><h3 id="首轮2动134速度？"><a href="#首轮2动134速度？" class="headerlink" title="首轮2动134速度？"></a>首轮2动134速度？</h3><p>$$<br>V&#x3D;\frac{S}{T} &#x3D;\frac{20000}{150} &#x3D;133.333333333<br>$$</p>
-<p>​	向上取整即得134。</p>
-<h3 id="风套布洛妮娅首轮AEQE，3动？"><a href="#风套布洛妮娅首轮AEQE，3动？" class="headerlink" title="风套布洛妮娅首轮AEQE，3动？"></a>风套布洛妮娅首轮AEQE，3动？</h3><p>​	以0星魂为例，首动A结束视为拉条，路程-3000，风套拉条25%<br>$$<br>t&#x3D;\frac{10000}{v}+\frac{7000}{v}+\frac{7500}{v} \le 150<br>$$<br>​	<code>v=163.333</code></p>
-<h3 id="翁瓦克停云首轮EAE三动？"><a href="#翁瓦克停云首轮EAE三动？" class="headerlink" title="翁瓦克停云首轮EAE三动？"></a>翁瓦克停云首轮EAE三动？</h3><p>​	停云E完加速，故第一动不加速，第二动才加速，最后一动之前不加速，则：<br>$$<br>t&#x3D;\frac{6000}{v}+\frac{10000}{v+112\times 0.2}+\frac{10000}{v} \le 150<br>$$<br>excel可算得为大于等于166速。</p>
-<h2 id="参考视频或文章"><a href="#参考视频或文章" class="headerlink" title="参考视频或文章"></a>参考视频或文章</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ay4y1c7Tq">【崩坏：星穹铁道】进阶攻略：高等速度论，实战讲解乱轴疑惑 by 夜色池塘_</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dk4y1S7cP">教练！我也想打0t！！基于停云和鸭鸭的两种公式化0t排轴入门 by 大爱わた</a></p>
+<meta name='description' content='使用浏览器爬取qq群的用户qq号'>
+<h1 id="使用浏览器爬取qq群的用户qq号"><a class="markdownIt-Anchor" href="#使用浏览器爬取qq群的用户qq号"></a> 使用浏览器爬取qq群的用户qq号</h1>
+<p>首先登录<a target="_blank" rel="noopener" href="https://qun.qq.com/member.html">qq群网页版</a><br>
+在控制台中运行js脚本提取qq号码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> qq_sl=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;groupMemberNum&quot;</span>);<br><span class="hljs-keyword">var</span> qq_js=<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">trunc</span>(qq_sl.<span class="hljs-property">innerHTML</span>/<span class="hljs-number">21</span>);<br><span class="hljs-keyword">var</span> qq_number=<span class="hljs-number">0</span>;<br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">scrollTo</span>(<span class="hljs-number">0</span>,<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">scrollHeight</span>);<br><span class="hljs-keyword">var</span> qq_ds=<span class="hljs-built_in">setInterval</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">scrollTo</span>(<span class="hljs-number">0</span>,<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">scrollHeight</span>);<br>qq_number++;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;正在加载所有页面：&quot;</span>+qq_number+<span class="hljs-string">&quot;/&quot;</span>+qq_js);<br><span class="hljs-keyword">if</span>(qq_js&lt;=qq_number)&#123;<br><span class="hljs-built_in">clearInterval</span>(qq_ds);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;加载完毕，正在获取页面所有QQ号码...&quot;</span>);<br><span class="hljs-keyword">var</span> classan =<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByClassName</span>(<span class="hljs-string">&quot;mb&quot;</span>);<br><span class="hljs-keyword">var</span> number= classan.<span class="hljs-property">length</span>;<br><span class="hljs-keyword">for</span>(nr=<span class="hljs-number">0</span>; nr&lt; number ; nr++)&#123;<br><span class="hljs-keyword">var</span> class_qq=classan[nr].<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&quot;class&quot;</span>);<br><span class="hljs-keyword">var</span> qq=qq+<span class="hljs-string">&quot;\n&quot;</span>+class_qq.<span class="hljs-title function_">substring</span>(<span class="hljs-number">5</span>);<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(qq);<br>&#125;<br>&#125;,<span class="hljs-number">500</span>);<br></code></pre></td></tr></table></figure>
+<p>生成字典，自行手动储存。</p>
 
                 
               </div>
@@ -370,7 +325,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Gamer/" class="category-chain-item">Gamer</a>
+  <a href="/categories/notes/" class="category-chain-item">随记</a>
   
   
 
@@ -385,7 +340,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%B4%A9%E5%9D%8F/" class="print-no-link">#崩坏</a>
+        <a href="/tags/JavaScript/" class="print-no-link">#JavaScript</a>
       
     </div>
   
@@ -397,8 +352,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>对星铁中的速度机制的浅略探讨</div>
-      <div>https://4rozen.github.io/archives/Gamer/星铁高等速度论基础/</div>
+      <div>使用浏览器爬取qq群的用户qq号</div>
+      <div>https://4rozen.github.io/archives/notes/17306/</div>
     </div>
     <div class="license-meta">
       
@@ -410,7 +365,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月25日</div>
+          <div>2022年11月25日</div>
         </div>
       
       
@@ -442,9 +397,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/archives/Vue/Vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85+%E9%83%A8%E7%BD%B2%E5%88%B0GitHub%E4%B8%BAdemo.md/" title="Vue项目打包并部署到GitHub为demo">
+                      <a href="/archives/notes/55208/" title="解决hexo主题无法显示使用相对路径的图床图片">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue项目打包并部署到GitHub为demo</span>
+                        <span class="hidden-mobile">解决hexo主题无法显示使用相对路径的图床图片</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -452,8 +407,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/archives/WP/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-dino3d/" title="DASCTF X CBCTF 2022九月挑战赛 dino3d">
-                        <span class="hidden-mobile">DASCTF X CBCTF 2022九月挑战赛 dino3d</span>
+                      <a href="/archives/Git/undefined/" title="浅略了解团队协作必须的Git的使用">
+                        <span class="hidden-mobile">浅略了解团队协作必须的Git的使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -471,7 +426,7 @@
     <div id="giscus" class="giscus"></div>
     <script type="text/javascript">
       Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"0","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
+        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"warn","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
         var attributes = {};
         for (let option in options) {
           if (!option.startsWith('theme-')) {
@@ -558,7 +513,6 @@
 
   
   
-
 
 
 
@@ -753,49 +707,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://fastly.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

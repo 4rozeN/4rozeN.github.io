@@ -16,12 +16,12 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog, programming, CTF, Vue, backend, Git, Uni-app">
   
-    <meta name="description" content="我的Strapi版本：v5.0.0 节点版本：v20.13.1 数据库：MySQL8    数据库 受到推崇的 最低限度    MySQL 8.0 8.0   玛丽亚数据库 10.6 10.5   PostgreSQL 14.0 12.0   SQLite 3 3   Strapi官方文档地址：https:&#x2F;&#x2F;strapi.nodejs.cn&#x2F;dev-docs&#x2F;installation&#x2F;cli">
+    <meta name="description" content="我的Strapi版本：v5.0.0 节点版本：v20.13.1 数据库：MySQL8    数据库 受到推崇的 最低限度     MySQL 8.0 8.0   玛丽亚数据库 10.6 10.5   PostgreSQL 14.0 12.0   SQLite 3 3    Strapi官方文档地址：https:&#x2F;&#x2F;strapi.nodejs.cn&#x2F;dev-docs&#x2F;installation&#x2F;cl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一文搞清Strapi5的安装与使用|踩坑爽(bushi">
-<meta property="og:url" content="https://4rozen.github.io/archives/Back-End/Strapi%E5%AD%A6%E4%B9%A0/">
+<meta property="og:url" content="https://4rozen.github.io/archives/Back-End/45101/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="我的Strapi版本：v5.0.0 节点版本：v20.13.1 数据库：MySQL8    数据库 受到推崇的 最低限度    MySQL 8.0 8.0   玛丽亚数据库 10.6 10.5   PostgreSQL 14.0 12.0   SQLite 3 3   Strapi官方文档地址：https:&#x2F;&#x2F;strapi.nodejs.cn&#x2F;dev-docs&#x2F;installation&#x2F;cli">
+<meta property="og:description" content="我的Strapi版本：v5.0.0 节点版本：v20.13.1 数据库：MySQL8    数据库 受到推崇的 最低限度     MySQL 8.0 8.0   玛丽亚数据库 10.6 10.5   PostgreSQL 14.0 12.0   SQLite 3 3    Strapi官方文档地址：https:&#x2F;&#x2F;strapi.nodejs.cn&#x2F;dev-docs&#x2F;installation&#x2F;cl">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111812868.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409210045773.png">
@@ -54,7 +54,7 @@
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409260033256.png">
 <meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409260036848.png">
 <meta property="article:published_time" content="2024-07-25T10:00:35.000Z">
-<meta property="article:modified_time" content="2024-10-17T07:52:04.343Z">
+<meta property="article:modified_time" content="2024-10-26T15:55:01.651Z">
 <meta property="article:author" content="4rozeN">
 <meta property="article:tag" content="Strapi">
 <meta name="twitter:card" content="summary_large_image">
@@ -75,6 +75,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" />
 
 
 
@@ -321,7 +323,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年10月17日 下午
+                    本文最后更新于：2024年10月26日 晚上
                   
                 
               </p>
@@ -341,7 +343,8 @@
 <th>最低限度</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>MySQL</td>
 <td>8.0</td>
 <td>8.0</td>
@@ -361,53 +364,52 @@
 <td>3</td>
 <td>3</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>Strapi官方文档地址：<a target="_blank" rel="noopener" href="https://strapi.nodejs.cn/dev-docs/installation/cli">https://strapi.nodejs.cn/dev-docs/installation/cli</a></p>
 </blockquote>
 <meta name="referrer" content="no-referrer"/>
-
 <meta name='description' content='从安装到使用，搞清Strapi5用作后端数据服务器的一切坑'>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇文章主要是从安装到使用，说说我在Windows | WindowsServer上使用Strapi5作后端数据服务器时碰到的一切坑。</p>
-<h1 id="安装Strapi"><a href="#安装Strapi" class="headerlink" title="安装Strapi"></a>安装Strapi</h1><h2 id="检查本地环境"><a href="#检查本地环境" class="headerlink" title="检查本地环境"></a>检查本地环境</h2><p>请转到<a target="_blank" rel="noopener" href="https://strapi.nodejs.cn/dev-docs/installation/cli">Strapi官方文档</a>，对照官方文档要求检查你本地的<code>Node.js</code>和<code>npm</code>版本。我的环境如下：</p>
+<h1 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h1>
+<p>本篇文章主要是从安装到使用，说说我在Windows | WindowsServer上使用Strapi5作后端数据服务器时碰到的一切坑。</p>
+<h1 id="安装strapi"><a class="markdownIt-Anchor" href="#安装strapi"></a> 安装Strapi</h1>
+<h2 id="检查本地环境"><a class="markdownIt-Anchor" href="#检查本地环境"></a> 检查本地环境</h2>
+<p>请转到<a target="_blank" rel="noopener" href="https://strapi.nodejs.cn/dev-docs/installation/cli">Strapi官方文档</a>，对照官方文档要求检查你本地的<code>Node.js</code>和<code>npm</code>版本。我的环境如下：</p>
 <ul>
-<li><p>Node.js版本：</p>
+<li>
+<p>Node.js版本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ node -v<br>v20.13.1<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>npm包管理器版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ npm -v<br>10.8.2<br></code></pre></td></tr></table></figure></li>
+<li>
+<p>npm包管理器版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ npm -v<br>10.8.2<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>官方文档中使用Python是为了支持它默认的SQLite数据库，我这里使用的是PHPStudy集成的MySQL8,数据库，所以Python环境是不必须的。</p>
 <blockquote>
 <p>✋ 提醒</p>
 <p>Strapi 不支持 MongoDB。</p>
 </blockquote>
-<h2 id="安装yarn（可选）"><a href="#安装yarn（可选）" class="headerlink" title="安装yarn（可选）"></a>安装yarn（可选）</h2><p>我之后投入了yarn的怀抱，所以这里可以安装一下yarn作为包管理器，<strong>非必须！</strong></p>
+<h2 id="安装yarn可选"><a class="markdownIt-Anchor" href="#安装yarn可选"></a> 安装yarn（可选）</h2>
+<p>我之后投入了yarn的怀抱，所以这里可以安装一下yarn作为包管理器，<strong>非必须！</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g yarn<br></code></pre></td></tr></table></figure>
-
 <p>卸载命令是</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm uninstall yarn -g<br></code></pre></td></tr></table></figure>
-
 <p>我的yarn版本是</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ yarn -v<br>1.22.22<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="创建Strapi项目"><a href="#创建Strapi项目" class="headerlink" title="创建Strapi项目"></a>创建Strapi项目</h1><p>在一个你准备好的目录中，使用终端<code>cmd</code>或<code>powershell</code>执行</p>
+<h1 id="创建strapi项目"><a class="markdownIt-Anchor" href="#创建strapi项目"></a> 创建Strapi项目</h1>
+<p>在一个你准备好的目录中，使用终端<code>cmd</code>或<code>powershell</code>执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yarn create strapi<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>✋ 注意</p>
 <p>Yarn does not support passing the version tag such as <code>@latest</code>, as opposed to npm. If you experience unexpected results with yarn and the latest version of Strapi is not installed, you might need to <a target="_blank" rel="noopener" href="https://yarn.nodejs.cn/cli/cache/clean">run the <code>yarn cache clean</code> command</a> to clean your Yarn cache.</p>
-<p>Yarn不支持传递版本标签，如<code>@latest </code>,这与npm相反。如果您在使用yarn时遇到意外结果，没有安装最新版本的Strapi，您可能需要运行 [yarn cache clean ](<a target="_blank" rel="noopener" href="https://yarn/">https://yarn</a> . nodejs . cn&#x2F;CLI&#x2F;cache&#x2F;clean) 命令来清理Yarn缓存。</p>
+<p>Yarn不支持传递版本标签，如<code>@latest </code>,这与npm相反。如果您在使用yarn时遇到意外结果，没有安装最新版本的Strapi，您可能需要运行 [yarn cache clean ](<a target="_blank" rel="noopener" href="https://yarn">https://yarn</a> . nodejs . cn/CLI/cache/clean) 命令来清理Yarn缓存。</p>
 </blockquote>
 <p>或者使用npm</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npx create-strapi@latest<br></code></pre></td></tr></table></figure>
-
 <p>我推荐创建时，使用npm以保证安装最新版本的Strapi</p>
 <p>以下是我的安装选择：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># E:\Coding\StrapiProjects\demo1</span><br><br>$ npx create-strapi@latest<br>Need to install the following packages:<br>create-strapi@5.0.5<br>Ok to proceed? (y) y<br><br><br> Strapi   v5.0.5 � Let<span class="hljs-string">&#x27;s create your new project</span><br><span class="hljs-string"></span><br><span class="hljs-string">? What is the name of your project? demo1</span><br><span class="hljs-string">? What is the name of your project? demo1</span><br><span class="hljs-string"></span><br><span class="hljs-string">We can&#x27;</span>t find any auth credentials <span class="hljs-keyword">in</span> your Strapi config.<br><br>Create a free account on Strapi Cloud and benefit from:<br><br>- ✦ Blazing-fast ✦ deployment <span class="hljs-keyword">for</span> your projects<br>- ✦ Exclusive ✦ access to resources to make your project successful<br>- An ✦ Awesome ✦ community and full enjoyment of Strapi<span class="hljs-string">&#x27;s ecosystem</span><br><span class="hljs-string"></span><br><span class="hljs-string">Start your 14-day free trial now!</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">? Please log in or sign up. Skip</span><br><span class="hljs-string">? Do you want to use the default database (sqlite) ? (Y/n) n</span><br><span class="hljs-string">? Choose your default database client mysql</span><br><span class="hljs-string">? Database name: demo1</span><br><span class="hljs-string">? Host: localhost</span><br><span class="hljs-string">? Port: 3306</span><br><span class="hljs-string">? Username: root</span><br><span class="hljs-string">? Password: ****</span><br><span class="hljs-string">? Enable SSL connection: (y/N) N</span><br><span class="hljs-string">? Start with an example structure &amp; data? (y/N) N</span><br><span class="hljs-string">? Start with Typescript? (Y/n) n</span><br><span class="hljs-string">? Install dependencies with npm? (Y/n) Y</span><br><span class="hljs-string">? Initialize a git repository? (Y/n) n</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>? Please log in or sign up. Skip</code>：意思是让你进行在线登录，我选择跳过</li>
 <li><code>? Do you want to use the default database (sqlite) ? (Y/n) n</code>：是否使用默认的sqlite数据库，我选择否</li>
@@ -425,28 +427,31 @@
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111812868.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011181201688"></p>
 <p>如果你在安装时选择了不自动安装依赖，进入项目内是没有node-modules包的，可手动安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install<br></code></pre></td></tr></table></figure>
-
 <p>安装好依赖之后请先别着急启动，接着看汉化步骤（如果你英语好，也请看看汉化小节的最后，运行命令在那里）</p>
-<h1 id="Strapi汉化"><a href="#Strapi汉化" class="headerlink" title="Strapi汉化"></a>Strapi汉化</h1><p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409210045773.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240921004508650"></p>
+<h1 id="strapi汉化"><a class="markdownIt-Anchor" href="#strapi汉化"></a> Strapi汉化</h1>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409210045773.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240921004508650"></p>
 <p>项目运行登录进面板之后点击左下角的profile进行设置</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409210109467.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240921010929358"></p>
-<h1 id="运行Strapi应用"><a href="#运行Strapi应用" class="headerlink" title="运行Strapi应用"></a>运行Strapi应用</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm run develop<br></code></pre></td></tr></table></figure>
-
+<h1 id="运行strapi应用"><a class="markdownIt-Anchor" href="#运行strapi应用"></a> 运行Strapi应用</h1>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm run develop<br></code></pre></td></tr></table></figure>
 <p>或</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yarn develop<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="Strapi运行-MySQL建表报错"><a href="#Strapi运行-MySQL建表报错" class="headerlink" title="Strapi运行-MySQL建表报错"></a>Strapi运行-MySQL建表报错</h1><blockquote>
-<p>Error: alter table <code>i18n_locale</code> add index <code>i18n_locale_documents_idx</code>(<code>document_id</code>, <code>locale</code>, <code>published_at</code>)<br>Specified key was too long; max key length is 1000 bytes</p>
-</blockquote>
-<p>类似上述报错，这是因为MySQL对于<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E&spm=1001.2101.3001.7020">InnoDB存储引擎</a>有一个索引键长度的限制，这个限制基于字符集的不同而不同。在使用<code>utf8</code>字符集时，每个字符可能占用<code>3</code>个字节，那么对于<code>innodb</code>表，索引键的最大长度大约为<code>1000</code>个字符左右（因为<code>3072 / 3 ≈ 1024</code>）。若字符集是<code>utf8mb4</code>，每个字符可能占用<code>4</code>个字节，所以最大长度会进一步减少到<code>768</code>个字符左右（<code>3072 / 4 = 768</code>）</p>
+<h1 id="strapi运行-mysql建表报错"><a class="markdownIt-Anchor" href="#strapi运行-mysql建表报错"></a> Strapi运行-MySQL建表报错</h1>
 <blockquote>
-<p>uf8mb4字符集:<br>要在 Mysql 中保存 4 字节长度的 UTF-8 字符，需要使用 utf8mb4 字符集（mb4就是most bytes 4的意思，专门用来兼容四字节的unicode），但只有 5.5.3 版本以后的才支持。<br>为了获取更好的兼容性，应该总是使用 utf8mb4 而非 utf8. 对于 CHAR 类型数据，utf8mb4 会多消耗一些空间，根据 Mysql 官方建议，使用 VARCHAR 替代 CHAR。其实，utf8mb4是utf8的超集，理论上原来使用utf8，然后将字符集修改为utf8mb4，也会不会对已有的utf8编码读取产生任何问题。当然，为了节省空间一般情况下使用utf8也就够了。</p>
+<p>Error: alter table <code>i18n_locale</code> add index <code>i18n_locale_documents_idx</code>(<code>document_id</code>, <code>locale</code>, <code>published_at</code>)<br>
+Specified key was too long; max key length is 1000 bytes</p>
 </blockquote>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>由于我使用的是PHPstudy集成的MySQL8所以直接找到PHPstudy将引擎改为InnoDB就好了</p>
+<p>类似上述报错，这是因为MySQL对于<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E&amp;spm=1001.2101.3001.7020">InnoDB存储引擎</a>有一个索引键长度的限制，这个限制基于字符集的不同而不同。在使用<code>utf8</code>字符集时，每个字符可能占用<code>3</code>个字节，那么对于<code>innodb</code>表，索引键的最大长度大约为<code>1000</code>个字符左右（因为<code>3072 / 3 ≈ 1024</code>）。若字符集是<code>utf8mb4</code>，每个字符可能占用<code>4</code>个字节，所以最大长度会进一步减少到<code>768</code>个字符左右（<code>3072 / 4 = 768</code>）</p>
+<blockquote>
+<p>uf8mb4字符集:<br>
+要在 Mysql 中保存 4 字节长度的 UTF-8 字符，需要使用 utf8mb4 字符集（mb4就是most bytes 4的意思，专门用来兼容四字节的unicode），但只有 5.5.3 版本以后的才支持。<br>
+为了获取更好的兼容性，应该总是使用 utf8mb4 而非 utf8. 对于 CHAR 类型数据，utf8mb4 会多消耗一些空间，根据 Mysql 官方建议，使用 VARCHAR 替代 CHAR。其实，utf8mb4是utf8的超集，理论上原来使用utf8，然后将字符集修改为utf8mb4，也会不会对已有的utf8编码读取产生任何问题。当然，为了节省空间一般情况下使用utf8也就够了。</p>
+</blockquote>
+<h2 id="解决办法"><a class="markdownIt-Anchor" href="#解决办法"></a> 解决办法</h2>
+<p>由于我使用的是PHPstudy集成的MySQL8所以直接找到PHPstudy将引擎改为InnoDB就好了</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409210102415.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240921010242363"></p>
-<h1 id="Strapi启动项目登录凭证"><a href="#Strapi启动项目登录凭证" class="headerlink" title="Strapi启动项目登录凭证"></a>Strapi启动项目登录凭证</h1><p>正确启动之后，会自动打开浏览器访问admin管理面板的注册页面，请自行注册。</p>
+<h1 id="strapi启动项目登录凭证"><a class="markdownIt-Anchor" href="#strapi启动项目登录凭证"></a> Strapi启动项目登录凭证</h1>
+<p>正确启动之后，会自动打开浏览器访问admin管理面板的注册页面，请自行注册。</p>
 <p>注册产生的凭证决定你是否能登录上Strapi的管理面板，请妥善保存你的登录信息。</p>
 <p>可只保存关键信息，下面是我的示例：</p>
 <table>
@@ -456,7 +461,8 @@
 <th>值</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>name</td>
 <td>4rozen</td>
 </tr>
@@ -472,10 +478,11 @@
 <td>密码</td>
 <td>Strapi1005</td>
 </tr>
-</tbody></table>
-<h1 id="了解Strapi的身份管理机制"><a href="#了解Strapi的身份管理机制" class="headerlink" title="了解Strapi的身份管理机制"></a>了解Strapi的身份管理机制</h1><p>Strapi可以设置普通注册用户为Authenticaed或public分组</p>
+</tbody>
+</table>
+<h1 id="了解strapi的身份管理机制"><a class="markdownIt-Anchor" href="#了解strapi的身份管理机制"></a> 了解Strapi的身份管理机制</h1>
+<p>Strapi可以设置普通注册用户为Authenticaed或public分组</p>
 <img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409231751921.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240923175122837" style="zoom:67%;" />
-
 <p>由于进行普通注册会默认得到jwt令牌，所以我们可以设置为Authenticaed分组</p>
 <p>这里你一定会疑惑Strapi的身份机制到底是什么？</p>
 <p>对普通用户简单来说有以下身份：</p>
@@ -489,9 +496,11 @@
 <p>每一个用户登录之前都是public用户，在注册后就成为了Authenticaed user经过验证的用户。</p>
 <p>Strapi使用Roles来对普通注册的user用户进行分组，在content manager中有默认创建的Users表，可以点击用户进行设置，分为以下身份：</p>
 <ul>
-<li><p>Authenticaed：身份验证通过的用户</p>
+<li>
+<p>Authenticaed：身份验证通过的用户</p>
 </li>
-<li><p>public：路人</p>
+<li>
+<p>public：路人</p>
 </li>
 </ul>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409231812271.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240923181205208"></p>
@@ -504,21 +513,28 @@
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409231817758.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240923181701691"></p>
 <p><strong>第一次注册进来默认是Super Admin超级管理员。</strong></p>
 <p>如果有更多人，点击Administration panel 管理面板中的Roles角色可以进行分组管理。</p>
-<h1 id="如何创建表结构"><a href="#如何创建表结构" class="headerlink" title="如何创建表结构"></a>如何创建表结构</h1><p>可能看到上面的身份管理你一脸懵，没关系，我们先来创建一个用于存放商品信息的示例表：</p>
+<h1 id="如何创建表结构"><a class="markdownIt-Anchor" href="#如何创建表结构"></a> 如何创建表结构</h1>
+<p>可能看到上面的身份管理你一脸懵，没关系，我们先来创建一个用于存放商品信息的示例表：</p>
 <ol>
-<li><p>点击左侧侧边栏的Content-Type Builder内容构建<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111826492.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011182621412"></p>
+<li>
+<p>点击左侧侧边栏的Content-Type Builder内容构建<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111826492.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011182621412"></p>
 </li>
-<li><p>点击Create new collection type创建内容集合类型的复杂数据表，这种表结构支持表与表之间的引用关联，这有助于我们创建符合数据要求的数据结构<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111828046.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011182837966"></p>
+<li>
+<p>点击Create new collection type创建内容集合类型的复杂数据表，这种表结构支持表与表之间的引用关联，这有助于我们创建符合数据要求的数据结构<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111828046.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011182837966"></p>
 </li>
-<li><p>填写单数形式的表名，当然复数形式的表名也可以</p>
-<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111832024.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011183217936" style="zoom:67%;" />
+<li>
+<p>填写单数形式的表名，当然复数形式的表名也可以<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111832024.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011183217936" style="zoom:67%;" /></p>
 </li>
-<li><p>点击ADVANCED SETTINGS高级设置</p>
-<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111834339.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011183455258" style="zoom:67%;" />
+<li>
+<p>点击ADVANCED SETTINGS高级设置<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111834339.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011183455258" style="zoom:67%;" /></p>
 </li>
-<li><p>点击Continue继续，此时需要你进行表的字段设置，比如设置商品名和商品图如下：</p>
-<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111837231.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011183733123" style="zoom:67%;" />
-
+<li>
+<p>点击Continue继续，此时需要你进行表的字段设置，比如设置商品名和商品图如下：<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111837231.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011183733123" style="zoom:67%;" /></p>
 <p>具体设置Text类型的商品名如下：</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111841019.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011184132933" style="zoom:67%;" /><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111843156.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011184331055" style="zoom:67%;" /></p>
 <p>设置商品图片如下：</p>
@@ -528,65 +544,72 @@
 <p>之后Strapi将进行重启，不出意外将成功创建Good数据表和我们刚才添加的字段：</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111853588.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011185353508"></p>
 </li>
-<li><p>填充数据：点击左侧边栏的Content Manager内容管理选择刚才我们创建的数据表good并点击右上角的Create new entry创建实体就行了。</p>
+<li>
+<p>填充数据：点击左侧边栏的Content Manager内容管理选择刚才我们创建的数据表good并点击右上角的Create new entry创建实体就行了。</p>
 </li>
 </ol>
-<h1 id="Strapi接口权限设置"><a href="#Strapi接口权限设置" class="headerlink" title="Strapi接口权限设置"></a>Strapi接口权限设置</h1><p>数据表有了，怎么通过接口调试呢？</p>
+<h1 id="strapi接口权限设置"><a class="markdownIt-Anchor" href="#strapi接口权限设置"></a> Strapi接口权限设置</h1>
+<p>数据表有了，怎么通过接口调试呢？</p>
 <p>Strapi的接口要想调试，首先得给予权限。</p>
 <ol>
-<li><p>找到左侧侧边栏的setting然后点击Roles<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111953074.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011195314924"></p>
+<li>
+<p>找到左侧侧边栏的setting然后点击Roles<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111953074.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011195314924"></p>
 <p><code>Authenticated</code>为经过注册等身份验证手段的用户，而Public为公共用户。这将以此分割接口权限，<code>Public</code>为随便就能访问的接口，<code>Authenticated</code>为身份验证之后才能使用的接口</p>
 </li>
-<li><p>除了登录注册接口，我们可能会希望所有接口能够经过权限验证才能通行。但是我这里为了演示，就将<code>good</code>表的接口给<code>Public</code>用户开通：<br><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111958468.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011195836369" style="zoom:67%;" /><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410112000118.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011200008789"></p>
+<li>
+<p>除了登录注册接口，我们可能会希望所有接口能够经过权限验证才能通行。但是我这里为了演示，就将<code>good</code>表的接口给<code>Public</code>用户开通：<br>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410111958468.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011195836369" style="zoom:67%;" /><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410112000118.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011200008789"></p>
 </li>
-<li><p>别忘记右上角点击保存。我这里直接使用浏览器进行接口测试：</p>
-<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410112008460.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011200804395" style="zoom:67%;" /></li>
+<li>
+<p>别忘记右上角点击保存。我这里直接使用浏览器进行接口测试：</p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410112008460.png" srcset="/img/loading/loading.gif" lazyload alt="image-20241011200804395" style="zoom:67%;" />
+</li>
 </ol>
 <p>如果想接口限权，只允许身份验证的用户才能使用的话，就请给<code>Authenticated</code>用户开权限而不是Public</p>
-<h1 id="Strapi接口文档查看"><a href="#Strapi接口文档查看" class="headerlink" title="Strapi接口文档查看"></a>Strapi接口文档查看</h1><blockquote>
+<h1 id="strapi接口文档查看"><a class="markdownIt-Anchor" href="#strapi接口文档查看"></a> Strapi接口文档查看</h1>
+<blockquote>
 <p>说到接口，这里推荐安装document插件进行可视化查看，因为Strapi默认不提供可视化的接口文档，只提供接口路由可供查看。</p>
 <p>插件官方文档：<a target="_blank" rel="noopener" href="https://docs.strapi.io/dev-docs/plugins/documentation">https://docs.strapi.io/dev-docs/plugins/documentation</a></p>
 </blockquote>
 <p>安装接口文档插件命令</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">yarn add @strapi/plugin-documentation<br><span class="hljs-comment"># 或者npm</span><br>npm install @strapi/plugin-documentation<br></code></pre></td></tr></table></figure>
-
 <p>接口文档访问地址</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">http://localhost:1337/documentation/v1.0.0#/<br></code></pre></td></tr></table></figure>
-
 <p>其中Users-Permissions - Auth为认证用户和普通用户的接口，下面的User-Permissions则是管理员端的相关接口。</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409231908943.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240923190855795"></p>
-<h1 id="配置发信插件"><a href="#配置发信插件" class="headerlink" title="配置发信插件"></a>配置发信插件</h1><p>Strapi 默认并不会自动配置邮件服务。</p>
+<h1 id="配置发信插件"><a class="markdownIt-Anchor" href="#配置发信插件"></a> 配置发信插件</h1>
+<p>Strapi 默认并不会自动配置邮件服务。</p>
 <p>为了能够发送邮件（例如密码重置邮件），需要设置一个邮件提供商（如 SendGrid、Gmail、SMTP 等）。如果没有配置邮件提供商，本地 Strapi 无法实际发送邮件。</p>
-<h2 id="安装-nodemailer-插件"><a href="#安装-nodemailer-插件" class="headerlink" title="安装 nodemailer 插件"></a>安装 <code>nodemailer</code> 插件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># using yarn</span><br>yarn add @strapi/provider-email-nodemailer<br><br><span class="hljs-comment"># using npm</span><br>npm install @strapi/provider-email-nodemailer --save<br></code></pre></td></tr></table></figure>
-
-<h2 id="配置-Email-Provider"><a href="#配置-Email-Provider" class="headerlink" title="配置 Email Provider"></a><strong>配置 Email Provider</strong></h2><p>接下来，需要配置邮件提供商。</p>
+<h2 id="安装-nodemailer-插件"><a class="markdownIt-Anchor" href="#安装-nodemailer-插件"></a> 安装 <code>nodemailer</code> 插件</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># using yarn</span><br>yarn add @strapi/provider-email-nodemailer<br><br><span class="hljs-comment"># using npm</span><br>npm install @strapi/provider-email-nodemailer --save<br></code></pre></td></tr></table></figure>
+<h2 id="配置-email-provider"><a class="markdownIt-Anchor" href="#配置-email-provider"></a> <strong>配置 Email Provider</strong></h2>
+<p>接下来，需要配置邮件提供商。</p>
 <p>在 Strapi 中，邮件服务的配置文件位于 <code>config/plugins.js</code>。国内推荐qq或者网易邮箱（自行搜索邮箱开通SMTP），这里介绍网易邮箱配置：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-function">(<span class="hljs-params">&#123; env &#125;</span>) =&gt;</span> (&#123;<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-attr">email</span>: &#123;<br>    <span class="hljs-attr">config</span>: &#123;<br>      <span class="hljs-attr">provider</span>: <span class="hljs-string">&#x27;nodemailer&#x27;</span>,<br>      <span class="hljs-attr">providerOptions</span>: &#123;<br>        <span class="hljs-attr">host</span>: <span class="hljs-title function_">env</span>(<span class="hljs-string">&#x27;SMTP_HOST&#x27;</span>), <span class="hljs-comment">// 网易邮箱SMTP服务器地址</span><br>        <span class="hljs-attr">port</span>: <span class="hljs-title function_">env</span>(<span class="hljs-string">&#x27;SMTP_PORT&#x27;</span>), <span class="hljs-comment">// SSL端口</span><br>        <span class="hljs-attr">secure</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 使用SSL</span><br>        <span class="hljs-attr">auth</span>: &#123;<br>          <span class="hljs-attr">user</span>: <span class="hljs-title function_">env</span>(<span class="hljs-string">&#x27;SMTP_USERNAME&#x27;</span>), <span class="hljs-comment">// 网易邮箱账号</span><br>          <span class="hljs-attr">pass</span>: <span class="hljs-title function_">env</span>(<span class="hljs-string">&#x27;SMTP_PASSWORD&#x27;</span>), <span class="hljs-comment">// 授权码</span><br>        &#125;,<br>        <span class="hljs-comment">// 其他自定义Nodemailer选项</span><br>      &#125;,<br>      <span class="hljs-attr">settings</span>: &#123;<br>        <span class="hljs-attr">defaultFrom</span>: <span class="hljs-title function_">env</span>(<span class="hljs-string">&#x27;SMTP_USERNAME&#x27;</span>),<br>        <span class="hljs-attr">defaultReplyTo</span>: <span class="hljs-title function_">env</span>(<span class="hljs-string">&#x27;SMTP_PASSWORD&#x27;</span>)<br>      &#125;,<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-comment">// ...</span><br>&#125;);<br><br></code></pre></td></tr></table></figure>
-
-<h2 id="获取-SMTP-授权码"><a href="#获取-SMTP-授权码" class="headerlink" title="获取 SMTP 授权码"></a>获取 SMTP 授权码</h2><ol>
+<h2 id="获取-smtp-授权码"><a class="markdownIt-Anchor" href="#获取-smtp-授权码"></a> 获取 SMTP 授权码</h2>
+<ol>
 <li>登录 163 邮箱。</li>
-<li>打开 <strong>设置</strong> -&gt; <strong>POP3&#x2F;SMTP&#x2F;IMAP</strong>。</li>
+<li>打开 <strong>设置</strong> -&gt; <strong>POP3/SMTP/IMAP</strong>。</li>
 <li>开启 <strong>SMTP</strong> 服务，并生成授权码（<strong>授权码只展示一次，请妥善保存</strong>）。</li>
 </ol>
 <p>在你的 <code>.env</code> 文件中设置相应的环境变量</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs .env"># Mail<br>SMTP_HOST=smtp.163.com<br>SMTP_PORT=465<br>SMTP_USERNAME=your_mail0@163.com<br>SMTP_PASSWORD=JBxxxxxxxxxxxxtreB<br></code></pre></td></tr></table></figure>
-
-<h2 id="修改template模板"><a href="#修改template模板" class="headerlink" title="修改template模板"></a>修改template模板</h2><p><strong>将模板中的发件人和刚才配置的插件文件中的发件人一致</strong></p>
+<h2 id="修改template模板"><a class="markdownIt-Anchor" href="#修改template模板"></a> 修改template模板</h2>
+<p><strong>将模板中的发件人和刚才配置的插件文件中的发件人一致</strong></p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409232306287.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240923230633136"></p>
 <p>否则你可能遇到错误</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Error: Mail <span class="hljs-built_in">command</span> failed: 501 Mail from address must be same as authorization user.<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="API-查询媒体数据"><a href="#API-查询媒体数据" class="headerlink" title="API-查询媒体数据"></a>API-查询媒体数据</h1><p>在查询某些包含关系、媒体字段（图片、视频等）、组件或动态区域的接口时，如果不在查询参数中加上<code>populate</code>参数，Strapi将默认不会查询返回，这是出于性能考虑。</p>
+<h1 id="api-查询媒体数据"><a class="markdownIt-Anchor" href="#api-查询媒体数据"></a> API-查询媒体数据</h1>
+<p>在查询某些包含关系、媒体字段（图片、视频等）、组件或动态区域的接口时，如果不在查询参数中加上<code>populate</code>参数，Strapi将默认不会查询返回，这是出于性能考虑。</p>
 <p>例如<code>/api/users/me</code>接口，假设Users表中还包含一个avatar头像字段，则想要接口返回头像数据，应该是如下查询（<code>*</code>表示查询所有关系）</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">http://localhost:1337/api/users/me?populate=*<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409242108207.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240924210837091"></p>
 <blockquote>
 <p>populate参数中文文档参考：<a target="_blank" rel="noopener" href="https://strapi.nodejs.cn/dev-docs/api/rest/populate-select/">https://strapi.nodejs.cn/dev-docs/api/rest/populate-select/</a></p>
 </blockquote>
-<h1 id="API-查询特定字段"><a href="#API-查询特定字段" class="headerlink" title="API-查询特定字段"></a>API-查询特定字段</h1><p>查询请求可以接受 <code>fields</code> 参数来<strong>仅选择</strong>某些字段。默认情况下，仅返回以下 <a target="_blank" rel="noopener" href="https://strapi.nodejs.cn/dev-docs/backend-customization/models#model-attributes">字段类型</a>：</p>
+<h1 id="api-查询特定字段"><a class="markdownIt-Anchor" href="#api-查询特定字段"></a> API-查询特定字段</h1>
+<p>查询请求可以接受 <code>fields</code> 参数来<strong>仅选择</strong>某些字段。默认情况下，仅返回以下 <a target="_blank" rel="noopener" href="https://strapi.nodejs.cn/dev-docs/backend-customization/models#model-attributes">字段类型</a>：</p>
 <ul>
 <li>字符串类型：字符串、文本、富文本、枚举、电子邮件、密码和 uid，</li>
 <li>日期类型：日期、时间、日期时间和时间戳，</li>
@@ -599,41 +622,38 @@
 <p>该参数可以限制响应的数据字段，可以使得某些数据不被暴露，一定程度提高安全性和数据简洁性。</p>
 <p>例如<code>/api/users/me</code>接口，查询所有的关系返回数据为</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">11</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dtree1c2woi3njmz56xmttcm&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;username&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xiaowu1&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1681237971@qq.com&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;provider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;local&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;confirmed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;blocked&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-23T16:06:23.045Z&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:20.561Z&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;publishedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:20.528Z&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;locale&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;avatar&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">32</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;nq7hj2shguktf5begtsluvup&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;头像.jpg&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;alternativeText&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;caption&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;width&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">350</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">350</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;formats&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;thumbnail&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;ext&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/uploads/thumbnail__993e719107.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;hash&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;thumbnail__993e719107&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;mime&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image/jpeg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;thumbnail_头像.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;size&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">7.37</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;width&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">156</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">156</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;sizeInBytes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">7369</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;hash&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;_993e719107&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;ext&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;mime&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image/jpeg&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;size&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20.89</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/uploads/_993e719107.jpg&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;previewUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;provider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;local&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;provider_metadata&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:16.512Z&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:16.512Z&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;publishedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:16.513Z&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;locale&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
 <p>如果带上下面的请求参数</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/users/me?fields=username,email,createdAt,updatedAt,<span class="hljs-built_in">id</span>&amp;populate[avatar][fields]=<span class="hljs-built_in">id</span>,height,width,name,updatedAt,ext<br></code></pre></td></tr></table></figure>
-
 <p>则返回数据为</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">11</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dtree1c2woi3njmz56xmttcm&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;username&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xiaowu1&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1681237971@qq.com&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-23T16:06:23.045Z&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:20.561Z&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;avatar&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">32</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;nq7hj2shguktf5begtsluvup&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">350</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;width&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">350</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;头像.jpg&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-24T12:51:16.512Z&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;ext&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.jpg&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="参数解释"><a href="#参数解释" class="headerlink" title="参数解释"></a>参数解释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/users/me?fields=username,email,createdAt,updatedAt,<span class="hljs-built_in">id</span>&amp;populate[avatar][fields]=<span class="hljs-built_in">id</span>,height,width,name,updatedAt,ext<br></code></pre></td></tr></table></figure>
-
+<h2 id="参数解释"><a class="markdownIt-Anchor" href="#参数解释"></a> 参数解释</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/users/me?fields=username,email,createdAt,updatedAt,<span class="hljs-built_in">id</span>&amp;populate[avatar][fields]=<span class="hljs-built_in">id</span>,height,width,name,updatedAt,ext<br></code></pre></td></tr></table></figure>
 <p><code>fields</code>关键字表示要进行第一级的字段选取，<code>populate[第一个参数][第二个参数]</code>的第一个中括号参数为第二级字段的根节点（这里是<code>avatar</code>），接着第二个中括号写<code>fields</code>关键字，表示要进行选取的字段名，这里是<code>id,height,width,name,updatedAt,ext</code></p>
-<h1 id="API-文件上传"><a href="#API-文件上传" class="headerlink" title="API-文件上传"></a>API-文件上传</h1><p>Strapi的文件上传除了在管理面板中进行上传之外，还可以通过接口的方式进行上传（Strapi支持blob、base64上传，请提前给予权限）</p>
+<h1 id="api-文件上传"><a class="markdownIt-Anchor" href="#api-文件上传"></a> API-文件上传</h1>
+<p>Strapi的文件上传除了在管理面板中进行上传之外，还可以通过接口的方式进行上传（Strapi支持blob、base64上传，请提前给予权限）</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409260028631.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240926002852546"></p>
-<p>请在接口前加上&#x2F;api，即：</p>
+<p>请在接口前加上/api，即：</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">http://localhost:1337/api/upload<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409260029602.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240926002913544"></p>
 <p>例如在apifox中进行测试：</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409260033256.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240926003359170"></p>
-<h1 id="API-更新包含媒体字段的数据"><a href="#API-更新包含媒体字段的数据" class="headerlink" title="API-更新包含媒体字段的数据"></a>API-更新包含媒体字段的数据</h1><p>那么如果我创建了一个数据表其中包含一个媒体字段，如何更新该表中的数据？</p>
+<h1 id="api-更新包含媒体字段的数据"><a class="markdownIt-Anchor" href="#api-更新包含媒体字段的数据"></a> API-更新包含媒体字段的数据</h1>
+<p>那么如果我创建了一个数据表其中包含一个媒体字段，如何更新该表中的数据？</p>
 <p>假设该表如下：</p>
 <p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202409260036848.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240926003626793"></p>
 <p>请求接口为：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST /api/articles/:<span class="hljs-built_in">id</span><br></code></pre></td></tr></table></figure>
-
 <p>访问接口文档插件的地址，你会发现它的示例如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;cover_img&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string or id&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;article_category&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string or id&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string or id&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;locale&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;localizations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;string or id&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;string or id&quot;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
 <p><code>&quot;cover_img&quot;: &quot;string or id&quot;</code></p>
 <p>string或者id？string说是网络地址我都能理解，id是什么？</p>
 <ul>
 <li>实际上该接口仅仅允许你<strong>通过已经上传的图片id进行设置cover_img</strong></li>
 </ul>
 <p><strong>也就是说你要先将更换好的图片进行上传，然后得到它的id，再将该id赋值给cover_img才行</strong></p>
-<p><del>折腾了我一晚上，各种曲线救国写的累死人，没想到随意一个测试，原来是这样的……哈哈😎😎</del></p>
-<h1 id="API-Strapi条件查询"><a href="#API-Strapi条件查询" class="headerlink" title="API-Strapi条件查询"></a>API-Strapi条件查询</h1><p>Strapi如何进行条件查询？</p>
+<p><s>折腾了我一晚上，各种曲线救国写的累死人，没想到随意一个测试，原来是这样的……哈哈😎😎</s></p>
+<h1 id="api-strapi条件查询"><a class="markdownIt-Anchor" href="#api-strapi条件查询"></a> API-Strapi条件查询</h1>
+<p>Strapi如何进行条件查询？</p>
 <blockquote>
 <p>参考文档：</p>
 <ul>
@@ -650,7 +670,8 @@
 <th>示例</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>$eq</code></td>
 <td>等于</td>
 <td><code>filters[title][$eq]=Vue.js Tutorial</code></td>
@@ -710,53 +731,51 @@
 <td>在两个值之间</td>
 <td><code>filters[views][$between][0]=10&amp;filters[views][$between][1]=100</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>示例</p>
 <p>查询 <code>views</code> 字段在 100 和 1000 之间的文章：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?filters[views][<span class="hljs-variable">$gte</span>]=100&amp;filters[views][<span class="hljs-variable">$lte</span>]=1000<br></code></pre></td></tr></table></figure>
-
 <p>查询 <code>category</code> 是 “Tech” 或 “News” 的文章：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?filters[category][<span class="hljs-variable">$in</span>][0]=Tech&amp;filters[category][<span class="hljs-variable">$in</span>][1]=News<br></code></pre></td></tr></table></figure>
-
-<p>假设数据如下（接口是：&#x2F;api&#x2F;articles）</p>
+<p>假设数据如下（接口是：/api/articles）</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;fuki5p5xzjnk5n7vfvwzv9c4&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;CTF-WP&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&lt;p&gt;这是一份测试内容数据321&lt;/p&gt;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T05:29:27.298Z&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:15:03.198Z&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;publishedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:15:03.188Z&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cover_img&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">45</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;nzpwo3hy9qkesr5l0uqd1k02&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1607569780_678488.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;alternativeText&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;caption&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;width&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1920</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1080</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;ext&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;mime&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image/jpeg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/uploads/1607569780_678488_991350393d.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:15:03.111Z&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:15:03.111Z&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;article_category&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">6</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;qznn6b3nxzqxyv9qlzyu6t65&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;category_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;mod修改&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;category_alias&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;mod&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T07:58:18.423Z&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T07:58:18.423Z&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;hevczglj0hqyjc5h5zva0cb9&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;这是测试新增文章的标&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&lt;p&gt;托尔斯泰&lt;/p&gt;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:33:11.929Z&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:33:11.929Z&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;publishedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:33:11.924Z&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cover_img&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">48</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;curr9bdzmqaxi6hz9sw2f7q8&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;d6ef9eb44aed2e7335cd59efc201a18b86d6fa60.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;alternativeText&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;caption&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;width&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1920</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1200</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;ext&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;mime&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image/jpeg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/uploads/d6ef9eb44aed2e7335cd59efc201a18b86d6fa60_41d5dbc6ce.jpg&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:33:11.737Z&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T17:33:11.737Z&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;article_category&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;documentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dchbyr5f11zshu2gb2thyxvh&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;category_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;随想&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;category_alias&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;suixiang&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T07:57:58.692Z&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;updatedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-09-25T07:57:58.692Z&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;meta&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;pagination&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;page&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;pageSize&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">25</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;pageCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;total&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="根据分类id和文章发布状态进行查询"><a href="#根据分类id和文章发布状态进行查询" class="headerlink" title="根据分类id和文章发布状态进行查询"></a>根据分类id和文章发布状态进行查询</h2><p>怎么根据分类id和文章发布状态进行查询？比如我要查询文章所属分类为随想且发布状态为已发布</p>
+<h2 id="根据分类id和文章发布状态进行查询"><a class="markdownIt-Anchor" href="#根据分类id和文章发布状态进行查询"></a> 根据分类id和文章发布状态进行查询</h2>
+<p>怎么根据分类id和文章发布状态进行查询？比如我要查询文章所属分类为随想且发布状态为已发布</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?filters[article_category][<span class="hljs-built_in">id</span>][<span class="hljs-variable">$eq</span>]=5&amp;filters[state][<span class="hljs-variable">$eq</span>]=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h2><p>通过 <code>pagination</code> 参数在请求中实现分页查询。Strapi 的分页功能包括 <code>page</code>（页码）和 <code>pageSize</code>（每页显示的记录数），我们可以在 API 请求的 URL 中传递这些参数。例如：</p>
+<h2 id="分页查询"><a class="markdownIt-Anchor" href="#分页查询"></a> 分页查询</h2>
+<p>通过 <code>pagination</code> 参数在请求中实现分页查询。Strapi 的分页功能包括 <code>page</code>（页码）和 <code>pageSize</code>（每页显示的记录数），我们可以在 API 请求的 URL 中传递这些参数。例如：</p>
 <p>查询第 2 页的数据，并且每页显示 5 条文章，URL 可以写成这样</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?pagination[page]=2&amp;pagination[pageSize]=5<br></code></pre></td></tr></table></figure>
-
 <p>分页查询的结果中，Strapi 会在 <code>meta</code> 字段中返回有关分页的信息：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> ... <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 数据列表</span><br>  <span class="hljs-attr">&quot;meta&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;pagination&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;page&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>        <span class="hljs-comment">// 当前页码</span><br>      <span class="hljs-attr">&quot;pageSize&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span>    <span class="hljs-comment">// 每页显示条数</span><br>      <span class="hljs-attr">&quot;pageCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 总页数</span><br>      <span class="hljs-attr">&quot;total&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50</span>       <span class="hljs-comment">// 总记录数</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br><br></code></pre></td></tr></table></figure>
-
-<h2 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h2><p>Strapi 支持通过 API 进行模糊查询，我们可以使用 <code>filters</code> 参数结合 <code>$contains</code> 运算符来实现模糊查询。例如：</p>
+<h2 id="模糊查询"><a class="markdownIt-Anchor" href="#模糊查询"></a> 模糊查询</h2>
+<p>Strapi 支持通过 API 进行模糊查询，我们可以使用 <code>filters</code> 参数结合 <code>$contains</code> 运算符来实现模糊查询。例如：</p>
 <p>根据文章标题（<code>title</code> 字段）进行模糊查询，查询包含某个关键词的文章列表，API 请求可以这样写：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?filters[title][<span class="hljs-variable">$contains</span>]=keyWord<br></code></pre></td></tr></table></figure>
-
 <p>我们甚至可以结合分页查询和模糊查询</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/api/articles?filters[title][<span class="hljs-variable">$contains</span>]=<span class="hljs-built_in">test</span>&amp;pagination[page]=1&amp;pagination[pageSize]=5<br></code></pre></td></tr></table></figure>
-
-<h2 id="排序查询"><a href="#排序查询" class="headerlink" title="排序查询"></a>排序查询</h2><p>Strapi 支持通过 API 查询时对数据进行排序。我们可以使用 <code>sort</code> 参数来指定排序字段和顺序。</p>
-<h3 id="单字段排序查询"><a href="#单字段排序查询" class="headerlink" title="单字段排序查询"></a>单字段排序查询</h3><p>单字段排序查询例如：</p>
+<h2 id="排序查询"><a class="markdownIt-Anchor" href="#排序查询"></a> 排序查询</h2>
+<p>Strapi 支持通过 API 查询时对数据进行排序。我们可以使用 <code>sort</code> 参数来指定排序字段和顺序。</p>
+<h3 id="单字段排序查询"><a class="markdownIt-Anchor" href="#单字段排序查询"></a> 单字段排序查询</h3>
+<p>单字段排序查询例如：</p>
 <p>根据 <code>updatedAt</code> 字段进行排序，可以按照如下方式查询最新更新的文章</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?<span class="hljs-built_in">sort</span>=updatedAt:desc<br></code></pre></td></tr></table></figure>
-
 <p><code>sort=updatedAt:desc</code>：按照 <code>updatedAt</code> 字段降序排列（最新的文章在前）</p>
 <ul>
 <li><code>desc</code>：降序排列，从新到旧。</li>
 <li><code>asc</code>：升序排列，从旧到新。</li>
 </ul>
-<h3 id="多字段排序"><a href="#多字段排序" class="headerlink" title="多字段排序"></a>多字段排序</h3><p>例如，首先按 <code>state</code>（状态），然后按 <code>updatedAt</code>：</p>
+<h3 id="多字段排序"><a class="markdownIt-Anchor" href="#多字段排序"></a> 多字段排序</h3>
+<p>例如，首先按 <code>state</code>（状态），然后按 <code>updatedAt</code>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?<span class="hljs-built_in">sort</span>=state:asc,updatedAt:desc<br></code></pre></td></tr></table></figure>
-
 <p>这将先按 <code>state</code> 升序排列，再按 <code>updatedAt</code> 降序排列。</p>
-<h3 id="结合分页和过滤"><a href="#结合分页和过滤" class="headerlink" title="结合分页和过滤"></a>结合分页和过滤</h3><p>甚至可以将排序与分页、过滤结合使用。例如，查询标题中包含 <code>test</code> 的文章，按 <code>updatedAt</code> 从新到旧排序，并分页显示：</p>
+<h3 id="结合分页和过滤"><a class="markdownIt-Anchor" href="#结合分页和过滤"></a> 结合分页和过滤</h3>
+<p>甚至可以将排序与分页、过滤结合使用。例如，查询标题中包含 <code>test</code> 的文章，按 <code>updatedAt</code> 从新到旧排序，并分页显示：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /api/articles?filters[title][<span class="hljs-variable">$contains</span>]=<span class="hljs-built_in">test</span>&amp;<span class="hljs-built_in">sort</span>=updatedAt:desc&amp;pagination[page]=1&amp;pagination[pageSize]=5<br></code></pre></td></tr></table></figure>
-
 <p>这会返回包含 <code>test</code> 关键词的文章，按更新时间降序排列，并分页显示。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>总之，Strapi 提供了多个过滤操作符，使得我们可以灵活地查询数据</p>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>总之，Strapi 提供了多个过滤操作符，使得我们可以灵活地查询数据</p>
 <ul>
 <li><code>$eq</code>：精确匹配</li>
 <li><code>$ne</code>：不等于</li>
@@ -821,7 +840,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>一文搞清Strapi5的安装与使用|踩坑爽(bushi</div>
-      <div>https://4rozen.github.io/archives/Back-End/Strapi学习/</div>
+      <div>https://4rozen.github.io/archives/Back-End/45101/</div>
     </div>
     <div class="license-meta">
       
@@ -869,7 +888,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/archives/Gamer/Simple-Animated-Guns%E6%9E%AA%E6%A2%B0%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9/" title="Simple Animated Guns枪械属性修改">
+                      <a href="/archives/Gamer/64665/" title="Simple Animated Guns枪械属性修改">
                         <span class="hidden-mobile">Simple Animated Guns枪械属性修改</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -888,7 +907,7 @@
     <div id="giscus" class="giscus"></div>
     <script type="text/javascript">
       Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"0","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
+        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"warn","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
         var attributes = {};
         for (let option in options) {
           if (!option.startsWith('theme-')) {
@@ -975,7 +994,6 @@
 
   
   
-
 
 
 
@@ -1170,49 +1188,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://fastly.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

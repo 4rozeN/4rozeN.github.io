@@ -16,25 +16,26 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog, programming, CTF, Vue, backend, Git, Uni-app">
   
-    <meta name="description" content="解决Google浏览器：您的浏览器由贵组织托管参考：https:&#x2F;&#x2F;blog.csdn.net&#x2F;w528_net&#x2F;article&#x2F;details&#x2F;119839068 注册表地址：计算机\HKEY_CURRENT_USER\SOFTWARE\Policies\Google\Chrome">
+    <meta name="description" content="解决hexo主题无法显示使用相对路径的图床图片  问题情况 本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下   原因 http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个refer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决谷歌浏览器问题：您的浏览器由贵组织托管解决">
-<meta property="og:url" content="https://4rozen.github.io/archives/notes/%E8%A7%A3%E5%86%B3%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E9%97%AE%E9%A2%98%EF%BC%9A%E6%82%A8%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%B1%E8%B4%B5%E7%BB%84%E7%BB%87%E6%89%98%E7%AE%A1%E8%A7%A3%E5%86%B3/">
+<meta property="og:title" content="解决hexo主题无法显示使用相对路径的图床图片">
+<meta property="og:url" content="https://4rozen.github.io/archives/notes/55208/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="解决Google浏览器：您的浏览器由贵组织托管参考：https:&#x2F;&#x2F;blog.csdn.net&#x2F;w528_net&#x2F;article&#x2F;details&#x2F;119839068 注册表地址：计算机\HKEY_CURRENT_USER\SOFTWARE\Policies\Google\Chrome">
+<meta property="og:description" content="解决hexo主题无法显示使用相对路径的图床图片  问题情况 本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下   原因 http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。 服务器端在拿到这个refer">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-25T15:48:55.000Z">
-<meta property="article:modified_time" content="2024-10-17T07:52:42.842Z">
+<meta property="og:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png">
+<meta property="article:published_time" content="2023-03-25T15:50:13.000Z">
+<meta property="article:modified_time" content="2024-10-26T15:55:01.648Z">
 <meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="Google浏览器">
-<meta property="article:tag" content="谷歌浏览器">
+<meta property="article:tag" content="hexo图片问题">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png">
   
   
   
     <meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88" /><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29" />
   
-  <title>解决谷歌浏览器问题：您的浏览器由贵组织托管解决 - 4rozeN&#39;s blog</title>
+  <title>解决hexo主题无法显示使用相对路径的图床图片 - 4rozeN&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -45,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" />
 
 
 
@@ -207,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="解决谷歌浏览器问题：您的浏览器由贵组织托管解决"></span>
+            <span id="subtitle" data-typed-text="解决hexo主题无法显示使用相对路径的图床图片"></span>
           
         </div>
 
@@ -223,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-06-25 23:48" pubdate>
-          2021年6月25日 晚上
+        <time datetime="2023-03-25 23:50" pubdate>
+          2023年3月25日 晚上
         </time>
       </span>
     
@@ -236,7 +239,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          40 字
+          535 字
         
       </span>
     
@@ -248,7 +251,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          5 分钟
         
       </span>
     
@@ -285,13 +288,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">解决谷歌浏览器问题：您的浏览器由贵组织托管解决</h1>
+            <h1 id="seo-header">解决hexo主题无法显示使用相对路径的图床图片</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年10月17日 下午
+                    本文最后更新于：2024年10月26日 晚上
                   
                 
               </p>
@@ -300,11 +303,22 @@
               <div class="markdown-body">
                 
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer" />
-
-<meta name='description' content='解决Google浏览器：您的浏览器由贵组织托管'>
-
-<h1 id="解决Google浏览器：您的浏览器由贵组织托管"><a href="#解决Google浏览器：您的浏览器由贵组织托管" class="headerlink" title="解决Google浏览器：您的浏览器由贵组织托管"></a>解决Google浏览器：您的浏览器由贵组织托管</h1><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/w528_net/article/details/119839068">https://blog.csdn.net/w528_net/article/details/119839068</a></p>
-<p>注册表地址：<code>计算机\HKEY_CURRENT_USER\SOFTWARE\Policies\Google\Chrome</code></p>
+<meta name='description' content='解决hexo主题无法显示使用相对路径的图床图片'>
+<h1 id="解决hexo主题无法显示使用相对路径的图床图片"><a class="markdownIt-Anchor" href="#解决hexo主题无法显示使用相对路径的图床图片"></a> 解决hexo主题无法显示使用相对路径的图床图片</h1>
+<h2 id="问题情况"><a class="markdownIt-Anchor" href="#问题情况"></a> 问题情况</h2>
+<p>本地预览查看明明使用图床的图片缺无法正常显示，报403问题，显示如下</p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png" srcset="/img/loading/loading.gif" lazyload alt="image-20240626004028362"></p>
+<h2 id="原因"><a class="markdownIt-Anchor" href="#原因"></a> 原因</h2>
+<p>http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，只能设置是否带上这个referrer信息，而不能定制referrer里面的值。</p>
+<p>服务器端在拿到这个referrer值后就可以进行相关的处理，比如图片资源，可以通过referrer值判断请求是否来自本站，若不是则返回403或者重定向返回其他信息，从而实现图片的防盗链。上面出现403就是因为，请求的是别人服务器上的资源，但把自己的referrer信息带过去了，被对方服务器拦截返回了403。</p>
+<h2 id="解决"><a class="markdownIt-Anchor" href="#解决"></a> 解决</h2>
+<p>前端可以通过meta来设置referrer policy(来源策略)，具体参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy">这里</a>。浏览器中referrer默认的值是<code>no-referrer-when-downgrade</code>，就是除了降级请求的情况以外都会带上referrer信息。降级请求是指https协议的地址去请求http协议，所以403的情况可以将请求的图片地址换成http协议，这样降级请求也不会带上referrer。另一种推荐的方法是把referrer设置成<code>no-referrer</code>，这样发送请求不会带上referrer信息，对方服务器也就无法拦截。</p>
+<p>由于我个人使用的主题为<code>fluid</code>，暂未找到可以直接修改的配置文件进行添加配置项配置meta，所以采用的是每次写md文档时，在开头加上</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;referrer&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;no-referrer&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>无需额外设置，如果使用的是typora会直接识别</p>
+<p>如果你的主题可以找到配置文件进行meta项的添加修改，可以加上下面这句</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">meta(<span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;referrer&quot;</span> <span class="hljs-attribute">content</span>=<span class="hljs-string">&quot;no-referrer&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>最后别忘了使用<code>hexo g</code>重新生成一下，确认可行之后使用<code>hexo d</code>同步即可</p>
 
                 
               </div>
@@ -338,9 +352,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Google%E6%B5%8F%E8%A7%88%E5%99%A8/" class="print-no-link">#Google浏览器</a>
-      
-        <a href="/tags/%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/" class="print-no-link">#谷歌浏览器</a>
+        <a href="/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/" class="print-no-link">#hexo图片问题</a>
       
     </div>
   
@@ -352,8 +364,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>解决谷歌浏览器问题：您的浏览器由贵组织托管解决</div>
-      <div>https://4rozen.github.io/archives/notes/解决谷歌浏览器问题：您的浏览器由贵组织托管解决/</div>
+      <div>解决hexo主题无法显示使用相对路径的图床图片</div>
+      <div>https://4rozen.github.io/archives/notes/55208/</div>
     </div>
     <div class="license-meta">
       
@@ -365,7 +377,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年6月25日</div>
+          <div>2023年3月25日</div>
         </div>
       
       
@@ -397,15 +409,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/archives/notes/DOH%E7%9A%84%E5%90%AF%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/" title="在Windows中启用DOH功能">
+                      <a href="/archives/WP/55980/" title="CTFSHOW-WEB-WP（未完结）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">在Windows中启用DOH功能</span>
+                        <span class="hidden-mobile">CTFSHOW-WEB-WP（未完结）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/archives/notes/17306/" title="使用浏览器爬取qq群的用户qq号">
+                        <span class="hidden-mobile">使用浏览器爬取qq群的用户qq号</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -420,7 +438,7 @@
     <div id="giscus" class="giscus"></div>
     <script type="text/javascript">
       Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"0","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
+        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"warn","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
         var attributes = {};
         for (let option in options) {
           if (!option.startsWith('theme-')) {
@@ -507,7 +525,6 @@
 
   
   
-
 
 
 
@@ -702,49 +719,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://fastly.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

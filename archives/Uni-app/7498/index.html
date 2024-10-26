@@ -16,15 +16,15 @@
   <meta name="author" content="4rozeN">
   <meta name="keywords" content="blog, programming, CTF, Vue, backend, Git, Uni-app">
   
-    <meta name="description" content="uni-app涉及到的生命周期小结UniApp 中，除了常见的 Vue 生命周期（如 created、mounted 等），它还提供了特定于小程序和移动应用的页面生命周期和应用生命周期 UniApp 常见的页面生命周期1、onLoad(options) 页面加载时触发。 常用于初始化页面数据，从页面 URL 的参数 options 获取数据。 只在页面首次加载时触发一次。  1234onLoa">
+    <meta name="description" content="uni-app涉及到的生命周期小结 UniApp 中，除了常见的 Vue 生命周期（如 created、mounted 等），它还提供了特定于小程序和移动应用的页面生命周期和应用生命周期  UniApp 常见的页面生命周期  1、onLoad(options)  页面加载时触发。 常用于初始化页面数据，从页面 URL 的参数 options 获取数据。 只在页面首次加载时触发一次。  1234">
 <meta property="og:type" content="article">
 <meta property="og:title" content="uni-app涉及到的生命周期小结">
-<meta property="og:url" content="https://4rozen.github.io/archives/Uni-app/uni-app%E6%B6%89%E5%8F%8A%E5%88%B0%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%B0%8F%E7%BB%93/">
+<meta property="og:url" content="https://4rozen.github.io/archives/Uni-app/7498/index.html">
 <meta property="og:site_name" content="4rozeN&#39;s blog">
-<meta property="og:description" content="uni-app涉及到的生命周期小结UniApp 中，除了常见的 Vue 生命周期（如 created、mounted 等），它还提供了特定于小程序和移动应用的页面生命周期和应用生命周期 UniApp 常见的页面生命周期1、onLoad(options) 页面加载时触发。 常用于初始化页面数据，从页面 URL 的参数 options 获取数据。 只在页面首次加载时触发一次。  1234onLoa">
+<meta property="og:description" content="uni-app涉及到的生命周期小结 UniApp 中，除了常见的 Vue 生命周期（如 created、mounted 等），它还提供了特定于小程序和移动应用的页面生命周期和应用生命周期  UniApp 常见的页面生命周期  1、onLoad(options)  页面加载时触发。 常用于初始化页面数据，从页面 URL 的参数 options 获取数据。 只在页面首次加载时触发一次。  1234">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-06T13:28:50.000Z">
-<meta property="article:modified_time" content="2024-10-17T07:52:13.603Z">
+<meta property="article:modified_time" content="2024-10-26T15:55:01.636Z">
 <meta property="article:author" content="4rozeN">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="uni-app">
@@ -45,6 +45,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" />
 
 
 
@@ -291,7 +293,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2024年10月17日 下午
+                    本文最后更新于：2024年10月26日 晚上
                   
                 
               </p>
@@ -300,109 +302,107 @@
               <div class="markdown-body">
                 
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name='description' content='uni-app涉及到的生命周期小结'>
-
-<h1 id="uni-app涉及到的生命周期小结"><a href="#uni-app涉及到的生命周期小结" class="headerlink" title="uni-app涉及到的生命周期小结"></a>uni-app涉及到的生命周期小结</h1><p>UniApp 中，除了常见的 Vue 生命周期（如 <code>created</code>、<code>mounted</code> 等），它还提供了特定于小程序和移动应用的<strong>页面生命周期</strong>和<strong>应用生命周期</strong></p>
-<h2 id="UniApp-常见的页面生命周期"><a href="#UniApp-常见的页面生命周期" class="headerlink" title="UniApp 常见的页面生命周期"></a>UniApp 常见的页面生命周期</h2><h3 id="1、onLoad-options"><a href="#1、onLoad-options" class="headerlink" title="1、onLoad(options)"></a>1、onLoad(options)</h3><ul>
+<h1 id="uni-app涉及到的生命周期小结"><a class="markdownIt-Anchor" href="#uni-app涉及到的生命周期小结"></a> uni-app涉及到的生命周期小结</h1>
+<p>UniApp 中，除了常见的 Vue 生命周期（如 <code>created</code>、<code>mounted</code> 等），它还提供了特定于小程序和移动应用的<strong>页面生命周期</strong>和<strong>应用生命周期</strong></p>
+<h2 id="uniapp-常见的页面生命周期"><a class="markdownIt-Anchor" href="#uniapp-常见的页面生命周期"></a> UniApp 常见的页面生命周期</h2>
+<h3 id="1-onloadoptions"><a class="markdownIt-Anchor" href="#1-onloadoptions"></a> 1、onLoad(options)</h3>
+<ul>
 <li>页面加载时触发。</li>
 <li>常用于初始化页面数据，从页面 URL 的参数 <code>options</code> 获取数据。</li>
 <li>只在页面首次加载时触发一次。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onLoad</span>(<span class="hljs-params">options</span>) &#123;<br>  <span class="hljs-comment">// 可以从options中拿到url查询参数</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;页面加载&#x27;</span>, options);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="2、onShow"><a href="#2、onShow" class="headerlink" title="2、onShow()"></a>2、onShow()</h3><ul>
+<h3 id="2-onshow"><a class="markdownIt-Anchor" href="#2-onshow"></a> 2、onShow()</h3>
+<ul>
 <li>页面显示时触发，可能在页面首次加载后，也可能在页面重新显示时（如从后台切回前台）。</li>
 <li>常用于刷新页面数据或 UI 状态。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onShow</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;页面显示&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="3、onReady"><a href="#3、onReady" class="headerlink" title="3、onReady()"></a>3、onReady()</h3><ul>
+<h3 id="3-onready"><a class="markdownIt-Anchor" href="#3-onready"></a> 3、onReady()</h3>
+<ul>
 <li>页面初次渲染完成时触发，只触发一次。</li>
 <li>页面结构加载和绘制完成后触发，可以在此进行与 UI 相关的操作。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onReady</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;页面初次渲染完成&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="4、onHide"><a href="#4、onHide" class="headerlink" title="4、onHide()"></a>4、onHide()</h3><ul>
+<h3 id="4-onhide"><a class="markdownIt-Anchor" href="#4-onhide"></a> 4、onHide()</h3>
+<ul>
 <li>页面被隐藏时触发，比如跳转到其他页面或应用切换到后台时。</li>
 <li>常用于暂停页面中的定时器或动画。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onHide</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;页面隐藏&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="5、onUnload"><a href="#5、onUnload" class="headerlink" title="5、onUnload()"></a>5、onUnload()</h3><ul>
+<h3 id="5-onunload"><a class="markdownIt-Anchor" href="#5-onunload"></a> 5、onUnload()</h3>
+<ul>
 <li>页面卸载（离开）时触发，常用于清理资源（如关闭网络请求或销毁定时器）。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onUnload</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;页面卸载&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="6、onPullDownRefresh"><a href="#6、onPullDownRefresh" class="headerlink" title="6、onPullDownRefresh()"></a>6、onPullDownRefresh()</h3><ul>
+<h3 id="6-onpulldownrefresh"><a class="markdownIt-Anchor" href="#6-onpulldownrefresh"></a> 6、onPullDownRefresh()</h3>
+<ul>
 <li>监听用户下拉动作的事件处理函数。</li>
 <li>需要在 <code>pages.json</code> 中启用页面的下拉刷新功能。</li>
 </ul>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;path&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;goods_list/goods_list&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;style&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;enablePullDownRefresh&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>在处理完数据刷新后，调用 <code>uni.stopPullDownRefresh()</code> 来结束下拉刷新状态。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">onPullDownRefresh</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;用户触发了下拉刷新&#x27;</span>);<br>    <br>    <span class="hljs-comment">// 模拟数据请求</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">fetchData</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-comment">// 数据加载完成后，停止下拉刷新</span><br>      uni.<span class="hljs-title function_">stopPullDownRefresh</span>();<br>    &#125;);<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">fetchData</span>(<span class="hljs-params">callback</span>) &#123;<br>      <span class="hljs-comment">// 这里可以调用 API 或执行其他操作来获取新数据</span><br>      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;数据刷新完成&#x27;</span>);<br>        callback &amp;&amp; <span class="hljs-title function_">callback</span>();<br>      &#125;, <span class="hljs-number">2000</span>);  <span class="hljs-comment">// 模拟延迟</span><br>    &#125;<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
 <p>在 UniApp 中，<code>onReachBottom()</code> 默认是在页面滚动到离底部 50px 位置时触发。不过在<code>pages.json</code> 文件中，可以配置 <code>onReachBottomDistance</code> 属性来调整触底的距离。这个属性指定了页面滚动到底部时触发 <code>onReachBottom()</code> 事件的距离（单位px）。例如，将触底距离设为150px</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;path&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;goods_list/goods_list&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;style&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;enablePullDownRefresh&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;onReachBottomDistance&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">150</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="7、onReachBottom"><a href="#7、onReachBottom" class="headerlink" title="7、onReachBottom()"></a>7、onReachBottom()</h3><ul>
+<h3 id="7-onreachbottom"><a class="markdownIt-Anchor" href="#7-onreachbottom"></a> 7、onReachBottom()</h3>
+<ul>
 <li>页面上拉触底事件的处理函数。</li>
 <li>用户上拉到页面底部时触发，常用于加载更多数据的场景。</li>
 </ul>
-<h3 id="8、onPageScroll-object"><a href="#8、onPageScroll-object" class="headerlink" title="8、onPageScroll(object"></a>8、onPageScroll(object</h3><ul>
+<h3 id="8-onpagescrollobject"><a class="markdownIt-Anchor" href="#8-onpagescrollobject"></a> 8、onPageScroll(object</h3>
+<ul>
 <li>页面滚动时触发，可以获取页面的滚动距离。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onPageScroll</span>(<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;页面滚动&#x27;</span>, event.<span class="hljs-property">scrollTop</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="9、onShareAppMessage"><a href="#9、onShareAppMessage" class="headerlink" title="9、onShareAppMessage()"></a>9、onShareAppMessage()</h3><ul>
+<h3 id="9-onshareappmessage"><a class="markdownIt-Anchor" href="#9-onshareappmessage"></a> 9、onShareAppMessage()</h3>
+<ul>
 <li>用户点击右上角分享时触发，返回自定义的分享内容。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onShareAppMessage</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;分享标题&#x27;</span>,<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/pages/index/index&#x27;</span><br>  &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="应用程序生命周期"><a href="#应用程序生命周期" class="headerlink" title="应用程序生命周期"></a>应用程序生命周期</h2><p>这些生命周期钩子是针对整个应用程序的，在不同的应用场景下会被触发。</p>
-<h3 id="1、onLaunch"><a href="#1、onLaunch" class="headerlink" title="1、onLaunch()"></a>1、onLaunch()</h3><ul>
+<h2 id="应用程序生命周期"><a class="markdownIt-Anchor" href="#应用程序生命周期"></a> 应用程序生命周期</h2>
+<p>这些生命周期钩子是针对整个应用程序的，在不同的应用场景下会被触发。</p>
+<h3 id="1-onlaunch"><a class="markdownIt-Anchor" href="#1-onlaunch"></a> 1、onLaunch()</h3>
+<ul>
 <li>当应用首次启动时触发，通常用于执行一些全局的初始化操作。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onLaunch</span>(<span class="hljs-params">options</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;应用启动&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="2、onShow-1"><a href="#2、onShow-1" class="headerlink" title="2、onShow()"></a>2、onShow()</h3><ul>
+<h3 id="2-onshow-2"><a class="markdownIt-Anchor" href="#2-onshow-2"></a> 2、onShow()</h3>
+<ul>
 <li>当应用从后台进入前台显示时触发。</li>
 <li>类似页面生命周期中的 <code>onShow</code>，但是作用于整个应用。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onShow</span>(<span class="hljs-params">options</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;应用显示&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="3、onHide"><a href="#3、onHide" class="headerlink" title="3、onHide()"></a>3、onHide()</h3><ul>
+<h3 id="3-onhide"><a class="markdownIt-Anchor" href="#3-onhide"></a> 3、onHide()</h3>
+<ul>
 <li>当应用进入后台时触发。</li>
 <li>可以在这里处理数据保存、暂停定时器等操作。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onHide</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;应用隐藏&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="4、onError"><a href="#4、onError" class="headerlink" title="4、onError()"></a>4、onError()</h3><ul>
+<h3 id="4-onerror"><a class="markdownIt-Anchor" href="#4-onerror"></a> 4、onError()</h3>
+<ul>
 <li>当应用发生 JavaScript 错误时触发。</li>
 <li>常用于全局错误监控。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onError</span>(<span class="hljs-params">err</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&#x27;应用出错&#x27;</span>, err);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="5、onPageNotFound"><a href="#5、onPageNotFound" class="headerlink" title="5、onPageNotFound()"></a>5、onPageNotFound()</h3><ul>
+<h3 id="5-onpagenotfound"><a class="markdownIt-Anchor" href="#5-onpagenotfound"></a> 5、onPageNotFound()</h3>
+<ul>
 <li>当页面路径不存在时触发，通常用于重定向到一个有效页面。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onPageNotFound</span>(<span class="hljs-params">res</span>) &#123;<br>  uni.<span class="hljs-title function_">redirectTo</span>(&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;/pages/404/404&#x27;</span><br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="小程序平台专属生命周期"><a href="#小程序平台专属生命周期" class="headerlink" title="小程序平台专属生命周期"></a>小程序平台专属生命周期</h2><h3 id="1、onResize-（小程序平台专属）"><a href="#1、onResize-（小程序平台专属）" class="headerlink" title="1、onResize()（小程序平台专属）"></a>1、onResize()（小程序平台专属）</h3><ul>
+<h2 id="小程序平台专属生命周期"><a class="markdownIt-Anchor" href="#小程序平台专属生命周期"></a> 小程序平台专属生命周期</h2>
+<h3 id="1-onresize小程序平台专属"><a class="markdownIt-Anchor" href="#1-onresize小程序平台专属"></a> 1、onResize()（小程序平台专属）</h3>
+<ul>
 <li>当小程序窗口尺寸发生变化时触发，通常在设备旋转时使用。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onResize</span>(<span class="hljs-params">size</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;窗口尺寸变化&#x27;</span>, size);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="2、onTabItemTap-item-（小程序平台专属）"><a href="#2、onTabItemTap-item-（小程序平台专属）" class="headerlink" title="2、onTabItemTap(item)（小程序平台专属）"></a>2、onTabItemTap(item)（小程序平台专属）</h3><ul>
+<h3 id="2-ontabitemtapitem小程序平台专属"><a class="markdownIt-Anchor" href="#2-ontabitemtapitem小程序平台专属"></a> 2、onTabItemTap(item)（小程序平台专属）</h3>
+<ul>
 <li>监听 tab 页点击的事件。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onTabItemTap</span>(<span class="hljs-params">item</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Tab 被点击&#x27;</span>, item);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
 <p>此笔记随时可能更新，总感觉还是见得少了……</p>
 
                 
@@ -452,7 +452,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>uni-app涉及到的生命周期小结</div>
-      <div>https://4rozen.github.io/archives/Uni-app/uni-app涉及到的生命周期小结/</div>
+      <div>https://4rozen.github.io/archives/Uni-app/7498/</div>
     </div>
     <div class="license-meta">
       
@@ -496,7 +496,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/archives/WP/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-dino3d/" title="DASCTF X CBCTF 2022九月挑战赛 dino3d">
+                      <a href="/archives/WP/29897/" title="DASCTF X CBCTF 2022九月挑战赛 dino3d">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">DASCTF X CBCTF 2022九月挑战赛 dino3d</span>
                         <span class="visible-mobile">上一篇</span>
@@ -506,7 +506,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/archives/Vue/%E7%90%86%E8%A7%A3%E9%98%B2%E6%8A%96/" title="理解闭包理解防抖">
+                      <a href="/archives/Vue/35829/" title="理解闭包理解防抖">
                         <span class="hidden-mobile">理解闭包理解防抖</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -525,7 +525,7 @@
     <div id="giscus" class="giscus"></div>
     <script type="text/javascript">
       Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"0","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
+        var options = {"repo":"4rozeN/4rozeN.github.io","repo-id":"R_kgDOMN8x0A","category":"General","category-id":"DIC_kwDOMN8x0M4CjtvK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":"1","emit-metadata":"1","input-position":"top","lang":"zh-CN","strict":"warn","theme":"preferred_color_scheme","loading":"lazy","crossorigin":"anonymous"};
         var attributes = {};
         for (let option in options) {
           if (!option.startsWith('theme-')) {
@@ -612,7 +612,6 @@
 
   
   
-
 
 
 
@@ -807,49 +806,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://fastly.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
