@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://4rozen.github.io/archives/notes/27484/</loc>
+    <loc>https://4rozen.github.io/archives/notes/27484.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Back-End/45101/</loc>
+    <loc>https://4rozen.github.io/archives/Back-End/45101.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/notes/55208/</loc>
+    <loc>https://4rozen.github.io/archives/notes/55208.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/notes/17306/</loc>
+    <loc>https://4rozen.github.io/archives/notes/17306.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Gamer/45940/</loc>
+    <loc>https://4rozen.github.io/archives/Gamer/45940.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Vue/35829/</loc>
+    <loc>https://4rozen.github.io/archives/Vue/35829.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Uni-app/7498/</loc>
+    <loc>https://4rozen.github.io/archives/Uni-app/7498.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Vue/47412/</loc>
+    <loc>https://4rozen.github.io/archives/Vue/47412.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/notes/22192/</loc>
+    <loc>https://4rozen.github.io/archives/notes/22192.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Gamer/64665/</loc>
+    <loc>https://4rozen.github.io/archives/Gamer/64665.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Vue/31657/</loc>
+    <loc>https://4rozen.github.io/archives/Vue/31657.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/WP/55980/</loc>
+    <loc>https://4rozen.github.io/archives/WP/55980.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/notes/46175/</loc>
+    <loc>https://4rozen.github.io/archives/notes/46175.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/WP/29897/</loc>
+    <loc>https://4rozen.github.io/archives/WP/29897.html</loc>
     
     <lastmod>2024-10-26</lastmod>
     
@@ -137,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/archives/Git/undefined/</loc>
+    <loc>https://4rozen.github.io/archives/Git/undefined.html</loc>
     
     <lastmod>2024-10-17</lastmod>
     
@@ -173,14 +173,14 @@
 
   
   <url>
-    <loc>https://4rozen.github.io/tags/DOH/</loc>
+    <loc>https://4rozen.github.io/tags/CTF-WP/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/CTF-WP/</loc>
+    <loc>https://4rozen.github.io/tags/DOH/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -194,14 +194,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Strapi/</loc>
+    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
+    <loc>https://4rozen.github.io/tags/Strapi/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -216,6 +216,13 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2024-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/uni-app/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -250,20 +257,6 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/uni-app/</loc>
-    <lastmod>2024-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
-    <lastmod>2024-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://4rozen.github.io/tags/Google%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -277,17 +270,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2024-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://4rozen.github.io/categories/notes/</loc>
+    <loc>https://4rozen.github.io/categories/WP/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/WP/</loc>
+    <loc>https://4rozen.github.io/categories/notes/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -301,14 +301,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Back-End/</loc>
+    <loc>https://4rozen.github.io/categories/Gamer/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Gamer/</loc>
+    <loc>https://4rozen.github.io/categories/Back-End/</loc>
     <lastmod>2024-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
