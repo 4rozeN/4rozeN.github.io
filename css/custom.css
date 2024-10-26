@@ -21,6 +21,7 @@
 
 
 .markdown-body blockquote {
+  /* color: #f0f8f0; */
   font-family: SourceHanSerifCN-Medium, Times, serif;
   padding: 0.8rem 0.6rem;
   border-left-color: #428bca;
