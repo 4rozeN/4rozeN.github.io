@@ -1,0 +1,1 @@
+:root{--mobile-bg-image:url('https://4rozen.github.io/img/bg/eva_mobile.jpg');--desktop-bg-image-normal:url('https://4rozen.github.io/img/bg/eva.jpg');--desktop-bg-image-night:url('https://4rozen.github.io/img/bg/Mei.jpg')}#web_bg{background-image:var(--desktop-bg-image-normal);position:fixed;width:100%;height:100%;z-index:-1;background-size:cover;transition:all .5s}
