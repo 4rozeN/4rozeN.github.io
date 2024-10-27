@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://4rozen.github.io/archives/Hexo/7648.html</loc>
+    
+    <lastmod>2024-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/archives/Vue/31657.html</loc>
     
     <lastmod>2024-10-26</lastmod>
@@ -194,14 +203,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
+    <loc>https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -222,6 +231,13 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/Hexo-GitHubActions-indexnow/</loc>
+    <lastmod>2024-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/python/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -230,13 +246,6 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/http/</loc>
-    <lastmod>2024-10-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/uni-app/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -257,6 +266,20 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/uni-app/</loc>
+    <lastmod>2024-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2024-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/Google%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -265,13 +288,6 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
-    <lastmod>2024-10-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -301,13 +317,6 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Gamer/</loc>
-    <lastmod>2024-10-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://4rozen.github.io/categories/Vue/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -315,7 +324,21 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/categories/Gamer/</loc>
+    <lastmod>2024-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/categories/Back-End/</loc>
+    <lastmod>2024-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/categories/Hexo/</loc>
     <lastmod>2024-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
