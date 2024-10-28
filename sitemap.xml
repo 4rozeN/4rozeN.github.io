@@ -191,7 +191,7 @@
 
   
   <url>
-    <loc>https://4rozen.github.io/tags/DOH/</loc>
+    <loc>https://4rozen.github.io/tags/Git/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -205,14 +205,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Git/</loc>
-    <lastmod>2024-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
+    <loc>https://4rozen.github.io/tags/DOH/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -233,7 +226,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Strapi/</loc>
+    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -275,14 +268,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/python/</loc>
-    <lastmod>2024-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/http/</loc>
+    <loc>https://4rozen.github.io/tags/Strapi/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -310,14 +296,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/uni-app/</loc>
+    <loc>https://4rozen.github.io/tags/%E5%B4%A9%E5%9D%8F/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/%E5%B4%A9%E5%9D%8F/</loc>
+    <loc>https://4rozen.github.io/tags/uni-app/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -338,6 +324,20 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/python/</loc>
+    <lastmod>2024-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/http/</loc>
+    <lastmod>2024-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -347,7 +347,7 @@
 
   
   <url>
-    <loc>https://4rozen.github.io/categories/notes/</loc>
+    <loc>https://4rozen.github.io/categories/Git/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -361,14 +361,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Git/</loc>
-    <lastmod>2024-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/categories/Gamer/</loc>
+    <loc>https://4rozen.github.io/categories/notes/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -382,7 +375,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Back-End/</loc>
+    <loc>https://4rozen.github.io/categories/Gamer/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -390,6 +383,13 @@
   
   <url>
     <loc>https://4rozen.github.io/categories/Hexo/</loc>
+    <lastmod>2024-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/categories/Back-End/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
