@@ -36,7 +36,7 @@ def ping_bing(url_list):
         "keyLocation": f"https://{HOST}/{KEY}.txt",
         "urlList": url_list
     }
-
+    print("请求体：", data)
     # 发送 POST 请求
     response = requests.post(url, headers=headers, json=data)
     return response
@@ -44,9 +44,8 @@ def ping_bing(url_list):
 if __name__ == "__main__":
     sitemap_path = "sitemap.xml"  # 替换为你的 sitemap 文件路径
     url_list = get_latest_posts(sitemap_path, 30)  # 获取最近 30 篇文章的 URL
-    print("最近更新的文章 URL 列表：")
-    print(url_list)  # 打印获取的 URL 列表
 
     response = ping_bing(url_list)  # 向 IndexNow 发送请求
+    print("响应体：", response.json())  # 打印响应内容
     print("响应状态码：", response.status_code)  # 打印响应状态
     print("响应内容：", response.text)  # 打印响应内容
