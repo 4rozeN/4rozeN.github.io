@@ -2,7 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 HOST = "4rozen.github.io"  # 替换为你的实际域名
-KEY = "4d18f67fdcc7464aba60e534922bfa29"  # 替换为你的 API 密钥
+KEY = "a71f352a4d724bf586e3e79ab60fd804"  # 替换为你的 API 密钥
 
 def get_latest_posts(sitemap_path, n=10):
     # 解析 XML sitemap
@@ -23,7 +23,8 @@ def get_latest_posts(sitemap_path, n=10):
     return [url[0] for url in urls[:n]]
 
 def ping_bing(url_list):
-    url = 'https://www.bing.com/indexnow'
+    # url = 'https://www.bing.com/indexnow'
+    url = 'api.indexnow.org'
     headers = {
         'Content-Type': 'application/json; charset=utf-8',
     }
@@ -42,7 +43,7 @@ def ping_bing(url_list):
 
 if __name__ == "__main__":
     sitemap_path = "sitemap.xml"  # 替换为你的 sitemap 文件路径
-    url_list = get_latest_posts(sitemap_path, 10)  # 获取最近 10 篇文章的 URL
+    url_list = get_latest_posts(sitemap_path, 30)  # 获取最近 30 篇文章的 URL
     print("最近更新的文章 URL 列表：")
     print(url_list)  # 打印获取的 URL 列表
 
