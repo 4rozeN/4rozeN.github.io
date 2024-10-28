@@ -191,14 +191,14 @@
 
   
   <url>
-    <loc>https://4rozen.github.io/tags/CTF-WP/</loc>
+    <loc>https://4rozen.github.io/tags/DOH/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/DOH/</loc>
+    <loc>https://4rozen.github.io/tags/CTF-WP/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -219,7 +219,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Strapi/</loc>
+    <loc>https://4rozen.github.io/tags/Vue/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -233,7 +233,7 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Vue/</loc>
+    <loc>https://4rozen.github.io/tags/Strapi/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -324,13 +324,6 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
-    <lastmod>2024-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://4rozen.github.io/tags/Google%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -344,17 +337,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://4rozen.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2024-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://4rozen.github.io/categories/WP/</loc>
+    <loc>https://4rozen.github.io/categories/notes/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/notes/</loc>
+    <loc>https://4rozen.github.io/categories/WP/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -375,14 +375,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Back-End/</loc>
+    <loc>https://4rozen.github.io/categories/Vue/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Vue/</loc>
+    <loc>https://4rozen.github.io/categories/Back-End/</loc>
     <lastmod>2024-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
