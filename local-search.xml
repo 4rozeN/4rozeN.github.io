@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Hexo 通过 git 的 ssh 链接 github 超时 (time out)</title>
+    <link href="/archives/notes/10729.html"/>
+    <url>/archives/notes/10729.html</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer"><meta name="description" content="最近在提交hexo文章时，遇到了git通过ssh链接github超时time out的问题，终端上的黄字非常具有迷惑性：Error: Spawn failed!实际上还是git配置端口的问题。"><h1 id="hexo通过git的ssh链接github超时time-out"><a class="markdownIt-Anchor" href="#hexo通过git的ssh链接github超时time-out"></a> Hexo 通过 git 的 ssh 链接 github 超时 (time out)</h1><p>最近在提交 hexo 文章时，遇到了 git 通过 ssh 链接 github 超时 time out 的问题，终端上的黄字非常具有迷惑性：<mark>Error: Spawn failed!</mark></p><p>使用 <code>ssh -T git@github.com</code> 进行测试也是如此。</p><figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">$</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">ssh</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-T</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">git@github.com</span></span><span class="line"><span style="color: #DCDCAA">ssh:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">connect</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">to</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">host</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">github.com</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">port</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">22</span><span style="color: #CE9178">:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">Connection</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">timed</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">out</span></span></code></pre></div></div></figure><p>实际上是 git 在尝试使用端口 22 链接超时而已，我们可以将其改为 443 再链接。</p><h2 id="解决办法"><a class="markdownIt-Anchor" href="#解决办法"></a> 解决办法</h2><ol><li><p>找到你生成 rsa 的地方，它可能是 <code>C:\Users\Name\.ssh</code><br>还记得吗？你曾通过 <code>ssh-keygen -t rsa -C "你的git绑定的邮箱名字"</code> 这样一个命令生成了一个 rsa 文件（<a href="https://zhuanlan.zhihu.com/p/193140870">我不记得了 (≧﹏ ≦)</a>）</p></li><li><p>修改或创建一个 <code>config</code> 文件写入以下代码：</p><figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">Host github.com</span></span><span class="line"><span style="color: #D4D4D4">HostName ssh.github.com</span></span><span class="line"><span style="color: #D4D4D4">User git</span></span><span class="line"><span style="color: #D4D4D4">Port 443</span></span><span class="line"><span style="color: #D4D4D4">PreferredAuthentications publickey</span></span><span class="line"><span style="color: #D4D4D4">IdentityFile ~/.ssh/id_rsa</span></span></code></pre></div></div></figure><p>这样就能将访问的 <code>github.com</code> 转换为 <code>ssh.github.com</code></p></li></ol><p>请注意，<code>~/</code> 是你要进行填充的地方，<code>~</code> 取决于你的 rsa 的保存位置。例如：<code>C:/Users/Administrator/.ssh/id_rsa</code></p><p>完成上述操作之后你就可以通过以下命令进行尝试：</p><figure class="shiki shell"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">$</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">ssh</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-T</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">git@github.com</span></span><span class="line"><span style="color: #DCDCAA">Hi</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">4</span><span style="color: #CE9178">rozeN!</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">You've successfully authenticated, but GitHub does not provide shell access.</span></span></code></pre></div></div></figure><p>成功的话，它会提示你已成功通过身份验证，但 GitHub 不提供 shell 访问权限，这是正常的。</p><blockquote><p>参考文章：<a href="https://blog.csdn.net/the__future/article/details/130038818">关于本地 git 通过 ssh 链接 github 时 time out 问题的解决方法</a></p></blockquote><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+    
+    
+    <categories>
+      
+      <category>随记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>git</tag>
+      
+      <tag>github</tag>
+      
+      <tag>ssh</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Steam 游戏全成就查漏补缺脚本</title>
     <link href="/archives/notes/39978.html"/>
     <url>/archives/notes/39978.html</url>
@@ -379,9 +410,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>JavaScript</tag>
+      
+      <tag>笔记</tag>
       
     </tags>
     

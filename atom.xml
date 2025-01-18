@@ -6,7 +6,7 @@
   <link href="https://4rozen.github.io/atom.xml" rel="self"/>
   
   <link href="https://4rozen.github.io/"/>
-  <updated>2025-01-18T10:50:36.336Z</updated>
+  <updated>2025-01-18T12:04:38.587Z</updated>
   <id>https://4rozen.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo 通过 git 的 ssh 链接 github 超时 (time out)</title>
+    <link href="https://4rozen.github.io/archives/notes/10729.html"/>
+    <id>https://4rozen.github.io/archives/notes/10729.html</id>
+    <published>2025-01-18T11:35:13.000Z</published>
+    <updated>2025-01-18T12:04:38.587Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer"><meta name="description" content="最近在提交hexo文章时，遇到了git通过ssh链接github超时time out的问题，终端上的黄字非常具有迷惑性：Error: Spawn failed!实际上还是git配置端口的问题。"><h1 id="hexo通过git的ssh链接github超时time-out"><a class="markdownIt-Anchor" href="#hexo通过git的ssh链接github超时time-out"></a> Hexo 通过 git 的 ssh 链接 github 超时 (time out)</h1><p>最近在提交 hexo 文章时，遇到了 git 通过 ssh 链接 github 超时 time out 的问题，终端上的黄字非常具有迷惑性：<mark>Error: Spawn failed!</mark></p><p>使用 <code>ssh -T git@github.com</code> 进行测试也是如此。</p><figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">$</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">ssh</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-T</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">git@github.com</span></span><span class="line"><span style="color: #DCDCAA">ssh:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">connect</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">to</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">host</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">github.com</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">port</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">22</span><span style="color: #CE9178">:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">Connection</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">timed</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">out</span></span></code></pre></div></div></figure><p>实际上是 git 在尝试使用端口 22 链接超时而已，我们可以将其改为 443 再链接。</p><h2 id="解决办法"><a class="markdownIt-Anchor" href="#解决办法"></a> 解决办法</h2><ol><li><p>找到你生成 rsa 的地方，它可能是 <code>C:\Users\Name\.ssh</code><br>还记得吗？你曾通过 <code>ssh-keygen -t rsa -C "你的git绑定的邮箱名字"</code> 这样一个命令生成了一个 rsa 文件（<a href="https://zhuanlan.zhihu.com/p/193140870">我不记得了 (≧﹏ ≦)</a>）</p></li><li><p>修改或创建一个 <code>config</code> 文件写入以下代码：</p><figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">Host github.com</span></span><span class="line"><span style="color: #D4D4D4">HostName ssh.github.com</span></span><span class="line"><span style="color: #D4D4D4">User git</span></span><span class="line"><span style="color: #D4D4D4">Port 443</span></span><span class="line"><span style="color: #D4D4D4">PreferredAuthentications publickey</span></span><span class="line"><span style="color: #D4D4D4">IdentityFile ~/.ssh/id_rsa</span></span></code></pre></div></div></figure><p>这样就能将访问的 <code>github.com</code> 转换为 <code>ssh.github.com</code></p></li></ol><p>请注意，<code>~/</code> 是你要进行填充的地方，<code>~</code> 取决于你的 rsa 的保存位置。例如：<code>C:/Users/Administrator/.ssh/id_rsa</code></p><p>完成上述操作之后你就可以通过以下命令进行尝试：</p><figure class="shiki shell"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">$</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">ssh</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-T</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">git@github.com</span></span><span class="line"><span style="color: #DCDCAA">Hi</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">4</span><span style="color: #CE9178">rozeN!</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">You've successfully authenticated, but GitHub does not provide shell access.</span></span></code></pre></div></div></figure><p>成功的话，它会提示你已成功通过身份验证，但 GitHub 不提供 shell 访问权限，这是正常的。</p><blockquote><p>参考文章：<a href="https://blog.csdn.net/the__future/article/details/130038818">关于本地 git 通过 ssh 链接 github 时 time out 问题的解决方法</a></p></blockquote><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</summary>
+      
+    
+    
+    
+    <category term="随记" scheme="https://4rozen.github.io/categories/notes/"/>
+    
+    
+    <category term="Hexo" scheme="https://4rozen.github.io/tags/Hexo/"/>
+    
+    <category term="git" scheme="https://4rozen.github.io/tags/git/"/>
+    
+    <category term="github" scheme="https://4rozen.github.io/tags/github/"/>
+    
+    <category term="ssh" scheme="https://4rozen.github.io/tags/ssh/"/>
+    
+  </entry>
   
   <entry>
     <title>Steam 游戏全成就查漏补缺脚本</title>
@@ -383,9 +413,9 @@
     <category term="Vue笔记" scheme="https://4rozen.github.io/categories/Vue/"/>
     
     
-    <category term="笔记" scheme="https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="JavaScript" scheme="https://4rozen.github.io/tags/JavaScript/"/>
+    
+    <category term="笔记" scheme="https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -508,30 +538,6 @@
     
     
     <category term="Git" scheme="https://4rozen.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在 Windows 中启用 DOH 功能</title>
-    <link href="https://4rozen.github.io/archives/notes/46175.html"/>
-    <id>https://4rozen.github.io/archives/notes/46175.html</id>
-    <published>2022-06-25T15:50:13.000Z</published>
-    <updated>2024-10-26T19:41:17.185Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer"><h1 id="windows设置中启用doh"><a class="markdownIt-Anchor" href="#windows设置中启用doh"></a> Windows 设置中启用 DOH</h1><meta name="description" content="在Windows中启用Google谷歌浏览器、Firefox浏览器的DOH功能"><blockquote><p>适用环境：Windows11（Win10 可以开启浏览器的 DOH）<br>DNS 检测工具：<a href="https://www.nstool.netease.com/">网易 DNS 在线检测</a><br>参考文章：</p><ul><li>网络设置 DOH：<a href="https://zhuanlan.zhihu.com/p/590105276">Windows 11 22H2 开启 DoH（DNS over HTTPS）</a></li><li>检测：<a href="https://wkings.blog/archives/1253">DNS、DoT、DoH 协议测试方法</a></li></ul></blockquote><h2 id="google浏览器和firefox浏览器启用doh"><a class="markdownIt-Anchor" href="#google浏览器和firefox浏览器启用doh"></a> Google 浏览器和 Firefox 浏览器启用 DOH</h2><blockquote><p>Google 浏览器版本：123.0.6312.86（正式版本） （64 位）<br>Firefox 浏览器版本：123.0.1 (64 位)</p></blockquote><h2 id="google浏览器"><a class="markdownIt-Anchor" href="#google浏览器"></a> Google 浏览器</h2><p>找到<code>设置-&gt;隐私和安全-&gt;安全-&gt;高级</code>在高级区启用使用安全 DNS，并填写 DNS 提供商即可。<br><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905304052-6ab911ae-a57d-433f-9295-726ca12cf59d.png#averageHue=%2325272b&amp;clientId=u46ce7476-c18b-4&amp;from=paste&amp;height=542&amp;id=u7e72b470&amp;originHeight=723&amp;originWidth=1437&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=76344&amp;status=done&amp;style=none&amp;taskId=u66ac412b-9daf-4157-97cb-359a6bb90d3&amp;title=&amp;width=1078" alt="image.png"><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905398251-83fc3bce-72de-4982-b6fc-00fda7a52c36.png#averageHue=%232d2e31&amp;clientId=u46ce7476-c18b-4&amp;from=paste&amp;height=425&amp;id=u8e9fd09e&amp;originHeight=566&amp;originWidth=689&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=37874&amp;status=done&amp;style=none&amp;taskId=ud8be3634-e5fe-48df-9622-8b69db22293&amp;title=&amp;width=517" alt="image.png"><br>DNS 提供商填写<a href="https://zhuanlan.zhihu.com/p/590105276">网络设置 DOH</a> 这篇参考文章中的就好。<br>所有设置妥当之后请调用 cmd 输入 <code>ipconfig /flushdns</code> 该命令使得设置生效。</p><h2 id="firefox浏览器"><a class="markdownIt-Anchor" href="#firefox浏览器"></a> Firefox 浏览器</h2><p>在设置页面直接搜索 <code>dns</code> 即可。设置如图：<br><img src="https://cdn.nlark.com/yuque/0/2024/png/32753108/1711905924937-6e642b87-9294-4a5b-bcf4-567904db0425.png#averageHue=%23293741&amp;clientId=u46ce7476-c18b-4&amp;from=paste&amp;height=716&amp;id=ubbcb1742&amp;originHeight=955&amp;originWidth=683&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=64012&amp;status=done&amp;style=none&amp;taskId=ue1c01ceb-bcd1-4f4e-92bd-ca3db108d44&amp;title=&amp;width=512" alt="image.png"><br>DNS 提供商填写<a href="https://zhuanlan.zhihu.com/p/590105276">网络设置 DOH</a> 这篇参考文章中的就好。<br>所有设置妥当之后请调用 cmd 输入 <code>ipconfig /flushdns</code> 该命令使得设置生效。</p><h2 id="检测是否成功开启doh"><a class="markdownIt-Anchor" href="#检测是否成功开启doh"></a> 检测是否成功开启 DOH</h2><blockquote><p>涉及工具：<a href="https://dns.lookup.dog/#installation">dog 工具</a><br>协议：<br>-U, --udp Use the DNS protocol over UDP<br>-T, --tcp Use the DNS protocol over TCP<br>-S, --tls Use the DNS-over-TLS protocol<br>-H, --https Use the DNS-over-HTTPS protocol</p></blockquote><p>命令示例：<code>dog.exe -H @[https://dns.alidns.com/dns-query](https://dns.alidns.com/dns-query) bilibili.com</code></p><p>先写到这，想起什么了再补充。2024.4.1</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</summary>
-      
-    
-    
-    
-    <category term="随记" scheme="https://4rozen.github.io/categories/notes/"/>
-    
-    
-    <category term="DOH" scheme="https://4rozen.github.io/tags/DOH/"/>
     
   </entry>
   
