@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /about/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /img/
+Sitemap: https://4rozeN.github.io/sitemap.xml
+Sitemap: https://4rozeN.github.io/baidusitemap.xml
