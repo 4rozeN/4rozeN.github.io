@@ -331,9 +331,9 @@
     
     <tags>
       
-      <tag>Vue</tag>
-      
       <tag>笔记</tag>
+      
+      <tag>Vue</tag>
       
     </tags>
     
@@ -410,9 +410,9 @@
     
     <tags>
       
-      <tag>JavaScript</tag>
-      
       <tag>笔记</tag>
+      
+      <tag>JavaScript</tag>
       
     </tags>
     
@@ -448,31 +448,6 @@
   
   
   <entry>
-    <title>解决 hexo 主题无法显示使用相对路径的图床图片</title>
-    <link href="/archives/notes/55208.html"/>
-    <url>/archives/notes/55208.html</url>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer"><meta name="description" content="解决hexo主题无法显示使用相对路径的图床图片"><h1 id="解决hexo主题无法显示使用相对路径的图床图片"><a class="markdownIt-Anchor" href="#解决hexo主题无法显示使用相对路径的图床图片"></a> 解决 hexo 主题无法显示使用相对路径的图床图片</h1><h2 id="问题情况"><a class="markdownIt-Anchor" href="#问题情况"></a> 问题情况</h2><p>本地预览查看明明使用图床的图片缺无法正常显示，报 403 问题，显示如下</p><p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png" alt="image-20240626004028362"></p><h2 id="原因"><a class="markdownIt-Anchor" href="#原因"></a> 原因</h2><p>http 请求体的 header 中有一个 referrer 字段，用来表示发起 http 请求的源地址信息，这个 referrer 信息是可以省略但是不可修改的，只能设置是否带上这个 referrer 信息，而不能定制 referrer 里面的值。</p><p>服务器端在拿到这个 referrer 值后就可以进行相关的处理，比如图片资源，可以通过 referrer 值判断请求是否来自本站，若不是则返回 403 或者重定向返回其他信息，从而实现图片的防盗链。上面出现 403 就是因为，请求的是别人服务器上的资源，但把自己的 referrer 信息带过去了，被对方服务器拦截返回了 403。</p><h2 id="解决"><a class="markdownIt-Anchor" href="#解决"></a> 解决</h2><p>前端可以通过 meta 来设置 referrer policy (来源策略)，具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy">这里</a>。浏览器中 referrer 默认的值是 <code>no-referrer-when-downgrade</code>，就是除了降级请求的情况以外都会带上 referrer 信息。降级请求是指 https 协议的地址去请求 http 协议，所以 403 的情况可以将请求的图片地址换成 http 协议，这样降级请求也不会带上 referrer。另一种推荐的方法是把 referrer 设置成 <code>no-referrer</code>，这样发送请求不会带上 referrer 信息，对方服务器也就无法拦截。</p><p>由于我个人使用的主题为 <code>fluid</code>，暂未找到可以直接修改的配置文件进行添加配置项配置 meta，所以采用的是每次写 md 文档时，在开头加上</p><figure class="shiki html"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">meta</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">name</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"referrer"</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">content</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"no-referrer"</span><span style="color: #D4D4D4"> </span><span style="color: #808080">/&gt;</span></span></code></pre></div></div></figure><p>无需额外设置，如果使用的是 typora 会直接识别</p><p>如果你的主题可以找到配置文件进行 meta 项的添加修改，可以加上下面这句</p><figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">meta(name="referrer" content="no-referrer")</span></span></code></pre></div></div></figure><p>最后别忘了使用 <code>hexo g</code> 重新生成一下，确认可行之后使用 <code>hexo d</code> 同步即可</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-    
-    
-    <categories>
-      
-      <category>随记</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>hexo图片问题</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>CTFSHOW-WEB-WP（未完结）</title>
     <link href="/archives/WP/55980.html"/>
     <url>/archives/WP/55980.html</url>
@@ -490,6 +465,31 @@
     <tags>
       
       <tag>CTF-WP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>解决 hexo 主题无法显示使用相对路径的图床图片</title>
+    <link href="/archives/notes/55208.html"/>
+    <url>/archives/notes/55208.html</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><meta name="referrer" content="no-referrer"><meta name="description" content="解决hexo主题无法显示使用相对路径的图床图片"><h1 id="解决hexo主题无法显示使用相对路径的图床图片"><a class="markdownIt-Anchor" href="#解决hexo主题无法显示使用相对路径的图床图片"></a> 解决 hexo 主题无法显示使用相对路径的图床图片</h1><h2 id="问题情况"><a class="markdownIt-Anchor" href="#问题情况"></a> 问题情况</h2><p>本地预览查看明明使用图床的图片缺无法正常显示，报 403 问题，显示如下</p><p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/image-20240626004028362.png" alt="image-20240626004028362"></p><h2 id="原因"><a class="markdownIt-Anchor" href="#原因"></a> 原因</h2><p>http 请求体的 header 中有一个 referrer 字段，用来表示发起 http 请求的源地址信息，这个 referrer 信息是可以省略但是不可修改的，只能设置是否带上这个 referrer 信息，而不能定制 referrer 里面的值。</p><p>服务器端在拿到这个 referrer 值后就可以进行相关的处理，比如图片资源，可以通过 referrer 值判断请求是否来自本站，若不是则返回 403 或者重定向返回其他信息，从而实现图片的防盗链。上面出现 403 就是因为，请求的是别人服务器上的资源，但把自己的 referrer 信息带过去了，被对方服务器拦截返回了 403。</p><h2 id="解决"><a class="markdownIt-Anchor" href="#解决"></a> 解决</h2><p>前端可以通过 meta 来设置 referrer policy (来源策略)，具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy">这里</a>。浏览器中 referrer 默认的值是 <code>no-referrer-when-downgrade</code>，就是除了降级请求的情况以外都会带上 referrer 信息。降级请求是指 https 协议的地址去请求 http 协议，所以 403 的情况可以将请求的图片地址换成 http 协议，这样降级请求也不会带上 referrer。另一种推荐的方法是把 referrer 设置成 <code>no-referrer</code>，这样发送请求不会带上 referrer 信息，对方服务器也就无法拦截。</p><p>由于我个人使用的主题为 <code>fluid</code>，暂未找到可以直接修改的配置文件进行添加配置项配置 meta，所以采用的是每次写 md 文档时，在开头加上</p><figure class="shiki html"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">meta</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">name</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"referrer"</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">content</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"no-referrer"</span><span style="color: #D4D4D4"> </span><span style="color: #808080">/&gt;</span></span></code></pre></div></div></figure><p>无需额外设置，如果使用的是 typora 会直接识别</p><p>如果你的主题可以找到配置文件进行 meta 项的添加修改，可以加上下面这句</p><figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">meta(name="referrer" content="no-referrer")</span></span></code></pre></div></div></figure><p>最后别忘了使用 <code>hexo g</code> 重新生成一下，确认可行之后使用 <code>hexo d</code> 同步即可</p><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+    
+    
+    <categories>
+      
+      <category>随记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>hexo图片问题</tag>
       
     </tags>
     
