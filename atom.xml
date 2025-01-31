@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>4rozeN&#39;s blog</title>
+  <title>4rozeN</title>
   
   <subtitle>4rozeN的博客</subtitle>
   <link href="https://4rozen.github.io/atom.xml" rel="self"/>
@@ -337,9 +337,9 @@
     <category term="Vue笔记" scheme="https://4rozen.github.io/categories/Vue/"/>
     
     
-    <category term="Vue" scheme="https://4rozen.github.io/tags/Vue/"/>
-    
     <category term="笔记" scheme="https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Vue" scheme="https://4rozen.github.io/tags/Vue/"/>
     
   </entry>
   
@@ -413,9 +413,9 @@
     <category term="Vue笔记" scheme="https://4rozen.github.io/categories/Vue/"/>
     
     
-    <category term="JavaScript" scheme="https://4rozen.github.io/tags/JavaScript/"/>
-    
     <category term="笔记" scheme="https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="JavaScript" scheme="https://4rozen.github.io/tags/JavaScript/"/>
     
   </entry>
   
