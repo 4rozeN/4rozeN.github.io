@@ -448,30 +448,6 @@
     </item>
     
     <item>
-      <title>CTFSHOW-WEB-WP（未完结）</title>
-      <link>https://4rozen.github.io/archives/WP/55980.html</link>
-      <guid>https://4rozen.github.io/archives/WP/55980.html</guid>
-      <pubDate>Sat, 25 Mar 2023 15:50:13 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/WP/">CTF-WP</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/CTF-WP/">CTF-WP</category>
-      
-      
-      <comments>https://4rozen.github.io/archives/WP/55980.html#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
       <title>解决 hexo 主题无法显示使用相对路径的图床图片</title>
       <link>https://4rozen.github.io/archives/notes/55208.html</link>
       <guid>https://4rozen.github.io/archives/notes/55208.html</guid>
@@ -540,6 +516,30 @@
       
       
       <comments>https://4rozen.github.io/archives/Git/undefined.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>在 Windows 中启用 DOH 功能</title>
+      <link>https://4rozen.github.io/archives/notes/46175.html</link>
+      <guid>https://4rozen.github.io/archives/notes/46175.html</guid>
+      <pubDate>Sat, 25 Jun 2022 15:50:13 GMT</pubDate>
+      
+        
+        
+      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</description>
+        
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/DOH/">DOH</category>
+      
+      
+      <comments>https://4rozen.github.io/archives/notes/46175.html#disqus_thread</comments>
       
     </item>
     
