@@ -294,6 +294,13 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
+    <lastmod>2025-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/%E5%85%A8%E6%88%90%E5%B0%B1%E5%B8%AE%E6%89%8B/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -309,20 +316,6 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2025-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
-    <lastmod>2025-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/Strapi/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -357,6 +350,13 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/Strapi/</loc>
+    <lastmod>2025-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/git/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -372,20 +372,6 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/ssh/</loc>
-    <lastmod>2025-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/GitHubActions/</loc>
-    <lastmod>2025-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/indexnow/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -420,14 +406,21 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/React/</loc>
+    <loc>https://4rozen.github.io/tags/uni-app/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/uni-app/</loc>
+    <loc>https://4rozen.github.io/tags/GitHubActions/</loc>
+    <lastmod>2025-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/indexnow/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -463,6 +456,13 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/svg/</loc>
+    <lastmod>2025-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://4rozen.github.io/tags/React/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -520,14 +520,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Vue/</loc>
+    <loc>https://4rozen.github.io/categories/Gamer/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Gamer/</loc>
+    <loc>https://4rozen.github.io/categories/Vue/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -541,14 +541,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/React/</loc>
+    <loc>https://4rozen.github.io/categories/Uni-app/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Uni-app/</loc>
+    <loc>https://4rozen.github.io/categories/React/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
