@@ -266,6 +266,13 @@
   </url>
   
   <url>
+    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
+    <lastmod>2025-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://4rozen.github.io/tags/%E7%BE%8E%E5%8C%96/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -301,14 +308,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/Minecraft/</loc>
+    <loc>https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://4rozen.github.io/tags/Strapi/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -344,13 +351,6 @@
   
   <url>
     <loc>https://4rozen.github.io/tags/JavaScript/</loc>
-    <lastmod>2025-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://4rozen.github.io/tags/Strapi/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -513,14 +513,14 @@
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Hexo/</loc>
+    <loc>https://4rozen.github.io/categories/Gamer/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://4rozen.github.io/categories/Gamer/</loc>
+    <loc>https://4rozen.github.io/categories/Hexo/</loc>
     <lastmod>2025-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
