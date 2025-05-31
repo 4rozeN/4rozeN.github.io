@@ -15,7 +15,7 @@
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>4rozeN的博客，W0rk ? L1f3.p3nd1ng : M1nd.cl34rC4ch3</description>
-    <pubDate>Thu, 15 May 2025 22:09:15 GMT</pubDate>
+    <pubDate>Sat, 31 May 2025 04:28:56 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -301,30 +301,6 @@
     </item>
     
     <item>
-      <title>React18 学习笔记</title>
-      <link>https://4rozen.github.io/archives/React/36922.html</link>
-      <guid>https://4rozen.github.io/archives/React/36922.html</guid>
-      <pubDate>Tue, 05 Dec 2023 08:50:13 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/React/">React</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/React/">React</category>
-      
-      
-      <comments>https://4rozen.github.io/archives/React/36922.html#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
       <title>GO-SHOPPING 商城项目笔记</title>
       <link>https://4rozen.github.io/archives/Vue/47412.html</link>
       <guid>https://4rozen.github.io/archives/Vue/47412.html</guid>
@@ -365,9 +341,9 @@
       <category domain="https://4rozeN.github.io/categories/Vue/">Vue笔记</category>
       
       
-      <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
-      
       <category domain="https://4rozeN.github.io/tags/Vue/">Vue</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
       
       
       <comments>https://4rozen.github.io/archives/Vue/31657.html#disqus_thread</comments>
@@ -425,7 +401,7 @@
     </item>
     
     <item>
-      <title>理解闭包理解防抖</title>
+      <title>理解防抖</title>
       <link>https://4rozen.github.io/archives/Vue/35829.html</link>
       <guid>https://4rozen.github.io/archives/Vue/35829.html</guid>
       <pubDate>Thu, 06 Jul 2023 13:26:43 GMT</pubDate>
@@ -545,6 +521,30 @@
       
       
       <comments>https://4rozen.github.io/archives/Git/undefined.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>在 Windows 中启用 DOH 功能</title>
+      <link>https://4rozen.github.io/archives/notes/46175.html</link>
+      <guid>https://4rozen.github.io/archives/notes/46175.html</guid>
+      <pubDate>Sat, 25 Jun 2022 15:50:13 GMT</pubDate>
+      
+        
+        
+      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</description>
+        
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/DOH/">DOH</category>
+      
+      
+      <comments>https://4rozen.github.io/archives/notes/46175.html#disqus_thread</comments>
       
     </item>
     
