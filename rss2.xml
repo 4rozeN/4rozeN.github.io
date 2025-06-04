@@ -15,8 +15,33 @@
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>4rozeN的博客，W0rk ? L1f3.p3nd1ng : M1nd.cl34rC4ch3</description>
-    <pubDate>Sat, 31 May 2025 04:28:56 GMT</pubDate>
+    <pubDate>Wed, 04 Jun 2025 18:17:21 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>【Bug】Windows11 23-24h2 输入首个字母变成英文无法打出汉字</title>
+      <link>https://4rozen.github.io/archives/notes/18029.html</link>
+      <guid>https://4rozen.github.io/archives/notes/18029.html</guid>
+      <pubDate>Thu, 05 Jun 2025 08:50:13 GMT</pubDate>
+      
+      <description>Windows11 23H2/24H2 微软输入法/搜狗输入法/微信输入法等 首字母变成英文/首字母打不出汉字/首击键不被认定为拼音，本文介绍临时解决方案。</description>
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/Windows11/">Windows11</category>
+      
+      <category domain="https://4rozeN.github.io/tags/Bug/">Bug</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%BE%93%E5%85%A5/">非预期输入</category>
+      
+      
+      <comments>https://4rozen.github.io/archives/notes/18029.html#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>fluid 创建自定义导航页</title>
@@ -362,9 +387,9 @@
       <category domain="https://4rozeN.github.io/categories/Vue/">Vue笔记</category>
       
       
-      <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
-      
       <category domain="https://4rozeN.github.io/tags/Vue/">Vue</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
       
       
       <comments>https://4rozen.github.io/archives/Vue/31657.html#disqus_thread</comments>
@@ -518,30 +543,6 @@
       
       
       <comments>https://4rozen.github.io/archives/notes/17306.html#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>浅略了解团队协作必须的 Git 的使用</title>
-      <link>https://4rozen.github.io/archives/Git/undefined.html</link>
-      <guid>https://4rozen.github.io/archives/Git/undefined.html</guid>
-      <pubDate>Sun, 26 Jun 2022 10:12:39 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/Git/">Git笔记</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/Git/">Git</category>
-      
-      
-      <comments>https://4rozen.github.io/archives/Git/undefined.html#disqus_thread</comments>
       
     </item>
     
