@@ -3,25 +3,25 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>4rozeN | 林之介</title>
+    <title>林之介 | 4rozeN</title>
     <link>https://4rozeN.github.io/</link>
     
     <image>
       <url>https://4rozen.github.io/img/ico/favicon.ico</url>
-      <title>4rozeN | 林之介</title>
+      <title>林之介 | 4rozeN</title>
       <link>https://4rozeN.github.io/</link>
     </image>
     
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
-    <description>4rozeN的博客，W0rk ? L1f3.p3nd1ng : M1nd.cl34rC4ch3</description>
-    <pubDate>Wed, 04 Jun 2025 18:20:47 GMT</pubDate>
+    <description>4rozeN的博客，分享各种数码、编程技术、bug调试趣事。</description>
+    <pubDate>Sat, 12 Jul 2025 09:27:55 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>【Bug】Windows11 23-24h2 输入首个字母变成英文无法打出汉字</title>
-      <link>https://4rozen.github.io/archives/notes/18029.html</link>
-      <guid>https://4rozen.github.io/archives/notes/18029.html</guid>
+      <link>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/18029.html</link>
+      <guid>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/18029.html</guid>
       <pubDate>Thu, 05 Jun 2025 08:50:13 GMT</pubDate>
       
       <description>Windows11 23H2/24H2 微软输入法/搜狗输入法/微信输入法等 首字母变成英文/首字母打不出汉字/首击键不被认定为拼音，本文介绍临时解决方案。</description>
@@ -29,7 +29,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      <category domain="https://4rozeN.github.io/categories/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/">随想随记</category>
       
       
       <category domain="https://4rozeN.github.io/tags/Windows11/">Windows11</category>
@@ -39,7 +39,7 @@
       <category domain="https://4rozeN.github.io/tags/%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%BE%93%E5%85%A5/">非预期输入</category>
       
       
-      <comments>https://4rozen.github.io/archives/notes/18029.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/18029.html#disqus_thread</comments>
       
     </item>
     
@@ -72,8 +72,8 @@
     
     <item>
       <title>Hexo 通过 git 的 ssh 链接 github 超时 (time out)</title>
-      <link>https://4rozen.github.io/archives/notes/10729.html</link>
-      <guid>https://4rozen.github.io/archives/notes/10729.html</guid>
+      <link>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/10729.html</link>
+      <guid>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/10729.html</guid>
       <pubDate>Sat, 18 Jan 2025 11:35:13 GMT</pubDate>
       
         
@@ -84,7 +84,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      <category domain="https://4rozeN.github.io/categories/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/">随想随记</category>
       
       
       <category domain="https://4rozeN.github.io/tags/Hexo/">Hexo</category>
@@ -96,14 +96,14 @@
       <category domain="https://4rozeN.github.io/tags/ssh/">ssh</category>
       
       
-      <comments>https://4rozen.github.io/archives/notes/10729.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/10729.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>Steam 游戏全成就查漏补缺脚本</title>
-      <link>https://4rozen.github.io/archives/notes/39978.html</link>
-      <guid>https://4rozen.github.io/archives/notes/39978.html</guid>
+      <link>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/39978.html</link>
+      <guid>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/39978.html</guid>
       <pubDate>Tue, 14 Jan 2025 11:50:13 GMT</pubDate>
       
         
@@ -114,13 +114,13 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      <category domain="https://4rozeN.github.io/categories/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/">我的项目</category>
       
       
       <category domain="https://4rozeN.github.io/tags/%E5%85%A8%E6%88%90%E5%B0%B1%E5%B8%AE%E6%89%8B/">全成就帮手</category>
       
       
-      <comments>https://4rozen.github.io/archives/notes/39978.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/39978.html#disqus_thread</comments>
       
     </item>
     
@@ -252,8 +252,8 @@
     
     <item>
       <title>华硕奥创中心以及其他服务组件彻底删除卸载</title>
-      <link>https://4rozen.github.io/archives/notes/57159.html</link>
-      <guid>https://4rozen.github.io/archives/notes/57159.html</guid>
+      <link>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/57159.html</link>
+      <guid>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/57159.html</guid>
       <pubDate>Sat, 05 Oct 2024 08:50:13 GMT</pubDate>
       
         
@@ -264,7 +264,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      <category domain="https://4rozeN.github.io/categories/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/">随想随记</category>
       
       
       <category domain="https://4rozeN.github.io/tags/%E5%8D%8E%E7%A1%95/">华硕</category>
@@ -272,14 +272,14 @@
       <category domain="https://4rozeN.github.io/tags/%E5%8D%B8%E8%BD%BD%E9%97%AE%E9%A2%98/">卸载问题</category>
       
       
-      <comments>https://4rozen.github.io/archives/notes/57159.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/57159.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>一文搞清 Strapi5 的安装与使用 | 踩坑爽 (bushi</title>
-      <link>https://4rozen.github.io/archives/Back-End/45101.html</link>
-      <guid>https://4rozen.github.io/archives/Back-End/45101.html</guid>
+      <link>https://4rozen.github.io/archives/%E5%90%8E%E7%AB%AF/45101.html</link>
+      <guid>https://4rozen.github.io/archives/%E5%90%8E%E7%AB%AF/45101.html</guid>
       <pubDate>Thu, 25 Jul 2024 10:00:35 GMT</pubDate>
       
         
@@ -291,20 +291,20 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Back-End/">后端笔记</category>
+      <category domain="https://4rozeN.github.io/categories/%E5%90%8E%E7%AB%AF/">后端</category>
       
       
       <category domain="https://4rozeN.github.io/tags/Strapi/">Strapi</category>
       
       
-      <comments>https://4rozen.github.io/archives/Back-End/45101.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E5%90%8E%E7%AB%AF/45101.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>Simple Animated Guns 游玩指南 / 教程</title>
-      <link>https://4rozen.github.io/archives/Gamer/63649.html</link>
-      <guid>https://4rozen.github.io/archives/Gamer/63649.html</guid>
+      <link>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/63649.html</link>
+      <guid>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/63649.html</guid>
       <pubDate>Sat, 20 Jul 2024 08:50:13 GMT</pubDate>
       
       <description>怎么合成？怎么使用配件？这一篇文章教会你关于Simple Animated Guns的一些技巧。</description>
@@ -312,20 +312,20 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Gamer/">Gamer</category>
+      <category domain="https://4rozeN.github.io/categories/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/">我的项目</category>
       
       
       <category domain="https://4rozeN.github.io/tags/Minecraft/">Minecraft</category>
       
       
-      <comments>https://4rozen.github.io/archives/Gamer/63649.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/63649.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>Simple Animated Guns 枪械属性修改</title>
-      <link>https://4rozen.github.io/archives/Gamer/64665.html</link>
-      <guid>https://4rozen.github.io/archives/Gamer/64665.html</guid>
+      <link>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/64665.html</link>
+      <guid>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/64665.html</guid>
       <pubDate>Thu, 18 Jul 2024 06:26:29 GMT</pubDate>
       
         
@@ -336,20 +336,20 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Gamer/">Gamer</category>
+      <category domain="https://4rozeN.github.io/categories/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/">我的项目</category>
       
       
       <category domain="https://4rozeN.github.io/tags/Minecraft/">Minecraft</category>
       
       
-      <comments>https://4rozen.github.io/archives/Gamer/64665.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/64665.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>React18 学习笔记</title>
-      <link>https://4rozen.github.io/archives/React/36922.html</link>
-      <guid>https://4rozen.github.io/archives/React/36922.html</guid>
+      <link>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/36922.html</link>
+      <guid>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/36922.html</guid>
       <pubDate>Tue, 05 Dec 2023 08:50:13 GMT</pubDate>
       
         
@@ -360,20 +360,20 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/React/">React</category>
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
       
       
       <category domain="https://4rozeN.github.io/tags/React/">React</category>
       
       
-      <comments>https://4rozen.github.io/archives/React/36922.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/36922.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>GO-SHOPPING 商城项目笔记</title>
-      <link>https://4rozen.github.io/archives/Vue/47412.html</link>
-      <guid>https://4rozen.github.io/archives/Vue/47412.html</guid>
+      <link>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/47412.html</link>
+      <guid>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/47412.html</guid>
       <pubDate>Mon, 30 Oct 2023 15:50:13 GMT</pubDate>
       
         
@@ -384,20 +384,20 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Vue/">Vue笔记</category>
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
       
       
       <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
       
       
-      <comments>https://4rozen.github.io/archives/Vue/47412.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/47412.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>Vue 项目打包并部署到 GitHub 为 demo</title>
-      <link>https://4rozen.github.io/archives/Vue/31657.html</link>
-      <guid>https://4rozen.github.io/archives/Vue/31657.html</guid>
+      <link>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/31657.html</link>
+      <guid>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/31657.html</guid>
       <pubDate>Thu, 26 Oct 2023 15:46:35 GMT</pubDate>
       
         
@@ -408,7 +408,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Vue/">Vue笔记</category>
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
       
       
       <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
@@ -416,7 +416,7 @@
       <category domain="https://4rozeN.github.io/tags/Vue/">Vue</category>
       
       
-      <comments>https://4rozen.github.io/archives/Vue/31657.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/31657.html#disqus_thread</comments>
       
     </item>
     
@@ -446,8 +446,8 @@
     
     <item>
       <title>uni-app 涉及到的生命周期小结</title>
-      <link>https://4rozen.github.io/archives/Uni-app/7498.html</link>
-      <guid>https://4rozen.github.io/archives/Uni-app/7498.html</guid>
+      <link>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/7498.html</link>
+      <guid>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/7498.html</guid>
       <pubDate>Wed, 06 Sep 2023 13:28:50 GMT</pubDate>
       
         
@@ -458,7 +458,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Uni-app/">Uni-app笔记</category>
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
       
       
       <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
@@ -466,14 +466,14 @@
       <category domain="https://4rozeN.github.io/tags/uni-app/">uni-app</category>
       
       
-      <comments>https://4rozen.github.io/archives/Uni-app/7498.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/7498.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>理解防抖</title>
-      <link>https://4rozen.github.io/archives/Vue/35829.html</link>
-      <guid>https://4rozen.github.io/archives/Vue/35829.html</guid>
+      <link>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/35829.html</link>
+      <guid>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/35829.html</guid>
       <pubDate>Thu, 06 Jul 2023 13:26:43 GMT</pubDate>
       
         
@@ -484,7 +484,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/Vue/">Vue笔记</category>
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
       
       
       <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
@@ -492,14 +492,14 @@
       <category domain="https://4rozeN.github.io/tags/JavaScript/">JavaScript</category>
       
       
-      <comments>https://4rozen.github.io/archives/Vue/35829.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E5%89%8D%E7%AB%AF/35829.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>使用 python 创建简易的 http 服务传递文件</title>
-      <link>https://4rozen.github.io/archives/notes/22192.html</link>
-      <guid>https://4rozen.github.io/archives/notes/22192.html</guid>
+      <link>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/22192.html</link>
+      <guid>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/22192.html</guid>
       <pubDate>Sun, 25 Jun 2023 15:37:33 GMT</pubDate>
       
         
@@ -510,7 +510,7 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      <category domain="https://4rozeN.github.io/categories/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/">随想随记</category>
       
       
       <category domain="https://4rozeN.github.io/tags/python/">python</category>
@@ -518,14 +518,14 @@
       <category domain="https://4rozeN.github.io/tags/http/">http</category>
       
       
-      <comments>https://4rozen.github.io/archives/notes/22192.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/22192.html#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>解决 hexo 主题无法显示使用相对路径的图床图片</title>
-      <link>https://4rozen.github.io/archives/notes/55208.html</link>
-      <guid>https://4rozen.github.io/archives/notes/55208.html</guid>
+      <link>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/55208.html</link>
+      <guid>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/55208.html</guid>
       <pubDate>Sat, 25 Mar 2023 15:50:13 GMT</pubDate>
       
         
@@ -536,13 +536,13 @@
       
       
       
-      <category domain="https://4rozeN.github.io/categories/notes/">随记</category>
+      <category domain="https://4rozeN.github.io/categories/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/">随想随记</category>
       
       
       <category domain="https://4rozeN.github.io/tags/hexo%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/">hexo图片问题</category>
       
       
-      <comments>https://4rozen.github.io/archives/notes/55208.html#disqus_thread</comments>
+      <comments>https://4rozen.github.io/archives/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/55208.html#disqus_thread</comments>
       
     </item>
     
