@@ -1,0 +1,1 @@
+::view-transition-new(root),::view-transition-old(root){animation:none;mix-blend-mode:normal}html[data-theme=dark]::view-transition-old(root){z-index:100}
