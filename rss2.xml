@@ -15,7 +15,7 @@
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>4rozeN的博客，分享各种数码、编程技术、bug调试趣事。</description>
-    <pubDate>Tue, 22 Jul 2025 06:00:33 GMT</pubDate>
+    <pubDate>Tue, 22 Jul 2025 06:42:05 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -191,9 +191,9 @@
       <category domain="https://4rozeN.github.io/categories/Hexo/">Hexo</category>
       
       
-      <category domain="https://4rozeN.github.io/tags/Hexo/">Hexo</category>
-      
       <category domain="https://4rozeN.github.io/tags/%E7%BE%8E%E5%8C%96/">美化</category>
+      
+      <category domain="https://4rozeN.github.io/tags/Hexo/">Hexo</category>
       
       <category domain="https://4rozeN.github.io/tags/Fluid/">Fluid</category>
       
@@ -283,11 +283,11 @@
       <category domain="https://4rozeN.github.io/categories/Hexo/">Hexo</category>
       
       
+      <category domain="https://4rozeN.github.io/tags/%E7%BE%8E%E5%8C%96/">美化</category>
+      
       <category domain="https://4rozeN.github.io/tags/Hexo/">Hexo</category>
       
       <category domain="https://4rozeN.github.io/tags/fluid/">fluid</category>
-      
-      <category domain="https://4rozeN.github.io/tags/%E7%BE%8E%E5%8C%96/">美化</category>
       
       <category domain="https://4rozeN.github.io/tags/%E6%97%A5%E5%A4%9C%E5%88%87%E6%8D%A2%E8%83%8C%E6%99%AF/">日夜切换背景</category>
       
@@ -537,9 +537,9 @@
       <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
       
       
-      <category domain="https://4rozeN.github.io/tags/JavaScript/">JavaScript</category>
-      
       <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
+      
+      <category domain="https://4rozeN.github.io/tags/JavaScript/">JavaScript</category>
       
       
       <comments>https://4rozen.github.io/posts/35829#disqus_thread</comments>
