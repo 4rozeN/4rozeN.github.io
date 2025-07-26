@@ -1,0 +1,538 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品 | 林之介 | 4rozeN</title><meta name="author" content="4rozeN"><meta name="copyright" content="4rozeN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Fabric模组开发-Minecraft1.20.1：#2.创建第一个物品">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品">
+<meta property="og:url" content="https://4rozen.github.io/posts/14171">
+<meta property="og:site_name" content="林之介 | 4rozeN">
+<meta property="og:description" content="Fabric模组开发-Minecraft1.20.1：#2.创建第一个物品">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp">
+<meta property="article:published_time" content="2025-07-06T00:50:13.000Z">
+<meta property="article:modified_time" content="2025-07-26T11:42:21.685Z">
+<meta property="article:author" content="4rozeN">
+<meta property="article:tag" content="Fabric">
+<meta property="article:tag" content="Minecraft">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品",
+  "url": "https://4rozen.github.io/posts/14171",
+  "image": "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp",
+  "datePublished": "2025-07-06T00:50:13.000Z",
+  "dateModified": "2025-07-26T11:42:21.685Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "4rozeN",
+      "url": "https://4rozen.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico"><link rel="canonical" href="https://4rozen.github.io/posts/14171"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88"/><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 4rozeN","link":"链接: ","source":"来源: 林之介 | 4rozeN","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer" /><link href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@300..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/figure.css"><link rel="stylesheet" href="/css/butterfly.css"><link rel="stylesheet" href="/css/ripple-toggle.css"><link rel="stylesheet" href="/css/rightmenu.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.css">
+<style>:root{--hl-color:#abb2bf;--hl-bg:#282c34;--hltools-bg:#21252b;--hltools-color:#bbbbbc;--hlnumber-bg:#282c34;--hlnumber-color:#495162;--hlscrollbar-bg:#373c47;--hlexpand-bg:linear-gradient(180deg,rgba(40,44,52,0.1),rgba(40,44,52,0.9))}</style>
+    <style>
+    .code-expand-btn:not(.expand-done) ~ div.codeblock,
+    .code-expand-btn:not(.expand-done) ~ * div.codeblock {
+      overflow: hidden;
+      height: 360px;
+    }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="林之介 | 4rozeN" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="/img/nav/mySVG.svg" alt="Logo"></a><a class="nav-page-title" href="/"><span class="site-name">Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-06T00:50:13.000Z" title="发表于 2025-07-06 08:50:13">2025-07-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-26T11:42:21.685Z" title="更新于 2025-07-26 19:42:21">2025-07-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Minecraft/">Minecraft</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:15,&quot;messagePrev&quot;:&quot;文章最后编辑于&quot;,&quot;messageNext&quot;:&quot;天前。&quot;,&quot;postUpdate&quot;:&quot;2025-07-26 19:42:21&quot;}" hidden></div><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><h2 id="注册类别介绍"><a class="markdownIt-Anchor" href="#注册类别介绍"></a> 注册类别介绍</h2>
+<p>添加基本的物品是编写模组的第一步。基本逻辑是创建 <code>Item</code> 对象，注册，并提供纹理。要向物品添加其他行为，就需要编写自定义的 <code>Item</code> 类。</p>
+<p>但在这之前，有必要了解一下 Minecraft 中常见的注册内容类别：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left"> Java 类</th>
+<th style="text-align:left">举例</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong> Item（物品）</strong></td>
+<td style="text-align:left"><code>net.minecraft.item.Item</code></td>
+<td style="text-align:left">铁锭、剑、药水</td>
+<td style="text-align:left">所有背包里的物体（不一定是方块）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Block（方块）</strong></td>
+<td style="text-align:left"><code>net.minecraft.block.Block</code></td>
+<td style="text-align:left">石头、熔炉、小麦地块</td>
+<td style="text-align:left">可以放在世界里的立体方块</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong> BlockItem（方块物品）</strong></td>
+<td style="text-align:left"><code>net.minecraft.item.BlockItem</code></td>
+<td style="text-align:left">石头物品、栅栏物品</td>
+<td style="text-align:left">在背包中代表某个方块的 “物品形式”</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Entity Type（实体）</strong></td>
+<td style="text-align:left"><code>EntityType&lt;?&gt;</code></td>
+<td style="text-align:left">僵尸、箭、村民</td>
+<td style="text-align:left">会动的东西（生物、投掷物）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sound Event（声音事件）</strong></td>
+<td style="text-align:left"><code>SoundEvent</code></td>
+<td style="text-align:left">挖掘声、击中声</td>
+<td style="text-align:left">可播放的音效事件</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong> Fluid（流体）</strong></td>
+<td style="text-align:left"><code>Fluid</code></td>
+<td style="text-align:left">水、岩浆、自定义油</td>
+<td style="text-align:left">可流动的液体类型</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong> Enchantment（附魔）</strong></td>
+<td style="text-align:left"><code>Enchantment</code></td>
+<td style="text-align:left">锋利、经验修补</td>
+<td style="text-align:left">给物品附加能力的系统</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong> Potion（药水类型）</strong></td>
+<td style="text-align:left"><code>Potion</code></td>
+<td style="text-align:left">治疗、跳跃、力量</td>
+<td style="text-align:left">药水本身的类型（不是瓶子）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>StatusEffect（状态效果）</strong></td>
+<td style="text-align:left"><code>StatusEffect</code></td>
+<td style="text-align:left">中毒、再生</td>
+<td style="text-align:left">药水或食物带来的效果</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong> RecipeSerializer / RecipeType（合成配方）</strong></td>
+<td style="text-align:left"><code>RecipeSerializer</code>, <code>RecipeType</code></td>
+<td style="text-align:left">合成表、锻造、熔炉配方</td>
+<td style="text-align:left">定义如何制作物品</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong> ItemGroup（创意模式标签）</strong></td>
+<td style="text-align:left"><code>ItemGroup</code></td>
+<td style="text-align:left">红石、装饰方块</td>
+<td style="text-align:left">创造模式分类标签</td>
+</tr>
+</tbody>
+</table>
+<h2 id="创建物品"><a class="markdownIt-Anchor" href="#创建物品"></a> 创建物品</h2>
+<p>在 <code>java/com/frozen/tutorialmod/</code> 下创建 <code>item</code> 软件包，用来存放相关物品实例项和注册表项。接着在 <code>item</code> 包下创建 <code>ModItems</code> 类，我们将在这个类中编写实例物品和注册方法。</p>
+<p>类有了，方法哪来？Fabric 端可以参考 Minecraft 的物品创建方式，使用 IDEA 快捷键双击 <code>shift</code> 打开搜索面板，搜索 <code>net.minecraft.item</code> 的 <code>Items</code> 类（搜索位置为所有位置）：<br>
+<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261603510.png" alt="image-20250726160337401"></p>
+<blockquote>
+<p>基本上，一个单词若是 <code>Item</code>，在 MC 大概率是定义物品基本属性的，而 <code>Items</code> 则是注册方面的。</p>
+</blockquote>
+<p>打开该文件，我们搜索（快捷键是 ctrl+f）<code>diamond</code> 钻石这一单词，找到这个最简单的物品，观察它是何如被 MC 实现的：<br>
+<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261613204.png" alt="image-20250726161340167"></p>
+<p>可以看到 <code>DIAMOND</code> 被一个 <code>register</code> 方法进行注册，于是我们使用鼠标选中这个 <code>register</code>，点击鼠标中键进行跳转，观察 <code>register</code> 方法（或者按住 Ctrl 建对 <code>register</code> 点击鼠标左键）：<br>
+<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261619081.png" alt="image-20250726161901011"></p>
+<p>可以看到从上到下总共存在三个静态注册物品的方法：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">String</span><span style="color: #D4D4D4"> id, </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> item) {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Identifier</span><span style="color: #D4D4D4">(id), item);</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">Identifier</span><span style="color: #D4D4D4"> id, </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> item) {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">RegistryKey</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">of</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Registries</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">ITEM</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getKey</span><span style="color: #D4D4D4">(), id), item);</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">RegistryKey</span><span style="color: #D4D4D4">&lt;Item&gt; key, </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> item) {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">if</span><span style="color: #D4D4D4"> (item </span><span style="color: #569CD6">instanceof</span><span style="color: #D4D4D4"> BlockItem) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    ((BlockItem)item).</span><span style="color: #DCDCAA">appendBlocks</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Item</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">BLOCK_ITEMS</span><span style="color: #D4D4D4">, item);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Registry</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Registries</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">ITEM</span><span style="color: #D4D4D4">, key, item);</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<details class="toggle"><summary class="toggle-button" style="">看不懂？点我展开！</summary><div class="toggle-content"><p>首先，这三个方法的调用顺序如下：<br>
+<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261642911.png" alt="image-20250726164216874"></p>
+<p><strong>第一个方法</strong>，帮你把要创建的物品标记上你指定的名字。但 <code>Identifier</code> 它本身<strong>不包含任何其他基本信息</strong>，是不知道你在注册物品还是方块的，所以需要第二个方法进一步增强类型安全。具体来说，主要是接收你定义的物品名字 <code>String id</code>，并将其转换为 <code>Identifier</code> 对象，<code>Item item</code> 参数若没有对物品基本属性进行指定则使用默认属性，然后将这俩作为参数传入给第二个 <code>register</code> 方法进一步增强类型安全。</p>
+<blockquote>
+<p>其中的 <code>Identifier</code> 是 MC 用来标识资源的类，在 <code>1.21</code> 之前一般是通过 <code>new Identifier("namespace", "path")</code> 或 <code>new Identifier("namespace:path")</code> 的方式进行使用，这里第一个方法只传入了 id，那么默认将会使用 mod 的 <code>id</code> 作为 <code>namespace</code> 命名空间。（此处可参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.fabricmc.net/zh_cn:tutorial:items">Fabric Wiki</a>）</p>
+</blockquote>
+<p><strong>第二个方法</strong>，把第一个方法传来的 <code>Identifier</code> 结合 <code>id</code> 转换成了 <code>RegistryKey&lt;Item&gt;</code>。<code>RegistryKey&lt;T&gt;</code> 是一个键对象，表示<strong>某个注册表中某个项目的唯一标识</strong>。例如第二个方法中：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #9CDCFE">RegistryKey</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">of</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Registries</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">ITEM</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getKey</span><span style="color: #D4D4D4">(), id)</span></span></code></pre></div></div></figure>
+<p>相当于：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #4EC9B0">RegistryKey</span><span style="color: #D4D4D4">&lt;</span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4">&gt; </span><span style="color: #9CDCFE">itemKey</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">RegistryKey</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">of</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Registries</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">ITEM</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getKey</span><span style="color: #D4D4D4">(), </span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Identifier</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"my_mod"</span><span style="color: #D4D4D4">, </span><span style="color: #CE9178">"my_item"</span><span style="color: #D4D4D4">));</span></span></code></pre></div></div></figure>
+<blockquote>
+<p>而 <code>Registries.ITEM</code> 是一个 <code>Registry&lt;Item&gt;</code>，代表的是 Minecraft 的物品注册表。</p>
+</blockquote>
+<p>所以这个意思是：“这是一个 <code>Item</code> 类型注册表里的条目，它的 ID 是 <code>my_mod:my_item</code>”。<br>
+所以，第二个方法主要是让注册系统知道你是在哪个注册表中注册哪个对象。</p>
+<p><strong>第三个方法</strong>，真正执行注册操作。对于 <code>if</code> 语句，它的作用很明显，主要是判断当前注册的物品是否为 <code>BlockItem</code> 方块物品。</p>
+<blockquote>
+<p>如果为真则会将这个物品加入到 <code>Item.BLOCK_ITEMS</code> 这个静态 Map 中，而这个 Map 是一个从 <code>Block</code> 到 <code>Item</code> 的映射，用于在需要时（比如显示方块物品）找到对应的物品。</p>
+</blockquote>
+<p>真正执行注册的语句是：<code>Registry.register(Registries.ITEM, key, item)</code>，意思很明显了，使用 <code>Registry</code> 大注册表的 <code>register</code> 注册方法将物品注册到注册表，括号内指明要注册的注册表、键名和基本属性。</p>
+</div></details>
+<p>我们将这三个注册方法直接复制粘贴到 <code>java/com/frozen/tutorialmod/item/ModItems.java</code> 中来，然后将第一个注册方法使用到的 id 改为我们 Mod 的 ID：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">ModItems</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">String</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">, </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">item</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Identifier</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">TutorialMod</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">MOD_ID</span><span style="color: #D4D4D4">, id), item);</span></span>
+<span class="line"><span style="color: #D4D4D4">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">Identifier</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">, </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">item</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">RegistryKey</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">of</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Registries</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">ITEM</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getKey</span><span style="color: #D4D4D4">(), id), item);</span></span>
+<span class="line"><span style="color: #D4D4D4">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">RegistryKey</span><span style="color: #D4D4D4">&lt;</span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4">&gt; </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">, </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">item</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">if</span><span style="color: #D4D4D4"> (item </span><span style="color: #569CD6">instanceof</span><span style="color: #D4D4D4"> BlockItem) {</span></span>
+<span class="line"><span style="color: #D4D4D4">            ((BlockItem)item).</span><span style="color: #DCDCAA">appendBlocks</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Item</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">BLOCK_ITEMS</span><span style="color: #D4D4D4">, item);</span></span>
+<span class="line"><span style="color: #D4D4D4">        }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Registry</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">Registries</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">ITEM</span><span style="color: #D4D4D4">, key, item);</span></span>
+<span class="line"><span style="color: #D4D4D4">    }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>现在注册方法有了，我们就可以开始注册物品实例了（<code>ModItems.java</code>）：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">// 注册一个紫色粉末，最大堆叠数量为30</span></span>
+<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">final</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">PURPLE_POWDER</span><span style="color: #D4D4D4"> = </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"purple_powder"</span><span style="color: #D4D4D4">, </span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Item</span><span style="color: #D4D4D4">(</span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> Item.</span><span style="color: #DCDCAA">Settings</span><span style="color: #D4D4D4">().</span><span style="color: #DCDCAA">maxCount</span><span style="color: #D4D4D4">(</span><span style="color: #B5CEA8">30</span><span style="color: #D4D4D4">)));</span></span></code></pre></div></div></figure>
+<blockquote>
+<p><code>new Item(new Item.Settings().maxCount(30))</code> 中的<code>.maxCount()</code> 是不必须的，仅作演示。<br>
+你可以通过 <code>new Item.Settings()</code> 后接一个<code>.</code> 来唤起很多属性方法。</p>
+</blockquote>
+<h2 id="分类的重要性"><a class="markdownIt-Anchor" href="#分类的重要性"></a> 分类的重要性</h2>
+<p>可以看到，现在我们注册的物品是不分类别的，因为我们的项目相对来说现在较为简单，但是一旦物品数量多到不得不分类的时候，我们等到那时候再去修改吗？这也不现实，维护成本巨大。所以，对物品进行分门别类是很重要的。</p>
+<p>分门别类在代码体现上，实际是对注册的物品写好路径（<code>ModItems.java</code>）：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">final</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">PURPLE_POWDER</span><span style="color: #D4D4D4"> = </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"purple_powder"</span><span style="color: #D4D4D4">, </span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Item</span><span style="color: #D4D4D4">(</span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> Item.</span><span style="color: #DCDCAA">Settings</span><span style="color: #D4D4D4">().</span><span style="color: #DCDCAA">maxCount</span><span style="color: #D4D4D4">(</span><span style="color: #B5CEA8">30</span><span style="color: #D4D4D4">))); </span><span style="color: #6A9955">// 注册一个紫色粉末，最大堆叠数量为30</span></span>
+<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">final</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Item</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">BLUE_POWDER</span><span style="color: #D4D4D4"> = </span><span style="color: #DCDCAA">register</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"material/blue_powder"</span><span style="color: #D4D4D4">, </span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Item</span><span style="color: #D4D4D4">(</span><span style="color: #C586C0">new</span><span style="color: #D4D4D4"> Item.</span><span style="color: #DCDCAA">Settings</span><span style="color: #D4D4D4">().</span><span style="color: #DCDCAA">maxCount</span><span style="color: #D4D4D4">(</span><span style="color: #B5CEA8">30</span><span style="color: #D4D4D4">))); </span><span style="color: #6A9955">// 注册一个蓝色粉末，最大堆叠数量为30</span></span></code></pre></div></div></figure>
+<p>在对蓝色粉末进行注册的时候， 我们在 <code>"bule_powder"</code> 中使用 <code>/</code> 路径符完成路径的编写。索性，把紫色粉末也加入原材料的类别中吧（<code>ModItems.java</code>）：</p>
+<figure class="shiki diff"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #CE9178">- public static final Item PURPLE_POWDER = register("purple_powder", new Item(new Item.Settings().maxCount(30))); // 注册一个紫色粉末，最大堆叠数量为30</span></span>
+<span class="line"><span style="color: #B5CEA8">+ public static final Item PURPLE_POWDER = register("material/purple_powder", new Item(new Item.Settings().maxCount(30))); // 注册一个紫色粉末，最大堆叠数量为30</span></span></code></pre></div></div></figure>
+<p>完成分类的操作，这将会在后面使用数据生成的时候，极大的方便资源的查找。</p>
+<h2 id="完成注册"><a class="markdownIt-Anchor" href="#完成注册"></a> 完成注册</h2>
+<p>接下来还要为 <code>ModItems.java</code> 加上一个静态的方法用来辅助我们注册：</p>
+<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">void</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">registerItems</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>该方法暂无需做任何事，只需要在主类 <code>java/com/frozen/tutorialmod/TutorialMod.java</code> 中进行调用即可：</p>
+<figure class="shiki diff"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">  @Override</span></span>
+<span class="line"><span style="color: #D4D4D4">  public void onInitialize() {</span></span>
+<span class="line"><span style="color: #B5CEA8">+   ModItems.registerItems();</span></span>
+<span class="line"><span style="color: #D4D4D4">    LOGGER.info("Hello Fabric world!");</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span></code></pre></div></div></figure>
+<p>这是 Java 的特性。类在首次使用时会被加载并初始化，所有静态字段也就被初始化了且只初始化一次，避免重复注册。</p>
+<h2 id="添加资源文件"><a class="markdownIt-Anchor" href="#添加资源文件"></a> 添加资源文件</h2>
+<p>在 <code>resources/assets/tutorial-mod</code> 中新建：</p>
+<ol>
+<li><code>lang</code> 包：存放语言文件。如 <code>en_us.json</code>、<code>zh_cn.json</code> 等，若其他语言文件损坏将默认采用 <code>en_us.json</code></li>
+<li><code>models</code> 包：存放模型文件。</li>
+<li><code>textures</code> 包：存放贴图文件。</li>
+</ol>
+<p><code>lang</code> 包，我们完成 <code>en_us.json</code> 文件的编写：</p>
+<figure class="shiki json"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">{</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">"item.tutorial-mod.material.purple_powder"</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">"purple Powder"</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">"item.tutorial-mod.material.blue_powder"</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">"Blue Powder"</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>也就是：<code>内容类别.namespace.路径名（如果有）.内容名</code>的格式。而中文语言文件，只需要把对应的值写成中文就可以了：</p>
+<figure class="shiki json"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">{</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">"item.tutorial-mod.material.purple_powder"</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">"紫色粉末"</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">"item.tutorial-mod.material.blue_powder"</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">"蓝色粉末"</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p><code>models</code> 包，新建两个软件包：<code>block</code> 和 <code>item</code> 包，对于 <code>textures</code> 包也是如此（请注意单复数区别）。</p>
+<p>在 <code>resources/assets/tutorial-mod/models/item/</code> 中创建 <code>material</code> 包（若没有分类则不需要创建该软件包直接新建 json 文件），并在这个包内创建 <code>purple_powder.json</code>（文件名和注册时写的物品名一致）：</p>
+<figure class="shiki json"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">{</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">"parent"</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">"item/generated"</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">"textures"</span><span style="color: #D4D4D4">: {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">"layer0"</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">"tutorial-mod:item/purple_powder"</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<div class="note warning flat"><p>物品模型的 <code>parent</code> 改变了物品在手中以及在物品栏内等情形下的渲染。<code>item/generated</code> 用于许多简单的物品。<code>item/handheld</code> 用于手持其纹理左下角的物品。</p>
+<p>如果在 <code>textures</code> 包的 <code>item</code> 也新建 <code>material</code> 软件包的话，<code>purple_powder.json</code> 需要将 <code>"tutorial-mod:item/purple_powder"</code> 修改为 <code>"tutorial-mod:item/material/purple_powder"</code></p>
+</div>
+<p>看到这个 <code>models</code> 里面的 <code>textures</code> 就是来指定 <code>assets</code> 的 <code>textures</code> 中具体的面数，我们这个物品比较简单，所以就是一个面数就行。</p>
+<p>在 <code>resources/assets/tutorial-mod/textures/item/material/</code> 中，将准备好的贴图文件放到该目录下（文件格式为 png，且文件名和你定义的物品名一致）。</p>
+<p>我的图片是：<br>
+<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261848667.png" alt="blue_powder"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261849632.png" alt="purple_powder"></p>
+<h2 id="贴图素材网站"><a class="markdownIt-Anchor" href="#贴图素材网站"></a> 贴图素材网站</h2>
+<ol>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://minecraft.novaskin.me/resourcepacks">NOVA SKIN</a>：能在线修改 MC 本体的内容素材并免费下载到本地。</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.planetminecraft.com/texture-packs/">Plant Minecraft-Texture Packs</a>：主要是用户上传的素材。</li>
+</ol>
+<p>如果有更好的网站，欢迎推荐！</p>
+<h2 id="运行测试"><a class="markdownIt-Anchor" href="#运行测试"></a> 运行测试</h2>
+<p>至此，已经可以尝试运行 MC 进行测试了。由于我们还没有完成物品组的创建，所以在游戏中无法直接获取到物品。不过我们可以通过 <code>/give</code> 指令来测试，例如：<code>/give Player537 tutorial-mod:material/blue_powder</code>，最终效果如下：<br>
+<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507261910720.png" alt="image-20250726191020648"></p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/">4rozeN</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/posts/14171">https://4rozen.github.io/posts/14171</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://4rozeN.github.io" target="_blank">林之介 | 4rozeN</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Fabric/">Fabric</a><a class="post-meta__tags" href="/tags/Minecraft/">Minecraft</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/posts/21458" title="Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</div></div></div></a><a class="pagination-related  no-desc" href="/posts/36838" title="我的 OBS 方案"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/OBS%E6%96%B9%E6%A1%88.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">我的 OBS 方案</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related no-desc" href="/posts/21458" title="Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-05</div><div class="info-item-2">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</div></div></div></a><a class="pagination-related no-desc" href="/posts/63649" title="Simple Animated Guns 游玩指南 &#x2F; 教程"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAGtutorial.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-20</div><div class="info-item-2">Simple Animated Guns 游玩指南 &#x2F; 教程</div></div></div></a><a class="pagination-related no-desc" href="/posts/64665" title="Simple Animated Guns 枪械属性修改"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-18</div><div class="info-item-2">Simple Animated Guns 枪械属性修改</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="author-info-name">4rozeN</div><div class="author-info-description">Coding noob 自进阶</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="/rss2.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #ff6600;"></i></a><a class="social-icon" href="https://github.com/4rozeN" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="https://steamcommunity.com/id/430426/" rel="external nofollow noreferrer" target="_blank" title="Steam"><i class="fab fa-steam" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">最近在努力学习Fabric modding和其他内容，不知天地为何物。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E7%B1%BB%E5%88%AB%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text"> 注册类别介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%89%A9%E5%93%81"><span class="toc-number">2.</span> <span class="toc-text"> 创建物品</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text"> 分类的重要性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%88%90%E6%B3%A8%E5%86%8C"><span class="toc-number">4.</span> <span class="toc-text"> 完成注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text"> 添加资源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%B4%E5%9B%BE%E7%B4%A0%E6%9D%90%E7%BD%91%E7%AB%99"><span class="toc-number">6.</span> <span class="toc-text"> 贴图素材网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">7.</span> <span class="toc-text"> 运行测试</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By 4rozeN</div><div class="footer_custom_text"><span id="performance-info"></span>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/instant.page/5.1.0/instantpage.min.js" type="module"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/vanilla-lazyload/17.3.1/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://registry.npmmirror.com/twikoo/1.6.44/files/dist/twikoo.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/rightmenu.js"></script><canvas id="universe"></canvas><script src="/js/ripple-toggle.js"></script><script src="/js/star.js"></script><script src="/js/watch.js"></script><script src="/js/butterfly.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/canvas-nest.js/2.0.4/canvas-nest.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      true 
+        ? (usePjax ? pjax.loadUrl('/404') : window.location.href = '/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+<script src="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.js"></script>
+
+  <script>
+  const CODE_CONFIG = {
+    beautify: true,
+    highlightCopy: true,
+    highlightLang: true,
+    highlightHeightLimit: 360,
+    isHighlightShrink: false,
+    copy: {
+      success: '复制成功',
+      error: '复制失败',
+      noSupport: '浏览器不支持复制功能',
+    }
+  };
+  console.log(
+    `%c hexo-shiki-plugin %c v1.0.27 %c https://github.com/nova1751/hexo-shiki-plugin`,
+    "color: #fff; background: #5f5f5f",
+    "color: #fff; background: #80c8f8",
+    ""
+  );
+  </script>
+  <!-- hexo injector body_end end --></body></html>
