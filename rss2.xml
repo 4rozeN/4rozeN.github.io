@@ -15,8 +15,83 @@
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>4rozeN的博客，分享各种数码、编程技术、bug调试趣事。</description>
-    <pubDate>Tue, 22 Jul 2025 06:42:05 GMT</pubDate>
+    <pubDate>Tue, 02 Sep 2025 12:09:23 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>浏览器渲染原理</title>
+      <link>https://4rozen.github.io/posts/1303</link>
+      <guid>https://4rozen.github.io/posts/1303</guid>
+      <pubDate>Mon, 01 Sep 2025 12:09:13 GMT</pubDate>
+      
+      <description>浏览器渲染原理</description>
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/">浏览器渲染原理</category>
+      
+      <category domain="https://4rozeN.github.io/tags/reflow/">reflow</category>
+      
+      <category domain="https://4rozeN.github.io/tags/repaint/">repaint</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96/">前端优化</category>
+      
+      
+      <comments>https://4rozen.github.io/posts/1303#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>事件循环</title>
+      <link>https://4rozen.github.io/posts/13214</link>
+      <guid>https://4rozen.github.io/posts/13214</guid>
+      <pubDate>Mon, 01 Sep 2025 04:50:13 GMT</pubDate>
+      
+      <description>学习理解事件循环</description>
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">事件循环</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E5%BC%82%E6%AD%A5/">异步</category>
+      
+      <category domain="https://4rozeN.github.io/tags/JS%E8%AE%A1%E6%97%B6%E5%99%A8/">JS计时器</category>
+      
+      
+      <comments>https://4rozen.github.io/posts/13214#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>JS 属性描述符</title>
+      <link>https://4rozen.github.io/posts/1</link>
+      <guid>https://4rozen.github.io/posts/1</guid>
+      <pubDate>Mon, 01 Sep 2025 03:50:13 GMT</pubDate>
+      
+      <description>学习属性描述符，理解架构难点。</description>
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/JavaScript/">JavaScript</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/">属性描述符</category>
+      
+      
+      <comments>https://4rozen.github.io/posts/1#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>js+css 实现 Hexo 博客 ripple 水波切换主题效果</title>
@@ -467,81 +542,6 @@
       
       
       <comments>https://4rozen.github.io/posts/64665#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>React18 学习笔记 (未完成)</title>
-      <link>https://4rozen.github.io/posts/36922</link>
-      <guid>https://4rozen.github.io/posts/36922</guid>
-      <pubDate>Tue, 05 Dec 2023 08:50:13 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;h2 id=&quot;创建-demo-工程&quot;&gt;&lt;a clas</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/React/">React</category>
-      
-      
-      <comments>https://4rozen.github.io/posts/36922#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GO-SHOPPING 商城项目笔记</title>
-      <link>https://4rozen.github.io/posts/47412</link>
-      <guid>https://4rozen.github.io/posts/47412</guid>
-      <pubDate>Mon, 30 Oct 2023 15:50:13 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;meta name=&quot;referrer&quot; conte</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
-      
-      
-      <comments>https://4rozen.github.io/posts/47412#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Vue 项目打包并部署到 GitHub 为 demo</title>
-      <link>https://4rozen.github.io/posts/31657</link>
-      <guid>https://4rozen.github.io/posts/31657</guid>
-      <pubDate>Thu, 26 Oct 2023 15:46:35 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;blockquote&gt;
-&lt;p&gt;目标：将打包好的 Vu</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
-      
-      <category domain="https://4rozeN.github.io/tags/Vue/">Vue</category>
-      
-      
-      <comments>https://4rozen.github.io/posts/31657#disqus_thread</comments>
       
     </item>
     
