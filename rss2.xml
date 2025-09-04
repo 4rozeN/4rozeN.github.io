@@ -15,8 +15,33 @@
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>4rozeN的博客，分享各种数码、编程技术、bug调试趣事。</description>
-    <pubDate>Tue, 02 Sep 2025 12:09:23 GMT</pubDate>
+    <pubDate>Thu, 04 Sep 2025 07:43:42 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>从 JS 属性描述符再看 Vue 数据响应式原理</title>
+      <link>https://4rozen.github.io/posts/24974</link>
+      <guid>https://4rozen.github.io/posts/24974</guid>
+      <pubDate>Tue, 02 Sep 2025 05:50:13 GMT</pubDate>
+      
+      <description>在学习了JS属性描述符之后，再看Vue数据响应式原理，或许有更深刻的认识。</description>
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/Vue/">Vue</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/">属性描述符</category>
+      
+      <category domain="https://4rozeN.github.io/tags/%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F/">数据响应式</category>
+      
+      
+      <comments>https://4rozen.github.io/posts/24974#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>浏览器渲染原理</title>
@@ -517,31 +542,6 @@
       
       
       <comments>https://4rozen.github.io/posts/63649#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Simple Animated Guns 枪械属性修改</title>
-      <link>https://4rozen.github.io/posts/64665</link>
-      <guid>https://4rozen.github.io/posts/64665</guid>
-      <pubDate>Thu, 18 Jul 2024 06:26:29 GMT</pubDate>
-      
-        
-        
-      <description>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css&quot;&gt;&lt;blockquote&gt;
-&lt;p&gt;环境：Windows1</description>
-        
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/Minecraft/">Minecraft</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/Minecraft/">Minecraft</category>
-      
-      
-      <comments>https://4rozen.github.io/posts/64665#disqus_thread</comments>
       
     </item>
     

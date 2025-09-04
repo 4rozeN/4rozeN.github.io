@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>从 JS 属性描述符再看 Vue 数据响应式原理 | 林之介 | 4rozeN</title><meta name="author" content="4rozeN"><meta name="copyright" content="4rozeN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="在学习了JS属性描述符之后，再看Vue数据响应式原理，或许有更深刻的认识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从 JS 属性描述符再看 Vue 数据响应式原理">
+<meta property="og:url" content="https://4rozen.github.io/posts/24974">
+<meta property="og:site_name" content="林之介 | 4rozeN">
+<meta property="og:description" content="在学习了JS属性描述符之后，再看Vue数据响应式原理，或许有更深刻的认识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/Vue%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.webp">
+<meta property="article:published_time" content="2025-09-02T05:50:13.000Z">
+<meta property="article:modified_time" content="2025-09-04T07:43:42.133Z">
+<meta property="article:author" content="4rozeN">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="属性描述符">
+<meta property="article:tag" content="数据响应式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/Vue%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "从 JS 属性描述符再看 Vue 数据响应式原理",
+  "url": "https://4rozen.github.io/posts/24974",
+  "image": "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/Vue%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.webp",
+  "datePublished": "2025-09-02T05:50:13.000Z",
+  "dateModified": "2025-09-04T07:43:42.133Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "4rozeN",
+      "url": "https://4rozen.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico"><link rel="canonical" href="https://4rozen.github.io/posts/24974"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88"/><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><link rel="stylesheet" href="/%3Clink%20href=%22https:/fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap%22%20rel=%22stylesheet%22%3E" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 4rozeN","link":"链接: ","source":"来源: 林之介 | 4rozeN","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '从 JS 属性描述符再看 Vue 数据响应式原理',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer" /><link rel="shortcut icon" href="/img/ico/favicon.ico" type="image/x-icon"><!-- Clarity tracking code for https://4rozen.github.io/ --> <script> (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt"; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "sow88olh8h"); </script><link href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@300..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/figure.css"><link rel="stylesheet" href="/css/butterfly.css"><link rel="stylesheet" href="/css/ripple-toggle.css"><link rel="stylesheet" href="/css/rightmenu.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.css">
+<style>:root{--hl-color:#abb2bf;--hl-bg:#282c34;--hltools-bg:#21252b;--hltools-color:#bbbbbc;--hlnumber-bg:#282c34;--hlnumber-color:#495162;--hlscrollbar-bg:#373c47;--hlexpand-bg:linear-gradient(180deg,rgba(40,44,52,0.1),rgba(40,44,52,0.9))}</style>
+    <style>
+    .code-expand-btn:not(.expand-done) ~ div.codeblock,
+    .code-expand-btn:not(.expand-done) ~ * div.codeblock {
+      overflow: hidden;
+      height: 360px;
+    }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="林之介 | 4rozeN" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/Vue%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="/img/nav/mySVG.svg" alt="Logo"></a><a class="nav-page-title" href="/"><span class="site-name">从 JS 属性描述符再看 Vue 数据响应式原理</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">从 JS 属性描述符再看 Vue 数据响应式原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-02T05:50:13.000Z" title="发表于 2025-09-02 13:50:13">2025-09-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-04T07:43:42.133Z" title="更新于 2025-09-04 15:43:42">2025-09-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:15,&quot;messagePrev&quot;:&quot;文章最后编辑于&quot;,&quot;messageNext&quot;:&quot;天前。&quot;,&quot;postUpdate&quot;:&quot;2025-09-04 15:43:42&quot;}" hidden></div><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><h2 id="前提"><a class="markdownIt-Anchor" href="#前提"></a> 前提</h2>
+<p>在阅读本篇文章之前，你应该对 JS 的属性描述符有所了解，如果没有，欢迎你阅读我的这篇文章《<a href="https://4rozen.github.io/posts/1">JS 属性描述符</a>》</p>
+<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
+<p>假设有以下的 HTML 代码描述一个页面：</p>
+<figure class="shiki html"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #808080">&lt;!</span><span style="color: #569CD6">DOCTYPE</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">html</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">html</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">lang</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"en"</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">head</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">title</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">Demo 1</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">title</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">meta</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">charset</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"UTF-8"</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">head</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">body</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">div</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">class</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"container"</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">p</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"name"</span><span style="color: #808080">&gt;&lt;/</span><span style="color: #569CD6">p</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">p</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"time"</span><span style="color: #808080">&gt;&lt;/</span><span style="color: #569CD6">p</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">div</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">script</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">goods</span><span style="color: #D4D4D4"> = {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">name:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">"苹果"</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">price:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">5.5</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">purchaseTime:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">"2025-01-01"</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">// 显示商品的名字</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4"> = () </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">nameDom</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">document</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getElementById</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"name"</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">nameDom</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">innerHTML</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">`商品名称：</span><span style="color: #569CD6">${</span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">name</span><span style="color: #569CD6">}</span><span style="color: #CE9178">`</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">// 显示已存放的时间</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">showPurchaseTime</span><span style="color: #D4D4D4"> = () </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">timeDom</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">document</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getElementById</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"time"</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">now</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Date</span><span style="color: #D4D4D4">()</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">purchaseDate</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Date</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">purchaseTime</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">diffTime</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">Math</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">abs</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">now</span><span style="color: #D4D4D4"> - </span><span style="color: #9CDCFE">purchaseDate</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">timeDom</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">innerHTML</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">`商品存放距今已有：</span><span style="color: #569CD6">${</span><span style="color: #9CDCFE">Math</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">floor</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">diffTime</span><span style="color: #D4D4D4"> / (</span><span style="color: #B5CEA8">1000</span><span style="color: #D4D4D4"> * </span><span style="color: #B5CEA8">60</span><span style="color: #D4D4D4"> * </span><span style="color: #B5CEA8">60</span><span style="color: #D4D4D4"> * </span><span style="color: #B5CEA8">24</span><span style="color: #D4D4D4">))</span><span style="color: #569CD6">}</span><span style="color: #CE9178">天`</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4">()</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">showPurchaseTime</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">purchaseTime</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">script</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">body</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">html</span><span style="color: #808080">&gt;</span></span></code></pre></div></div></figure>
+<p>就这样一个简单的页面，将来要改动 goods 的信息的时候，比如更改商品名称，在调用两个函数的后面加上：</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4">()</span></span>
+<span class="line"><span style="color: #DCDCAA">showPurchaseTime</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">purchaseTime</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">name</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">"梨"</span></span></code></pre></div></div></figure>
+<p>很显然，页面数据是不会随之更新的，除非在 <code>goos.name = "梨"</code> 的下一行再次调用 <code>showName()</code> 函数。<br>
+换句话说，就是在更改了属性之后，我们应该调用依赖于该属性的函数。这样才能保证页面和数据是统一的。</p>
+<div class="note info no-icon flat"><p>有的朋友可能会说，那还不是你函数写的有问题，你写成下面这样不就好了？</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4"> = (</span><span style="color: #9CDCFE">name</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">nameDom</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">document</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getElementById</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"name"</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">nameDom</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">innerHTML</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">`商品名称：</span><span style="color: #569CD6">${</span><span style="color: #9CDCFE">name</span><span style="color: #569CD6">}</span><span style="color: #CE9178">`</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>这样不就可以在更改商品名字的时候更新页面了吗？</p>
+<p>是的，确实可以。但是这会给你增加额外的心智负担。每有一次更新数据需求，你都要尝试找到这个对象的这个属性是否有对应的更新函数，这您受得了吗？</p>
+</div>
+<p>请大家忘记 Vue 的存在，让我们穿越回尤雨溪还没有写出 Vue 的时候，站在他的角度来想想，这个问题应该如何解决。</p>
+<h2 id="思考解决方案"><a class="markdownIt-Anchor" href="#思考解决方案"></a> 思考解决方案</h2>
+<p>回忆上述困境，它真的好解决吗？</p>
+<p>即使我们能够想出一种办法，能够在程序中每一次更改属性的时候自动加上调用函数的代码，但是这样就够了吗？<br>
+很明显是不够的，因为就算我们把代码写完，属性依然可以被更改。用户还可以直接在 F12 的开发者工具中更改，这您受得了嘛？</p>
+<p>这就是说，我们根本无法知道属性到底在哪里被更改了…… 吗？</p>
+<p>回忆之前的属性描述符，<code>get()</code> 和 <code>set()</code> 是不是能够帮我们得到一些信息呢？</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">name</span></span>
+<span class="line"><span style="color: #9CDCFE">Object</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">defineProperty</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">, </span><span style="color: #CE9178">"name"</span><span style="color: #D4D4D4">, {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">get</span><span style="color: #9CDCFE">:</span><span style="color: #D4D4D4"> () </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"发生了获取商品名称行为，当前名称为："</span><span style="color: #D4D4D4"> + </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span></span>
+<span class="line"><span style="color: #D4D4D4">  },</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">set</span><span style="color: #9CDCFE">:</span><span style="color: #D4D4D4"> (</span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">val</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4">()</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"发生了修改商品名称的行为，新名称为："</span><span style="color: #D4D4D4"> + </span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">})</span></span></code></pre></div></div></figure>
+<p>我们加上上述代码，是不是就能得到一些信息？</p>
+<p><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/new-pic-bed/raw/main/img/202509041321795.png" alt="image-20250904132145755"></p>
+<p>但是这够吗？很明显不够啊，因为我们这里的调用是写死的，未来我们知道有多少函数会用到这个属性吗？不太可能的。而且将来每有一个项目，就写一个 <code>defineProperty</code>，这也太麻烦了。</p>
+<h2 id="试写方案"><a class="markdownIt-Anchor" href="#试写方案"></a> 试写方案</h2>
+<p>我们试着写一个通用 js 来解决上述问题，将其命名为 <code>auv.js</code> 吧，我们就不写 <code>Vue</code> 了，我们功力还没那么深厚。</p>
+<p>上面我们增加的代码只观察了 <code>name</code> 属性，这也不太通用，项目中只观察一个属性的情况太少了，我们写一个观察全部属性的：</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">/**</span></span>
+<span class="line"><span style="color: #6A9955"> * 观察某个对象的全部属性</span></span>
+<span class="line"><span style="color: #6A9955"> * </span><span style="color: #569CD6">@param</span><span style="color: #6A9955"> </span><span style="color: #9CDCFE">obj</span></span>
+<span class="line"><span style="color: #6A9955"> */</span></span>
+<span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">observer</span><span style="color: #D4D4D4"> = (</span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> (</span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">in</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">[</span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">];</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">Object</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">defineProperty</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">, </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">, {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #DCDCAA">get</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">      },</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #DCDCAA">set</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #6A9955">// 如何触发依赖更新？</span></span>
+<span class="line"><span style="color: #D4D4D4">      }</span></span>
+<span class="line"><span style="color: #D4D4D4">    })</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>问题就来了，写成通用的之后，我们根本不知道该如何触发依赖（某个使用到被关注的属性的函数）更新。前面好歹还能手写 <code>showName()</code> 触发更新，现在根本不知道。</p>
+<p>现在我们就需要想想，是不是我们对依赖的来源根本不知道？本质就是：谁在用我们的属性？</p>
+<p>但是这个问题正好 <code>get()</code> 能解决啊，只要有函数在用到我们关注的属性，那么 <code>get()</code> 就一定能知道谁在用。这就是说：<code>get()</code> 需要记录到底谁在用我；而 <code>set()</code> 需要运行那个用我的函数。</p>
+<div class="note info no-icon flat"><p>这个在 Vue 中有专门的名词：</p>
+<ul>
+<li>依赖收集：记录哪个函数在用我</li>
+<li>派发更新：运行用我的那个函数</li>
+</ul>
+</div>
+<p>我们更新一下 <code>observer</code>：</p>
+<p>思考一下，为什么要用 <code>new Set()</code> 而不是普通数组？</p>
+<details class="toggle"><summary class="toggle-button" style="">点我查看原因</summary><div class="toggle-content"><p>用 <code>new Set()</code> 而不是普通数组，相信你能想到是去重。还有一个原因就是，我们根本不知道依赖使用到了几次属性，如果使用了多次，那么普通数组就会记录多个同样的函数，这大大降低了效率。</p>
+</div></details>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">/**</span></span>
+<span class="line"><span style="color: #6A9955"> * 观察某个对象的全部属性</span></span>
+<span class="line"><span style="color: #6A9955"> * </span><span style="color: #569CD6">@param</span><span style="color: #6A9955"> </span><span style="color: #9CDCFE">obj</span></span>
+<span class="line"><span style="color: #6A9955"> */</span></span>
+<span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">observer</span><span style="color: #D4D4D4"> = (</span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> (</span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">in</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">[</span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">];</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">fns</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Set</span><span style="color: #D4D4D4">();</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">Object</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">defineProperty</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">, </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">, {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #DCDCAA">get</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #9CDCFE">fns</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">add</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">exampleFn</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">      },</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #DCDCAA">set</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #6A9955">// 派发更新</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> (</span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">fn</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">of</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">fns</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">          </span><span style="color: #DCDCAA">fn</span><span style="color: #D4D4D4">();</span></span>
+<span class="line"><span style="color: #D4D4D4">        }</span></span>
+<span class="line"><span style="color: #D4D4D4">      }</span></span>
+<span class="line"><span style="color: #D4D4D4">    })</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>现在兜兜转转又回到了之前的问题，我们到底如何记录 <code>exampleFn</code> 呢？到底谁在用我的属性？</p>
+<p><code>Vue</code> 用了一个极其巧妙的方式解决了这个问题：<strong>定义一个全局变量，帮你运行想要运行的函数。</strong></p>
+<p>比如，在我们这个简单场景下，可以定义一个 <code>window.__auv</code> 来收集要运行的函数：</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">// 将html内部js抽离为 demo1.js 并更新 demo1.js 如下</span></span>
+<span class="line"><span style="color: #DCDCAA">observer</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">goods</span><span style="color: #D4D4D4">) </span><span style="color: #6A9955">// 设置观察对象</span></span>
+<span class="line"><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">showName</span><span style="color: #D4D4D4"> </span><span style="color: #6A9955">// 设置全局变量收集对象</span></span>
+<span class="line"><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4">()</span></span>
+<span class="line"><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955">// 更新 auv.js 如下</span></span>
+<span class="line"><span style="color: #6A9955">/**</span></span>
+<span class="line"><span style="color: #6A9955"> * 观察某个对象的全部属性</span></span>
+<span class="line"><span style="color: #6A9955"> * </span><span style="color: #569CD6">@param</span><span style="color: #6A9955"> </span><span style="color: #9CDCFE">obj</span></span>
+<span class="line"><span style="color: #6A9955"> */</span></span>
+<span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">observer</span><span style="color: #D4D4D4"> = (</span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> (</span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">in</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">[</span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">];</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">fns</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">Set</span><span style="color: #D4D4D4">();</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">Object</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">defineProperty</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">obj</span><span style="color: #D4D4D4">, </span><span style="color: #9CDCFE">key</span><span style="color: #D4D4D4">, {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #DCDCAA">get</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">if</span><span style="color: #D4D4D4"> (</span><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">          </span><span style="color: #9CDCFE">fns</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">add</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">        }</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">      },</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #DCDCAA">set</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #9CDCFE">internalVal</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">val</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #6A9955">// 派发更新</span></span>
+<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> (</span><span style="color: #569CD6">let</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">fn</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">of</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">fns</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">          </span><span style="color: #DCDCAA">fn</span><span style="color: #D4D4D4">();</span></span>
+<span class="line"><span style="color: #D4D4D4">        }</span></span>
+<span class="line"><span style="color: #D4D4D4">      }</span></span>
+<span class="line"><span style="color: #D4D4D4">    })</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>此时页面表现：</p>
+<p><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/new-pic-bed/raw/main/img/202509041423262.gif" alt="PixPin_2025-09-04_14-22-41"></p>
+<p>现在还有点不太完美，每次都要写下面三句：</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">showName</span></span>
+<span class="line"><span style="color: #DCDCAA">showName</span><span style="color: #D4D4D4">()</span></span>
+<span class="line"><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">null</span></span></code></pre></div></div></figure>
+<p>完全可以在 <code>auv.js</code> 中写成函数：</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">// auv.js</span></span>
+<span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">easyRun</span><span style="color: #D4D4D4"> = (</span><span style="color: #9CDCFE">fn</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">fn</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">fn</span><span style="color: #D4D4D4">();</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">__auv</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">null</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<p>那么 <code>demo1.js</code> 中那三句话就可以写成一句话：</p>
+<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">easyRun</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">showName</span><span style="color: #D4D4D4">)</span></span></code></pre></div></div></figure>
+<p>我们可以加一个 <code>input</code> 将输入的值去更改商品名字，方便展示效果：</p>
+<figure class="shiki html"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">input</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">type</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"text"</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">oninput</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"</span><span style="color: #9CDCFE">goods</span><span style="color: #CE9178">.</span><span style="color: #9CDCFE">name</span><span style="color: #CE9178"> </span><span style="color: #D4D4D4">=</span><span style="color: #CE9178"> </span><span style="color: #569CD6">this</span><span style="color: #CE9178">.</span><span style="color: #9CDCFE">value</span><span style="color: #CE9178">"</span><span style="color: #808080">/&gt;</span></span></code></pre></div></div></figure>
+<p>页面效果：</p>
+<p><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/new-pic-bed/raw/main/img/202509041431829.gif" alt="PixPin_2025-09-04_14-31-03"></p>
+<p>当然我们现在的这份代码肯定有很多 bug，<code>Vue</code> 的代码比我们的这个版本健全得多。</p>
+<p>至此，相信你已经对 <code>Vue</code> 的数据响应式有更深刻的认识。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/">4rozeN</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/posts/24974">https://4rozen.github.io/posts/24974</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://4rozeN.github.io" target="_blank">林之介 | 4rozeN</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/">属性描述符</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F/">数据响应式</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/posts/1303" title="浏览器渲染原理"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">浏览器渲染原理</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related no-desc" href="/posts/31657" title="Vue 项目打包并部署到 GitHub 为 demo"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-26</div><div class="info-item-2">Vue 项目打包并部署到 GitHub 为 demo</div></div></div></a><a class="pagination-related no-desc" href="/posts/1" title="JS 属性描述符"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-01</div><div class="info-item-2">JS 属性描述符</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="author-info-name">4rozeN</div><div class="author-info-description">Coding noob 自进阶</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="/rss2.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #ff6600;"></i></a><a class="social-icon" href="https://github.com/4rozeN" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="https://steamcommunity.com/id/430426/" rel="external nofollow noreferrer" target="_blank" title="Steam"><i class="fab fa-steam" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">最近在努力学习Fabric modding和其他内容，不知天地为何物。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.</span> <span class="toc-text"> 前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text"> 场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text"> 思考解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%95%E5%86%99%E6%96%B9%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text"> 试写方案</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By 4rozeN</div><div class="footer_custom_text"><span id="performance-info"></span>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.bootcdn.net/ajax/libs/vanilla-lazyload/19.1.3/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://registry.npmmirror.com/twikoo/1.6.44/files/dist/twikoo.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/rightmenu.js"></script><script src="/js/ripple-toggle.js"></script><script src="/js/star.js"></script><script src="/js/watch.js"></script><script src="/js/butterfly.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      true 
+        ? (usePjax ? pjax.loadUrl('/404') : window.location.href = '/404')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+<script src="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.js"></script>
+
+  <script>
+  const CODE_CONFIG = {
+    beautify: true,
+    highlightCopy: true,
+    highlightLang: true,
+    highlightHeightLimit: 360,
+    isHighlightShrink: false,
+    copy: {
+      success: '复制成功',
+      error: '复制失败',
+      noSupport: '浏览器不支持复制功能',
+    }
+  };
+  console.log(
+    `%c hexo-shiki-plugin %c v1.0.27 %c https://github.com/nova1751/hexo-shiki-plugin`,
+    "color: #fff; background: #5f5f5f",
+    "color: #fff; background: #80c8f8",
+    ""
+  );
+  </script>
+  <!-- hexo injector body_end end --></body></html>
