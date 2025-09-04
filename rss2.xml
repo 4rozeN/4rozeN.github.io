@@ -15,14 +15,14 @@
     <atom:link href="https://4rozen.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>4rozeN的博客，分享各种数码、编程技术、bug调试趣事。</description>
-    <pubDate>Thu, 04 Sep 2025 07:43:42 GMT</pubDate>
+    <pubDate>Thu, 04 Sep 2025 14:04:33 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>从 JS 属性描述符再看 Vue 数据响应式原理</title>
       <link>https://4rozen.github.io/posts/24974</link>
       <guid>https://4rozen.github.io/posts/24974</guid>
-      <pubDate>Tue, 02 Sep 2025 05:50:13 GMT</pubDate>
+      <pubDate>Thu, 04 Sep 2025 03:46:56 GMT</pubDate>
       
       <description>在学习了JS属性描述符之后，再看Vue数据响应式原理，或许有更深刻的认识。</description>
       
