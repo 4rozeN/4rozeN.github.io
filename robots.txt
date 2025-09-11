@@ -1,11 +1,16 @@
 User-agent: *
 Allow: /
-Allow: /archives/
-Allow: /categories/
-Allow: /about/
 
-Disallow: /js/
-Disallow: /css/
-Disallow: /img/
+# 阻止旧的 archives 页面被索引
+Disallow: /archives/
+
+# 可以选择禁止分类页面（避免重复收录），如果你希望分类也被收录就保留
+# Disallow: /categories/
+
+# 静态资源允许抓取（推荐这样，利于 SEO）
+# Disallow: /js/
+# Disallow: /css/
+# Disallow: /img/
+
 Sitemap: https://4rozeN.github.io/sitemap.xml
 Sitemap: https://4rozeN.github.io/baidusitemap.xml
