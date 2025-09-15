@@ -1,199 +1,220 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue 项目打包并部署到 GitHub 为 demo | 林之介 | 4rozeN</title><meta name="author" content="4rozeN"><meta name="copyright" content="4rozeN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="目标：将打包好的 Vue2 | Vue3 项目部署到 github pages 用作项目 demo  我将尽可能的讲述打包前后可能遇到的绝大部分问题和原因，希望能有所帮助。  打包前的问题 打包其实实际上不会碰到什么大问题，我们讨论的问题实际是打包之后想要将打包结果也就是静态页面进行部署而发生的问题：  白屏问题 刷新 404 问题 跨域问题  但要想讨论上述问题，我们得研究好打包前的配置问题，">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Vue 项目打包并部署到 GitHub 为 demo">
-<meta property="og:url" content="https://4rozen.github.io/posts/31657">
-<meta property="og:site_name" content="林之介 | 4rozeN">
-<meta property="og:description" content="目标：将打包好的 Vue2 | Vue3 项目部署到 github pages 用作项目 demo  我将尽可能的讲述打包前后可能遇到的绝大部分问题和原因，希望能有所帮助。  打包前的问题 打包其实实际上不会碰到什么大问题，我们讨论的问题实际是打包之后想要将打包结果也就是静态页面进行部署而发生的问题：  白屏问题 刷新 404 问题 跨域问题  但要想讨论上述问题，我们得研究好打包前的配置问题，">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp">
-<meta property="article:published_time" content="2023-10-26T15:46:35.000Z">
-<meta property="article:modified_time" content="2025-09-11T02:44:14.012Z">
-<meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="笔记">
-<meta property="article:tag" content="Vue">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Vue 项目打包并部署到 GitHub 为 demo",
-  "url": "https://4rozen.github.io/posts/31657",
-  "image": "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp",
-  "datePublished": "2023-10-26T15:46:35.000Z",
-  "dateModified": "2025-09-11T02:44:14.012Z",
-  "author": [
-    {
-      "@type": "Person",
-      "name": "4rozeN",
-      "url": "https://4rozen.github.io/"
-    }
-  ]
-}</script><link rel="shortcut icon" href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico"><link rel="canonical" href="https://4rozen.github.io/posts/31657"><link rel="preconnect" href="//cdn.jsdelivr.net"/><meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88"/><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
-    (() => {
-      
-    const saveToLocal = {
-      set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
-      },
-      get: key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return value
-      }
-    }
-
-    window.btf = {
-      saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
-        }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
-        }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
-      addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
-        const globalFn = parent.globalFn || {}
-        globalFn[key] = globalFn[key] || {}
-        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
-        parent.globalFn = globalFn
-      }
-    }
-  
-      
-      const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-
-      btf.activateDarkMode = activateDarkMode
-      btf.activateLightMode = activateLightMode
-
-      const theme = saveToLocal.get('theme')
-    
-          const hour = new Date().getHours()
-          const isNight = hour <= 6 || hour >= 18
-          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
-          else theme === 'light' ? activateLightMode() : activateDarkMode()
-        
-      
-      
-    const detectApple = () => {
-      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-  
-    })()
-  </script><script>const GLOBAL_CONFIG = {
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Vue 项目打包并部署到 GitHub 为 demo | 林之介4rozeN</title><meta name="keywords" content="笔记,Vue"><meta name="author" content="4rozeN"><meta name="copyright" content="4rozeN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Vue 项目打包并部署到 GitHub 为 demo"><meta name="application-name" content="Vue 项目打包并部署到 GitHub 为 demo"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Vue 项目打包并部署到 GitHub 为 demo"><meta property="og:url" content="https://4rozen.github.io/posts/31657.html"><meta property="og:site_name" content="林之介4rozeN"><meta property="og:description" content="目标：将打包好的 Vue2 | Vue3 项目部署到 github pages 用作项目 demo  我将尽可能的讲述打包前后可能遇到的绝大部分问题和原因，希望能有所帮助。  打包前的问题 打包其实实际上不会碰到什么大问题，我们讨论的问题实际是打包之后想要将打包结果也就是静态页面进行部署而发生的问"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp"><meta property="article:author" content="4rozeN"><meta property="article:tag" content="blog, programming, CTF, Vue, backend, Git, Uni-app"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp"><meta name="description" content="目标：将打包好的 Vue2 | Vue3 项目部署到 github pages 用作项目 demo  我将尽可能的讲述打包前后可能遇到的绝大部分问题和原因，希望能有所帮助。  打包前的问题 打包其实实际上不会碰到什么大问题，我们讨论的问题实际是打包之后想要将打包结果也就是静态页面进行部署而发生的问"><link rel="shortcut icon" href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico"><link rel="canonical" href="https://4rozen.github.io/posts/31657.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88"/><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"等你回来(∠・ω< )⌒☆","backTitle":null},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
   root: '/',
+  preloader: {"source":1},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: undefined,
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
-  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
-  highlight: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"bottom","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
   copy: {
     success: '复制成功',
-    error: '复制失败',
+    error: '复制错误',
     noSupport: '浏览器不支持'
   },
   relativeDate: {
     homepage: false,
+    simplehomepage: true,
     post: false
   },
   runtime: '天',
-  dateSuffix: {
+  date_suffix: {
     just: '刚刚',
     min: '分钟前',
     hour: '小时前',
     day: '天前',
     month: '个月前'
   },
-  copyright: {"limitCount":100,"languages":{"author":"作者: 4rozeN","link":"链接: ","source":"来源: 林之介 | 4rozeN","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":120,"languages":{"author":"作者: 4rozeN","link":"链接: ","source":"来源: 林之介4rozeN","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
   lightbox: 'fancybox',
-  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1.2/dist/fjGallery.min.css'
+    }
   },
   isPhotoFigcaption: false,
-  islazyloadPlugin: true,
+  islazyload: false,
   isAnchor: true,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
+  shortcutKey: undefined,
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '林之介4rozeN',
   title: 'Vue 项目打包并部署到 GitHub 为 demo',
+  postAI: '',
+  pageFillDescription: ' 打包前的问题,  请求地址配置问题,  proxy 的缺点,  Js 引入地址配置问题,  解决打包后的白屏问题,  解决跨域问题,  其他,  解决打包后的刷新 404 问题,  怎么使用 history 模式,  GitHub Pages 上的 history 路由模式可行性,  我的看法,  一个可能的方法,  一个可能需要的配置参考,  部署到 GitHub Pages,  可选配置,  Github 部署目标将打包好的项目部署到用作项目我将尽可能的讲述打包前后可能遇到的绝大部分问题和原因希望能有所帮助打包前的问题打包其实实际上不会碰到什么大问题我们讨论的问题实际是打包之后想要将打包结果也就是静态页面进行部署而发生的问题白屏问题刷新问题跨域问题但要想讨论上述问题我们得研究好打包前的配置问题也就是为什么会出现上述问题请求地址配置问题首先我这里默认你的项目中二次封装了并配置了请求基地址别告诉我请求地址是哈那么你的请求配置方法可能是主动暴露或者你是这样配置的环境为配置转发如果你并没有在二次封装的过程中暴露具体请求地址而是配置了进行代理转发你的配置可能是配置的开发环境下只要请求匹配到就会把请求转发到并且将删除浏览器请求为假设你的项目运行在端口实际请求为的缺点这两者在开发环境进行请求都没有问题都能完成任务但是一旦进行了打包脚手架环境消失这第种配置方法就失效了请求会只剩下这种形式可能你会问玩呢这怎么发请求我明明还是见到浏览器发出请求了啊只不过失败了是的这种形式的确不能正常发请求不过浏览器会在只给出如的形式的请求时自动在前面拼接上下文环境比如在本地测试项目浏览器就会自动拼接上使得最终形式为不过变成这种情况的话基本也就无法部署了本地部署除外因为你已经失去了脚手架的环境不过你依然可以在项目的同系统环境下使用类似的也行尝试进行监听和转发也就是反向代理详情请见下节中的使用那么第种配置方法会在打包之后发生什么问题吗不会它可以正常工作除非请求地址是如果为则会引起跨域问题引入地址配置问题如果说请求地址影响着数据显示问题那么引入地址影响的是打包后的页面白屏问题这个问题基本上就是打包后的文件引入问题我们应当将导出后的等文件的引入地址配置为相对地址在或中应当配置如下对于的官方文档中不推荐直接配置而是始终使用这将使得打包后的页面的引入地址为相对地址看起来就像这样请注意结果为而非解决打包后的白屏问题出现白屏问题白屏分为跨域造成的未正确引入造成的没有配置成相对路径详见配置其他解决跨域问题相关链接什么是跨域问题其实也谈不上解决毕竟这个问题不是真正的跨域问题真正的跨域问题只靠前端不靠服务器是不可能解决的一般这种情况下的跨域问题主要是打包后的文件是以协议进行读取的而协议不像协议支持跨域所以控制台跨域报错解决方案参考打包本地文件类型引发跨域等问题探讨但我不太推荐上面的解决方案因为利用或其他网络服务器的反向代理就够了详情见使用其他诚然我不可能见过所有的白屏问题所以欢迎探讨解决打包后的刷新问题为什么会出现有基本结构但是我刷新就报错误呢这个问题的发生满足以下条件配置了默认访问或访问重定向到某具体路由页面如配置了路由模式为不带符号的历史模式为什么说满足以上条件就会触发这个问题呢这是因为当你第一次访问项目你的访问地址可能是或者而因为你的项目满足第一条所以你的项目自动重定向到了你指定的某个具体路由页面比如如果你按照上述方式访问这个时候为第一次访问是没有任何问题的正常加载页面正常显示一旦当你刷新之后访问地址就变成了这是什么地址浏览器会认为是一个后端路由地址将其携带到后端服务器嘿哥们你这儿有这样一个路由地址吗然而后端实际上没有这样一个路由能匹配于是就造成了的结果那为什么别人做的网站项目不会这样呢当然是因为别人已经配置过了没有经过正确配置之前人人都一样的那是不是哈希模式就可以呢是的模式可以解决这个问题这是因为设置为模式后如果有这样一个地址那么其中的就是值值只在客户端如浏览器中使用是不会带给服务器的所以使用模式时不存在刷新问题怎么使用模式我不想出现错误我也不想使用模式我该怎么使用模式来让网站变得更优雅呢思路让服务器那边在收到未配置的路由时都返回即可什么意思呢如果浏览器将这样一个后端不认识的路由真的带给了服务器那么服务器就把塞回去回去了意味着它所引入的就工作了工作了那么前端路由就活过来了于是就可以正确处理路由地址了问题也就迎刃而解了这也是为什么某些文章中使用配置里有存在了换句话说如果你是本地部署使用它可以解决你的刷新问题并且也能解决打包后失效带来的请求问题配置如下请注意的根目录最好不要是盘防止权限不足略略配置监听的项目根地址项目的打包目录默认首页文件名配置请求转发配置请求监听到之后的转发目标相关链接下载上的路由模式可行性我的看法相信看过上面你已经想到了我能不能对部署在上的也这样配置我只能说我没试过但我觉得不行因为和不在同一个系统环境上述配置能成的根本原因是在前端将路由也带来的情况下进行监听并匹配成功然后将进行返回这里的重点在于要能成功监听到项目的根地址但对于部署到上的来说浏览器会直接向请求资源而只支持静态文件托管它是没有针对模式的服务端配置的而且我总不可能将也部署到上吧一个可能的方法不过有一个它的解决办法在打包目录内中加入一个页面用于手动返回如果页面找不到路径重定向到让处理我无法验证该方法的可行性因为我已经将我的给我生成的域名用来部署了博客我的所有其他仓库的项目都是在该域名下这导致我的无法使用该方法我也就无法验证了相关链接部署静态博客主题我参考的那篇文章找不到了一个可能需要的配置参考别忘了给你的服务器加上监听并正确转发请求什么是证书因为的网络环境是的如果你发送请求浏览器将会进行拦截可自行搜索需要的免费证书签发厂家如果你的远程服务器没有域名那么你需要的证书为证书我使用的正是这种类型可以搜索我的配置示例如下监听请求并重定向到监听替换为你的域名或强制到重定向监听请求监听替换为你的域名或证书路径私钥路径启用的协议启用的加密算法指定网站根目录默认主页文件代理到使用处理处理传递主机头传递客户端真实传递转发传递原始协议代理到使用处理处理传递主机头传递客户端真实传递转发传递原始协议其他配置我的使用的数据来自什么是我将该无头部署到了和同一系统环境之下于是有了上述配置部署到可选配置终于到了激动人心的部署时刻在打包之前请根据上文做好自己项目的配置除此之外还有一个配置对于打包的项目可选指定文件的输出路径及命名规则指定分片文件的输出路径及命名规则设置不同类型文件的输出路径及命名规则图像文件输出路径及命名规则字体文件输出路径及命名规则其他资源文件输出路径及命名规则添加上述配置项将会将打包后的目录按类型分文件夹当然只是可选非必须配置项参考文章项目配置打包输出文件夹部署好了请将项目打包为一个文件夹然后按照以下步骤进行部署转到创建一个新的仓库已有仓库跳第二步填写仓库名并将仓库设为公开就可以了其他不用设置点击创建仓库即可复制仓库的链接我没有用过进行远程仓库绑定例如找到本地刚新鲜打包的文件夹进入文件夹中目录结构应该为打包结果打包结果在文件夹内执行仓库初始化添加所有文件到暂存区并执行提交注打包的项目可能会存在以下划线开头的文件而可能忽略该文件导致项目无法找到文件报错误请检查你的文件夹下的目录中是否存在上述文件如果确实存在请在目录下创建一个空文件以禁用的默认处理行为文件名为参考文章不能识别下划线开头的文件绑定远程仓库你可以将该分支我的默认初始化分支为先推送出去已有仓库的可以跳到创建孤立的空分支用于推送推送代码到分支用于部署静态页面转到仓库页请切换仓库分支为并等待的操作的操作完成后点击仓库设置项然后在左侧侧边栏选择点击构建好的链接或者右边的即可小白篇到此完结撒花有更多需求可以自行探索相信你已经入门了',
+  isPost: true,
+  isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  pageType: 'post'
-}</script><meta name="referrer" content="no-referrer" /><link rel="shortcut icon" href="/img/ico/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@300..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/figure.css"><link rel="stylesheet" href="/css/butterfly.css"><link rel="stylesheet" href="/css/ripple-toggle.css"><link rel="stylesheet" href="/css/rightmenu.css"><!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.css">
-<style>:root{--hl-color:#abb2bf;--hl-bg:#282c34;--hltools-bg:#21252b;--hltools-color:#bbbbbc;--hlnumber-bg:#282c34;--hlnumber-color:#495162;--hlscrollbar-bg:#373c47;--hlexpand-bg:linear-gradient(180deg,rgba(40,44,52,0.1),rgba(40,44,52,0.9))}</style>
-    <style>
-    .code-expand-btn:not(.expand-done) ~ div.codeblock,
-    .code-expand-btn:not(.expand-done) ~ * div.codeblock {
-      overflow: hidden;
-      height: 360px;
-    }
-    </style>
-  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="林之介 | 4rozeN" type="application/rss+xml">
-</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  postUpdate: '2025-09-11 10:44:14',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 8 || hour >= 22
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="referrer" content="no-referrer" /><link rel="shortcut icon" href="/img/ico/favicon.ico" type="image/x-icon"><link rel="stylesheet" href="/css/anzhiyu.css"><link href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@300..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="林之介4rozeN" type="application/rss+xml">
+</head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
   endLoading: () => {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loading-box').classList.add("loaded")
+    document.getElementById('loading-box').classList.add("loaded");
   },
   initLoading: () => {
-    document.body.style.overflow = '';
     document.getElementById('loading-box').classList.remove("loaded")
-
   }
 }
 window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
 
 if (false) {
   document.addEventListener('pjax:send', () => { preloader.initLoading() })
   document.addEventListener('pjax:complete', () => { preloader.endLoading() })
-}</script><script>window.paceOptions = {
-  restartOnPushState: false
+}</script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.anheyu.com/" title="我的博客"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico" alt="我的博客"/><span class="back-menu-item-text">我的博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Simple-Animated-Guns-Fixed" title="MC枪械模组"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="MC枪械模组"/><span class="back-menu-item-text">MC枪械模组</span></a><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Datapack_S.A.G" title="SAG数据包"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="SAG数据包"/><span class="back-menu-item-text">SAG数据包</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">林之介4rozeN</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
 }
-
-btf.addGlobalFn('pjaxSend', () => {
-  Pace.restart()
-}, 'pace_restart')
-
-</script><link rel="stylesheet" href="/css/progress_bar.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="/img/nav/mySVG.svg" alt="Logo"></a><a class="nav-page-title" href="/"><span class="site-name">Vue 项目打包并部署到 GitHub 为 demo</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Vue 项目打包并部署到 GitHub 为 demo</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-26T15:46:35.000Z" title="发表于 2023-10-26 23:46:35">2023-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-11T02:44:14.012Z" title="更新于 2025-09-11 10:44:14">2025-09-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:15,&quot;messagePrev&quot;:&quot;文章最后编辑于&quot;,&quot;messageNext&quot;:&quot;天前。&quot;,&quot;postUpdate&quot;:&quot;2025-09-11 10:44:14&quot;}" hidden></div><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><blockquote>
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)" rel="external nofollow noreferrer">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/API/" style="font-size: 1.05rem;">API<sup>1</sup></a><a href="/tags/Bootstrap/" style="font-size: 1.05rem;">Bootstrap<sup>1</sup></a><a href="/tags/Bug/" style="font-size: 1.05rem;">Bug<sup>1</sup></a><a href="/tags/CSS/" style="font-size: 1.05rem;">CSS<sup>2</sup></a><a href="/tags/CTF-WP/" style="font-size: 1.05rem;">CTF-WP<sup>1</sup></a><a href="/tags/DOH/" style="font-size: 1.05rem;">DOH<sup>1</sup></a><a href="/tags/Fabric/" style="font-size: 1.05rem;">Fabric<sup>3</sup></a><a href="/tags/Fluid/" style="font-size: 1.05rem;">Fluid<sup>1</sup></a><a href="/tags/Git/" style="font-size: 1.05rem;">Git<sup>1</sup></a><a href="/tags/GitHubActions/" style="font-size: 1.05rem;">GitHubActions<sup>1</sup></a><a href="/tags/Hexo/" style="font-size: 1.05rem;">Hexo<sup>6</sup></a><a href="/tags/JS%E8%AE%A1%E6%97%B6%E5%99%A8/" style="font-size: 1.05rem;">JS计时器<sup>1</sup></a><a href="/tags/JavaScript/" style="font-size: 1.05rem;">JavaScript<sup>5</sup></a><a href="/tags/Minecraft/" style="font-size: 1.05rem;">Minecraft<sup>5</sup></a><a href="/tags/Modding/" style="font-size: 1.05rem;">Modding<sup>1</sup></a><a href="/tags/PHP/" style="font-size: 1.05rem;">PHP<sup>1</sup></a><a href="/tags/React/" style="font-size: 1.05rem;">React<sup>1</sup></a><a href="/tags/Strapi/" style="font-size: 1.05rem;">Strapi<sup>1</sup></a><a href="/tags/Vue/" style="font-size: 1.05rem;">Vue<sup>2</sup></a><a href="/tags/Windows11/" style="font-size: 1.05rem;">Windows11<sup>1</sup></a><a href="/tags/ejs/" style="font-size: 1.05rem;">ejs<sup>1</sup></a><a href="/tags/fluid/" style="font-size: 1.05rem;">fluid<sup>2</sup></a><a href="/tags/git/" style="font-size: 1.05rem;">git<sup>1</sup></a><a href="/tags/github/" style="font-size: 1.05rem;">github<sup>1</sup></a><a href="/tags/http/" style="font-size: 1.05rem;">http<sup>1</sup></a><a href="/tags/indexnow/" style="font-size: 1.05rem;">indexnow<sup>1</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>1</sup></a><a href="/tags/ssh/" style="font-size: 1.05rem;">ssh<sup>1</sup></a><a href="/tags/styl/" style="font-size: 1.05rem;">styl<sup>1</sup></a><a href="/tags/uni-app/" style="font-size: 1.05rem;">uni-app<sup>1</sup></a><a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" style="font-size: 1.05rem;">事件循环<sup>1</sup></a><a href="/tags/%E5%85%A8%E6%88%90%E5%B0%B1%E5%B8%AE%E6%89%8B/" style="font-size: 1.05rem;">全成就帮手<sup>1</sup></a><a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 1.05rem;">反序列化<sup>1</sup></a><a href="/tags/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/" style="font-size: 1.05rem;">属性描述符<sup>2</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5/" style="font-size: 1.05rem;">异步<sup>1</sup></a><a href="/tags/%E6%97%A5%E5%A4%9C%E5%88%87%E6%8D%A2%E8%83%8C%E6%99%AF/" style="font-size: 1.05rem;">日夜切换背景<sup>1</sup></a><a href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/" style="font-size: 1.05rem;">模组开发<sup>1</sup></a><a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 1.05rem;">笔记<sup>4</sup></a><a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 1.05rem;">美化<sup>3</sup></a><a href="/tags/%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%BE%93%E5%85%A5/" style="font-size: 1.05rem;">非预期输入<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date">九月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">六月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">十一月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);" rel="external nofollow noreferrer"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url">前端</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>笔记</span></a><a class="article-meta__tags" href="/tags/Vue/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Vue</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Vue 项目打包并部署到 GitHub 为 demo</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2023-10-26T15:46:35.000Z" title="发表于 2023-10-26 23:46:35">2023-10-26</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-09-11T02:44:14.012Z" title="更新于 2025-09-11 10:44:14">2025-09-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">3.7k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>13分钟</span></span></div></div></div><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://4rozen.github.io/posts/31657"><header><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url">前端</a><a href="/tags/%E7%AC%94%E8%AE%B0/" tabindex="-1" itemprop="url">笔记</a><a href="/tags/Vue/" tabindex="-1" itemprop="url">Vue</a><h1 id="CrawlerTitle" itemprop="name headline">Vue 项目打包并部署到 GitHub 为 demo</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">4rozeN</span><time itemprop="dateCreated datePublished" datetime="2023-10-26T15:46:35.000Z" title="发表于 2023-10-26 23:46:35">2023-10-26</time><time itemprop="dateCreated datePublished" datetime="2025-09-11T02:44:14.012Z" title="更新于 2025-09-11 10:44:14">2025-09-11</time></header><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><blockquote>
 <p>目标：将打包好的 Vue2 | Vue3 项目部署到 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages">github pages</a> 用作项目 demo</p>
 </blockquote>
 <p>我将尽可能的讲述打包前后可能遇到的绝大部分问题和原因，希望能有所帮助。</p>
@@ -210,31 +231,14 @@ btf.addGlobalFn('pjaxSend', () => {
 <ol>
 <li>主动暴露 base</li>
 </ol>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #C8C8C8">base</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'http://your.domain.com'</span></span>
-<span class="line"><span style="color: #C8C8C8">api</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'/api/end-point'</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4"># </span><span style="color: #9CDCFE">The</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">final</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">request</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">form</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">may</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">look</span><span style="color: #D4D4D4"> </span><span style="color: #C8C8C8">like</span><span style="color: #D4D4D4">:</span></span>
-<span class="line"><span style="color: #C8C8C8">http</span><span style="color: #D4D4D4">:</span><span style="color: #6A9955">//your.domain.com/api/end-point</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">base</span>: <span class="string">'http://your.domain.com'</span></span><br><span class="line"><span class="attr">api</span>: <span class="string">'/api/end-point'</span></span><br><span class="line"></span><br><span class="line"># <span class="title class_">The</span> final request form may look <span class="attr">like</span>:</span><br><span class="line"><span class="attr">http</span>:<span class="comment">//your.domain.com/api/end-point</span></span><br></pre></td></tr></tbody></table></figure>
 <p>或者你是这样配置的（环境为 Vue3+vite）：</p>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #C8C8C8">base</span><span style="color: #D4D4D4">: </span><span style="color: #C586C0">import</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">meta</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">env</span><span style="color: #D4D4D4">.</span><span style="color: #4FC1FF">VITE_BASE_URL</span></span>
-<span class="line"><span style="color: #C8C8C8">api</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'/api/end-point'</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4"># </span><span style="color: #9CDCFE">The</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">final</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">request</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">form</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">may</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">look</span><span style="color: #D4D4D4"> </span><span style="color: #C8C8C8">like</span><span style="color: #D4D4D4">:</span></span>
-<span class="line"><span style="color: #C8C8C8">http</span><span style="color: #D4D4D4">:</span><span style="color: #6A9955">//your.domain.com/api/end-point</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">base</span>: <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">VITE_BASE_URL</span></span><br><span class="line"><span class="attr">api</span>: <span class="string">'/api/end-point'</span></span><br><span class="line"></span><br><span class="line"># <span class="title class_">The</span> final request form may look <span class="attr">like</span>:</span><br><span class="line"><span class="attr">http</span>:<span class="comment">//your.domain.com/api/end-point</span></span><br></pre></td></tr></tbody></table></figure>
 <ol start="2">
 <li>配置 proxy 转发</li>
 </ol>
 <p>如果你并没有在二次封装 axios 的过程中暴露具体请求地址，而是配置了 proxy 进行代理转发，你的 proxy 配置可能是：</p>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4"># </span><span style="color: #9CDCFE">vite</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">config</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">js</span></span>
-<span class="line"><span style="color: #C8C8C8">devServer</span><span style="color: #D4D4D4">: {</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C8C8C8">proxy</span><span style="color: #D4D4D4">: {</span></span>
-<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #CE9178">'/dev'</span><span style="color: #D4D4D4">: {</span></span>
-<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #9CDCFE">target:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">'http://your.domain.com'</span><span style="color: #D4D4D4">,</span></span>
-<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #9CDCFE">pathRewrite:</span><span style="color: #D4D4D4"> { </span><span style="color: #CE9178">'^/dev'</span><span style="color: #9CDCFE">:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">''</span><span style="color: #D4D4D4"> }</span></span>
-<span class="line"><span style="color: #D4D4D4">      ......</span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4">  }</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># vite.<span class="property">config</span>.<span class="property">js</span></span><br><span class="line"><span class="attr">devServer</span>: {</span><br><span class="line">  <span class="attr">proxy</span>: {</span><br><span class="line">    <span class="string">'/dev'</span>: {</span><br><span class="line">      <span class="attr">target</span>: <span class="string">'http://your.domain.com'</span>,</span><br><span class="line">      <span class="attr">pathRewrite</span>: { <span class="string">'^/dev'</span>: <span class="string">''</span> }</span><br><span class="line">      ......</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>配置 proxy 的开发环境下，只要请求匹配到 <code>/api</code> 就会把请求转发到 <code>target</code> 并且将 <code>/dev</code> 删除，浏览器请求为（假设你的项目运行在 8088 端口）：<code>http://localhost:8088/dev/api/end-point</code>，实际请求为：<code>http://your.domain.com/api/end-point</code></p>
 <h3 id="proxy-的缺点"><a class="markdownIt-Anchor" href="#proxy-的缺点"></a> proxy 的缺点</h3>
 <p>这两者在开发环境进行请求都没有问题，都能完成任务，但是一旦进行了打包，脚手架环境消失，这第 2 种配置方法就失效了，请求会只剩下 <code>/dev/api/end-point</code> 这种形式。</p>
@@ -245,15 +249,13 @@ btf.addGlobalFn('pjaxSend', () => {
 <p>如果说请求地址影响着数据显示问题，那么 js 引入地址影响的是打包后的页面白屏问题。</p>
 <p>这个问题基本上就是打包后的文件引入问题，我们应当将导出后的 js 等文件的引入地址配置为相对地址。</p>
 <p>在 vite 或 vue-cli 中 <a id="js">应当配置</a> 如下：</p>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4"># </span><span style="color: #9CDCFE">vite</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">config</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">js</span></span>
-<span class="line"><span style="color: #C8C8C8">base</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'./'</span><span style="color: #D4D4D4">,</span></span></code></pre></div></div></figure>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4"># </span><span style="color: #9CDCFE">vue</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">config</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">js</span></span>
-<span class="line"><span style="color: #C8C8C8">publicPath</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'./'</span><span style="color: #D4D4D4">,</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vite.<span class="property">config</span>.<span class="property">js</span></span><br><span class="line"><span class="attr">base</span>: <span class="string">'./'</span>,</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vue.<span class="property">config</span>.<span class="property">js</span></span><br><span class="line"><span class="attr">publicPath</span>: <span class="string">'./'</span>,</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>对于 vue2 的 vue-cli，官方文档中不推荐直接配置 <code>output.publicPath</code> 而是始终使用 **<code>publicPath</code>**</p>
 </blockquote>
 <p>这将使得打包后的 <code>index.html</code> 页面的 js 引入地址为相对地址，看起来就像这样：</p>
-<figure class="shiki html"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">link</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">href</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"css/app.363852d2.css"</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">rel</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"stylesheet"</span><span style="color: #D4D4D4"> </span><span style="color: #808080">/&gt;</span></span></code></pre></div></div></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"css/app.363852d2.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>请注意结果为 <code>css/app.363852d2.css</code> 而非 <code>/js/app.5bd045ab.js</code></p>
 <h2 id="解决打包后的白屏问题"><a class="markdownIt-Anchor" href="#解决打包后的白屏问题"></a> 解决打包后的白屏问题</h2>
 <p>出现白屏问题，白屏分为：</p>
@@ -268,7 +270,7 @@ btf.addGlobalFn('pjaxSend', () => {
 </blockquote>
 <p>其实也谈不上解决，毕竟这个问题不是真正的跨域问题，<strong>真正的跨域问题只靠前端不靠服务器是不可能解决的</strong>。</p>
 <p>一般这种情况下的跨域问题主要是打包后的文件是以 file 协议进行读取的，而 file 协议不像 http (s) 协议支持跨域，所以控制台 CROS 跨域报错</p>
-<p><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410102158577.png" alt="image-20241010215831443"></p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410102158577.png" alt="image-20241010215831443"></p>
 <p>解决方案参考：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_34727886/article/details/136163494">vite 打包本地文件，file 类型 URL 引发跨域等问题探讨</a></p>
 <p>但我不太推荐上面的解决方案，因为利用 Nginx（或其他网络服务器）的反向代理就够了。</p>
 <p>详情见 <a href="#history">history 使用</a></p>
@@ -280,30 +282,11 @@ btf.addGlobalFn('pjaxSend', () => {
 <ol>
 <li>
 <p>配置了默认访问或 <code>/</code> 访问重定向到某具体路由页面，如 <code>/home</code></p>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">// Vue2</span></span>
-<span class="line"><span style="color: #C8C8C8">path</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'/'</span><span style="color: #D4D4D4">,</span></span>
-<span class="line"><span style="color: #C8C8C8">redirect</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'/home'</span><span style="color: #D4D4D4">,</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #6A9955">// Vue3</span></span>
-<span class="line"><span style="color: #C8C8C8">path</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'/'</span><span style="color: #D4D4D4">,</span></span>
-<span class="line"><span style="color: #C8C8C8">redirect</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'/article/manage'</span><span style="color: #D4D4D4">,</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Vue2</span></span><br><span class="line"><span class="attr">path</span>: <span class="string">'/'</span>,</span><br><span class="line"><span class="attr">redirect</span>: <span class="string">'/home'</span>,</span><br><span class="line"></span><br><span class="line"><span class="comment">// Vue3</span></span><br><span class="line"><span class="attr">path</span>: <span class="string">'/'</span>,</span><br><span class="line"><span class="attr">redirect</span>: <span class="string">'/article/manage'</span>,</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>配置了路由模式为不带<code>#</code>符号的 <code>history</code> 历史模式</p>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">// Vue2</span></span>
-<span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">router</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">new</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">VueRouter</span><span style="color: #D4D4D4">({</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">mode:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">'history'</span><span style="color: #D4D4D4">,</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">routes</span></span>
-<span class="line"><span style="color: #D4D4D4">})</span></span>
-<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">router</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #6A9955">// Vue3</span></span>
-<span class="line"><span style="color: #569CD6">const</span><span style="color: #D4D4D4"> </span><span style="color: #4FC1FF">router</span><span style="color: #D4D4D4"> = </span><span style="color: #DCDCAA">createRouter</span><span style="color: #D4D4D4">({</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">// history: createWebHashHistory()</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">history:</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">createWebHistory</span><span style="color: #D4D4D4">(),</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">routes</span></span>
-<span class="line"><span style="color: #D4D4D4">})</span></span>
-<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">router</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Vue2</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>({</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">'history'</span>,</span><br><span class="line">  routes</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// Vue3</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>({</span><br><span class="line">  <span class="comment">// history: createWebHashHistory()</span></span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHistory</span>(),</span><br><span class="line">  routes</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 <p>为什么说满足以上条件就会触发这个问题呢？</p>
@@ -322,26 +305,7 @@ btf.addGlobalFn('pjaxSend', () => {
 <ul>
 <li>请注意 Nginx 的根目录最好<strong>不要是 C 盘</strong>，防止权限不足 </li>
 </ul>
-<figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">http {</span></span>
-<span class="line"><span style="color: #D4D4D4">	...略...</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">	server {</span></span>
-<span class="line"><span style="color: #D4D4D4">		...略...</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">    # 配置Nginx监听的项目根地址</span></span>
-<span class="line"><span style="color: #D4D4D4">    location / {</span></span>
-<span class="line"><span style="color: #D4D4D4">        try_files $uri $uri/ /index.html;</span></span>
-<span class="line"><span style="color: #D4D4D4">        # Vue3项目的打包目录</span></span>
-<span class="line"><span style="color: #D4D4D4">        root D:/your/own/dist;</span></span>
-<span class="line"><span style="color: #D4D4D4">        index index.html; # 默认首页文件名</span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4">    # 配置请求转发</span></span>
-<span class="line"><span style="color: #D4D4D4">    location /dev/ {</span></span>
-<span class="line"><span style="color: #D4D4D4">    	# 配置请求监听到之后的转发目标</span></span>
-<span class="line"><span style="color: #D4D4D4">    	proxy_pass http://your.domain.com</span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4">	}</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">http {</span><br><span class="line">	...略...</span><br><span class="line"></span><br><span class="line">	server {</span><br><span class="line">		...略...</span><br><span class="line"></span><br><span class="line">    # 配置Nginx监听的项目根地址</span><br><span class="line">    location / {</span><br><span class="line">        try_files $uri $uri/ /index.html;</span><br><span class="line">        # Vue3项目的打包目录</span><br><span class="line">        root D:/your/own/dist;</span><br><span class="line">        index index.html; # 默认首页文件名</span><br><span class="line">    }</span><br><span class="line">    # 配置请求转发</span><br><span class="line">    location /dev/ {</span><br><span class="line">    	# 配置请求监听到之后的转发目标</span><br><span class="line">    	proxy_pass http://your.domain.com</span><br><span class="line">    }</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>相关链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://nginx.org/en/download.html">Nginx 下载</a></p>
 </blockquote>
@@ -354,11 +318,7 @@ btf.addGlobalFn('pjaxSend', () => {
 <p>而且，我总不可能将 Nginx 也部署到 GitHub 上吧？</p>
 <h3 id="一个可能的方法"><a class="markdownIt-Anchor" href="#一个可能的方法"></a> 一个可能的方法</h3>
 <p>不过，ChatGPT 有一个它的解决办法：在 <code>dist</code> 打包<strong>目录内</strong>中加入一个 <code>404.html</code> 页面用于手动返回 <code>index.html</code></p>
-<figure class="shiki html"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">script</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">type</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">"text/javascript"</span><span style="color: #808080">&gt;</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">// 如果页面找不到路径，重定向到index.html，让Vue处理</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">var</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">redirect</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">location</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">pathname</span><span style="color: #D4D4D4">;</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">window</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">location</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">href</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">"/index.html?redirect="</span><span style="color: #D4D4D4"> + </span><span style="color: #9CDCFE">redirect</span><span style="color: #D4D4D4">;</span></span>
-<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">script</span><span style="color: #808080">&gt;</span></span></code></pre></div></div></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 如果页面找不到路径，重定向到index.html，让Vue处理</span></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">var</span> redirect = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">pathname</span>;</span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">"/index.html?redirect="</span> + redirect;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>我无法验证该方法的可行性，因为我已经将我的 <code>pages</code> 给我生成的域名用来部署了 <code>hexo</code> 博客，我的所有其他仓库的 <code>pages</code> 项目都是在该域名下，这导致我的 demo 无法使用该方法，我也就无法验证了。</p>
 <blockquote>
 <p>相关链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://runoneall.github.io/%E9%80%9A%E8%BF%87Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B.html">GitHub Pages 部署 hexo 静态博客</a> -<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid</a> 主题</p>
@@ -370,94 +330,12 @@ btf.addGlobalFn('pjaxSend', () => {
 <p>可自行搜索需要的免费 ssl 证书签发厂家，如果你的远程服务器没有域名，那么你需要的 ssl 证书为 ip 证书，我使用的正是这种类型，可以搜索：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://cn.bing.com/search?q=zerossl">zerossl</a></p>
 </blockquote>
 <p>我的 <code>Nginx</code> 配置示例如下：</p>
-<figure class="shiki text"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">#user  nobody;</span></span>
-<span class="line"><span style="color: #D4D4D4">worker_processes  4;</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">#error_log  logs/error.log;</span></span>
-<span class="line"><span style="color: #D4D4D4">#error_log  logs/error.log  notice;</span></span>
-<span class="line"><span style="color: #D4D4D4">#error_log  logs/error.log  info;</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">#pid        logs/nginx.pid;</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">events {</span></span>
-<span class="line"><span style="color: #D4D4D4">    worker_connections  1024;</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">http {</span></span>
-<span class="line"><span style="color: #D4D4D4">    # 监听 HTTP 请求并重定向到 HTTPS</span></span>
-<span class="line"><span style="color: #D4D4D4">    server {</span></span>
-<span class="line"><span style="color: #D4D4D4">        listen 80;  # 监听 HTTP</span></span>
-<span class="line"><span style="color: #D4D4D4">        server_name your_domain;  # 替换为你的域名或 IP</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        # 强制 HTTP 到 HTTPS 重定向</span></span>
-<span class="line"><span style="color: #D4D4D4">        return 301 https://$host$request_uri;</span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">    # 监听 HTTPS 请求</span></span>
-<span class="line"><span style="color: #D4D4D4">    server {</span></span>
-<span class="line"><span style="color: #D4D4D4">        listen 443 ssl;  # 监听 HTTPS</span></span>
-<span class="line"><span style="color: #D4D4D4">        server_name your_domain;  # 替换为你的域名或 IP</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        ssl_certificate C:/ssl/certificate.crt;  # SSL 证书路径</span></span>
-<span class="line"><span style="color: #D4D4D4">        ssl_certificate_key C:/ssl/private.key;  # SSL 私钥路径</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        ssl_protocols TLSv1.2 TLSv1.3;  # 启用的 SSL 协议</span></span>
-<span class="line"><span style="color: #D4D4D4">        ssl_ciphers HIGH:!aNULL:!MD5;  # 启用的加密算法</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        location / {</span></span>
-<span class="line"><span style="color: #D4D4D4">            root C:/my/test;  # 指定网站根目录</span></span>
-<span class="line"><span style="color: #D4D4D4">            index flag.txt;  # 默认主页文件</span></span>
-<span class="line"><span style="color: #D4D4D4">        }</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        location /api {</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_pass http://localhost:1337;  # 代理到 Strapi</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_http_version 1.1;  # 使用 HTTP/1.1</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header Upgrade $http_upgrade;  # 处理 WebSocket</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header Connection 'upgrade';  # 处理 WebSocket</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header Host $host;  # 传递主机头</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header X-Real-IP $remote_addr;  # 传递客户端真实 IP</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # 传递转发 IP</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header X-Forwarded-Proto $scheme;  # 传递原始协议</span></span>
-<span class="line"><span style="color: #D4D4D4">        }</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        location /upload {</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_pass http://localhost:1337;  # 代理到 Strapi</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_http_version 1.1;  # 使用 HTTP/1.1</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header Upgrade $http_upgrade;  # 处理 WebSocket</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header Connection 'upgrade';  # 处理 WebSocket</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header Host $host;  # 传递主机头</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header X-Real-IP $remote_addr;  # 传递客户端真实 IP</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # 传递转发 IP</span></span>
-<span class="line"><span style="color: #D4D4D4">            proxy_set_header X-Forwarded-Proto $scheme;  # 传递原始协议</span></span>
-<span class="line"><span style="color: #D4D4D4">        }</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">        # 其他 location 配置...</span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#user  nobody;</span><br><span class="line">worker_processes  4;</span><br><span class="line"></span><br><span class="line">#error_log  logs/error.log;</span><br><span class="line">#error_log  logs/error.log  notice;</span><br><span class="line">#error_log  logs/error.log  info;</span><br><span class="line"></span><br><span class="line">#pid        logs/nginx.pid;</span><br><span class="line"></span><br><span class="line">events {</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">http {</span><br><span class="line">    # 监听 HTTP 请求并重定向到 HTTPS</span><br><span class="line">    server {</span><br><span class="line">        listen 80;  # 监听 HTTP</span><br><span class="line">        server_name your_domain;  # 替换为你的域名或 IP</span><br><span class="line"></span><br><span class="line">        # 强制 HTTP 到 HTTPS 重定向</span><br><span class="line">        return 301 https://$host$request_uri;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    # 监听 HTTPS 请求</span><br><span class="line">    server {</span><br><span class="line">        listen 443 ssl;  # 监听 HTTPS</span><br><span class="line">        server_name your_domain;  # 替换为你的域名或 IP</span><br><span class="line"></span><br><span class="line">        ssl_certificate C:/ssl/certificate.crt;  # SSL 证书路径</span><br><span class="line">        ssl_certificate_key C:/ssl/private.key;  # SSL 私钥路径</span><br><span class="line"></span><br><span class="line">        ssl_protocols TLSv1.2 TLSv1.3;  # 启用的 SSL 协议</span><br><span class="line">        ssl_ciphers HIGH:!aNULL:!MD5;  # 启用的加密算法</span><br><span class="line"></span><br><span class="line">        location / {</span><br><span class="line">            root C:/my/test;  # 指定网站根目录</span><br><span class="line">            index flag.txt;  # 默认主页文件</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        location /api {</span><br><span class="line">            proxy_pass http://localhost:1337;  # 代理到 Strapi</span><br><span class="line">            proxy_http_version 1.1;  # 使用 HTTP/1.1</span><br><span class="line">            proxy_set_header Upgrade $http_upgrade;  # 处理 WebSocket</span><br><span class="line">            proxy_set_header Connection 'upgrade';  # 处理 WebSocket</span><br><span class="line">            proxy_set_header Host $host;  # 传递主机头</span><br><span class="line">            proxy_set_header X-Real-IP $remote_addr;  # 传递客户端真实 IP</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # 传递转发 IP</span><br><span class="line">            proxy_set_header X-Forwarded-Proto $scheme;  # 传递原始协议</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        location /upload {</span><br><span class="line">            proxy_pass http://localhost:1337;  # 代理到 Strapi</span><br><span class="line">            proxy_http_version 1.1;  # 使用 HTTP/1.1</span><br><span class="line">            proxy_set_header Upgrade $http_upgrade;  # 处理 WebSocket</span><br><span class="line">            proxy_set_header Connection 'upgrade';  # 处理 WebSocket</span><br><span class="line">            proxy_set_header Host $host;  # 传递主机头</span><br><span class="line">            proxy_set_header X-Real-IP $remote_addr;  # 传递客户端真实 IP</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # 传递转发 IP</span><br><span class="line">            proxy_set_header X-Forwarded-Proto $scheme;  # 传递原始协议</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        # 其他 location 配置...</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>我的 demo 使用的数据来自 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://strapi.nodejs.cn/dev-docs/quick-start">Strapi</a>（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/671975325">什么是 Strapi？</a>），我将该无头 CMS 部署到了和 Nginx 同一系统环境之下，于是有了上述配置。</p>
 <h2 id="部署到-github-pages"><a class="markdownIt-Anchor" href="#部署到-github-pages"></a> 部署到 GitHub Pages</h2>
 <h3 id="可选配置"><a class="markdownIt-Anchor" href="#可选配置"></a> 可选配置</h3>
 <p>终于到了激动人心的部署时刻，在打包之前请根据上文做好自己项目的配置，除此之外还有一个配置对于 vite 打包的项目<strong>可选</strong>：</p>
-<figure class="shiki js"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #6A9955">// vite.config.js</span></span>
-<span class="line"><span style="color: #C8C8C8">build</span><span style="color: #D4D4D4">: {</span></span>
-<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #C8C8C8">rollupOptions</span><span style="color: #D4D4D4">: {</span></span>
-<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C8C8C8">output</span><span style="color: #D4D4D4">: {</span></span>
-<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #C8C8C8">entryFileNames</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'js/[name]-[hash].js'</span><span style="color: #D4D4D4">, </span><span style="color: #6A9955">// 指定 JS 文件的输出路径及命名规则</span></span>
-<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #C8C8C8">chunkFileNames</span><span style="color: #D4D4D4">: </span><span style="color: #CE9178">'js/[name]-[hash].js'</span><span style="color: #D4D4D4">, </span><span style="color: #6A9955">// 指定分片文件的输出路径及命名规则</span></span>
-<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #C8C8C8">assetFileNames</span><span style="color: #D4D4D4">: (</span><span style="color: #9CDCFE">assetInfo</span><span style="color: #D4D4D4">) </span><span style="color: #569CD6">=&gt;</span><span style="color: #D4D4D4"> {</span></span>
-<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #6A9955">// 设置不同类型文件的输出路径及命名规则</span></span>
-<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">if</span><span style="color: #D4D4D4"> (</span><span style="color: #9CDCFE">assetInfo</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">type</span><span style="color: #D4D4D4"> === </span><span style="color: #CE9178">'asset'</span><span style="color: #D4D4D4"> &amp;&amp;</span><span style="color: #D16969"> /</span><span style="color: #D7BA7D">\.</span><span style="color: #CE9178">(</span><span style="color: #D16969">jpe</span><span style="color: #D7BA7D">?</span><span style="color: #D16969">g</span><span style="color: #DCDCAA">|</span><span style="color: #D16969">png</span><span style="color: #DCDCAA">|</span><span style="color: #D16969">gif</span><span style="color: #DCDCAA">|</span><span style="color: #D16969">svg</span><span style="color: #CE9178">)</span><span style="color: #DCDCAA">$</span><span style="color: #D16969">/</span><span style="color: #569CD6">i</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">test</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">assetInfo</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">name</span><span style="color: #D4D4D4">)) {</span></span>
-<span class="line"><span style="color: #D4D4D4">          </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">'img/[name].[hash].[ext]'</span><span style="color: #D4D4D4"> </span><span style="color: #6A9955">// 图像文件输出路径及命名规则</span></span>
-<span class="line"><span style="color: #D4D4D4">        }</span></span>
-<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">if</span><span style="color: #D4D4D4"> (</span><span style="color: #9CDCFE">assetInfo</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">type</span><span style="color: #D4D4D4"> === </span><span style="color: #CE9178">'asset'</span><span style="color: #D4D4D4"> &amp;&amp;</span><span style="color: #D16969"> /</span><span style="color: #D7BA7D">\.</span><span style="color: #CE9178">(</span><span style="color: #D16969">ttf</span><span style="color: #DCDCAA">|</span><span style="color: #D16969">woff</span><span style="color: #DCDCAA">|</span><span style="color: #D16969">woff2</span><span style="color: #DCDCAA">|</span><span style="color: #D16969">eot</span><span style="color: #CE9178">)</span><span style="color: #DCDCAA">$</span><span style="color: #D16969">/</span><span style="color: #569CD6">i</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">test</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">assetInfo</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">name</span><span style="color: #D4D4D4">)) {</span></span>
-<span class="line"><span style="color: #D4D4D4">          </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">'fonts/[name].[hash].[ext]'</span><span style="color: #D4D4D4"> </span><span style="color: #6A9955">// 字体文件输出路径及命名规则</span></span>
-<span class="line"><span style="color: #D4D4D4">        }</span></span>
-<span class="line"><span style="color: #D4D4D4">        </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">'[ext]/name1-[hash].[ext]'</span><span style="color: #D4D4D4"> </span><span style="color: #6A9955">// 其他资源文件输出路径及命名规则</span></span>
-<span class="line"><span style="color: #D4D4D4">      }</span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4">  }</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.js</span></span><br><span class="line"><span class="attr">build</span>: {</span><br><span class="line">  <span class="attr">rollupOptions</span>: {</span><br><span class="line">    <span class="attr">output</span>: {</span><br><span class="line">      <span class="attr">entryFileNames</span>: <span class="string">'js/[name]-[hash].js'</span>, <span class="comment">// 指定 JS 文件的输出路径及命名规则</span></span><br><span class="line">      <span class="attr">chunkFileNames</span>: <span class="string">'js/[name]-[hash].js'</span>, <span class="comment">// 指定分片文件的输出路径及命名规则</span></span><br><span class="line">      <span class="attr">assetFileNames</span>: <span class="function">(<span class="params">assetInfo</span>) =&gt;</span> {</span><br><span class="line">        <span class="comment">// 设置不同类型文件的输出路径及命名规则</span></span><br><span class="line">        <span class="keyword">if</span> (assetInfo.<span class="property">type</span> === <span class="string">'asset'</span> &amp;&amp; <span class="regexp">/\.(jpe?g|png|gif|svg)$/i</span>.<span class="title function_">test</span>(assetInfo.<span class="property">name</span>)) {</span><br><span class="line">          <span class="keyword">return</span> <span class="string">'img/[name].[hash].[ext]'</span> <span class="comment">// 图像文件输出路径及命名规则</span></span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (assetInfo.<span class="property">type</span> === <span class="string">'asset'</span> &amp;&amp; <span class="regexp">/\.(ttf|woff|woff2|eot)$/i</span>.<span class="title function_">test</span>(assetInfo.<span class="property">name</span>)) {</span><br><span class="line">          <span class="keyword">return</span> <span class="string">'fonts/[name].[hash].[ext]'</span> <span class="comment">// 字体文件输出路径及命名规则</span></span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'[ext]/name1-[hash].[ext]'</span> <span class="comment">// 其他资源文件输出路径及命名规则</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>添加上述 <code>build</code> 配置项，将会将打包后的 dist 目录按类型分 <code>css</code>、<code>js</code>、<code>img</code> 文件夹。当然<strong>只是可选，非必须</strong>。</p>
 <blockquote>
 <p>配置项参考文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_33522195/article/details/137021366">vue 项目配置 vite 打包输出文件夹（css，img，js，font）</a></p>
@@ -470,79 +348,92 @@ btf.addGlobalFn('pjaxSend', () => {
 </li>
 <li>
 <p>复制仓库的 ssh 链接（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/lezaizhu/p/13836164.html">我没有用过 git 进行远程仓库绑定</a>），例如：</p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git@github.com:yourUserName/article-management-admin.git</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git@github.com:yourUserName/article-management-admin.git</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>找到本地刚新鲜打包的 <code>dist</code> 文件夹，进入文件夹中，目录结构应该为：</p>
-<figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4"># vue-cli 打包结果</span></span>
-<span class="line"><span style="color: #D4D4D4">├─css</span></span>
-<span class="line"><span style="color: #D4D4D4">├─img</span></span>
-<span class="line"><span style="color: #D4D4D4">├─js</span></span>
-<span class="line"><span style="color: #D4D4D4">├─.nojekyll</span></span>
-<span class="line"><span style="color: #D4D4D4">├─favicon.ico</span></span>
-<span class="line"><span style="color: #D4D4D4">└─index.html</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4"># vite 打包结果</span></span>
-<span class="line"><span style="color: #D4D4D4">├─asset</span></span>
-<span class="line"><span style="color: #D4D4D4">├─favicon.ico</span></span>
-<span class="line"><span style="color: #D4D4D4">└─index.html</span></span></code></pre></div></div></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># vue-cli 打包结果</span><br><span class="line">├─css</span><br><span class="line">├─img</span><br><span class="line">├─js</span><br><span class="line">├─.nojekyll</span><br><span class="line">├─favicon.ico</span><br><span class="line">└─index.html</span><br><span class="line"></span><br><span class="line"># vite 打包结果</span><br><span class="line">├─asset</span><br><span class="line">├─favicon.ico</span><br><span class="line">└─index.html</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>在 <code>dist</code><strong>文件夹内</strong>，执行 git 仓库初始化</p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">init</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>添加所有文件到暂存区，并执行 <code>commit</code> 提交<br>
 注：<code>vite</code> 打包的项目可能会存在以<code>_</code>下划线开头的 <code>js</code> 文件，而 <code>GitHub Pages</code> 可能忽略该文件，导致项目 demo 无法找到文件报 404 错误，请检查你的 dist 文件夹下的 asset 目录中是否存在上述文件。如果确实存在，请在 <code>dist</code> 目录下创建一个空文件以禁用 GitHub Pages 的 Jekyll 默认处理行为，文件名为：<code>.nojekyll</code><br>
 参考文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/deajax/p/12430884.html">github pages 不能识别下划线开头的文件</a></p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">add</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">.</span></span>
-<span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">commit</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-m</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">"-Write down your message here."</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"-Write down your message here."</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>绑定远程仓库</p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">remote</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">add</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">origin</span><span style="color: #D4D4D4"> &lt;</span><span style="color: #CE9178">remote-ur</span><span style="color: #D4D4D4">l&gt;</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;remote-url&gt;</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>你可以将该分支（我的默认初始化分支为 main）先 push 推送出去，已有仓库的可以跳到 8</p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">push</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-u</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">origin</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">main</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin main</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>创建孤立的空分支 <code>gh-pages</code> 用于推送</p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">checkout</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">--orphan</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">gh-pages</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --orphan gh-pages</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>推送代码到 <code>gh-pages</code> 分支用于部署静态页面</p>
-<figure class="shiki bash"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">git</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">push</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-u</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">origin</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">gh-pages</span></span></code></pre></div></div></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin gh-pages</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>转到 GitHub 仓库页，请切换仓库分支为 <code>gh-pages</code> 并等待 <code>GitHub</code> 的 <code>check</code> 操作：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410110255530.png" alt="image-20241011025535410"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410110255530.png" alt="image-20241011025535410"></p>
 </li>
 <li>
 <p>GitHub 的 check 操作完成后，点击仓库 <code>Settings</code> 设置项，然后在左侧侧边栏选择 <code>Pages</code>，点击构建好的链接或者右边的 <code>Visit site</code> 即可。<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410110259820.png" alt="image-20241011025932731"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202410110259820.png" alt="image-20241011025932731"></p>
 </li>
 </ol>
 <p>小白篇到此，完结撒花 🎉🎉🎉</p>
 <p>有更多需求可以自行探索，相信你已经入门了。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/">4rozeN</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/posts/31657">https://4rozen.github.io/posts/31657</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://4rozeN.github.io" target="_blank">林之介 | 4rozeN</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a><a class="post-meta__tags" href="/tags/Vue/">Vue</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/posts/29897" title="DASCTF X CBCTF 2022 九月挑战赛 dino3d"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/CTF-WP/ctf-wp.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">DASCTF X CBCTF 2022 九月挑战赛 dino3d</div></div></div></a><a class="pagination-related  no-desc" href="/posts/47412" title="GO-SHOPPING 商城项目笔记"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">GO-SHOPPING 商城项目笔记</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related no-desc" href="/posts/47412" title="GO-SHOPPING 商城项目笔记"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-30</div><div class="info-item-2">GO-SHOPPING 商城项目笔记</div></div></div></a><a class="pagination-related no-desc" href="/posts/7498" title="uni-app 涉及到的生命周期小结"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/uniapp%E7%AC%94%E8%AE%B0.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-06</div><div class="info-item-2">uni-app 涉及到的生命周期小结</div></div></div></a><a class="pagination-related no-desc" href="/posts/35829" title="理解防抖"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E9%98%B2%E6%8A%96.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-06</div><div class="info-item-2">理解防抖</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="author-info-name">4rozeN</div><div class="author-info-description">Coding noob 自进阶</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="/rss2.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #ff6600;"></i></a><a class="social-icon" href="https://github.com/4rozeN" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="https://steamcommunity.com/id/430426/" rel="external nofollow noreferrer" target="_blank" title="Steam"><i class="fab fa-steam" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">最近在努力学习Fabric modding和其他内容，不知天地为何物。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E5%89%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text"> 打包前的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text"> 请求地址配置问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proxy-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text"> proxy 的缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E5%BC%95%E5%85%A5%E5%9C%B0%E5%9D%80%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text"> Js 引入地址配置问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E7%99%BD%E5%B1%8F%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> 解决打包后的白屏问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text"> 解决跨域问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">2.2.</span> <span class="toc-text"> 其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E5%88%B7%E6%96%B0-404-%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text"> 解决打包后的刷新 404 问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8-history-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text"> 怎么使用 history 模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#github-pages-%E4%B8%8A%E7%9A%84-history-%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="toc-number">4.1.</span> <span class="toc-text"> GitHub Pages 上的 history 路由模式可行性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%9C%8B%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text"> 我的看法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text"> 一个可能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8F%82%E8%80%83"><span class="toc-number">4.4.</span> <span class="toc-text"> 一个可能需要的配置参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0-github-pages"><span class="toc-number">5.</span> <span class="toc-text"> 部署到 GitHub Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE"><span class="toc-number">5.1.</span> <span class="toc-text"> 可选配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#github-%E9%83%A8%E7%BD%B2"><span class="toc-number">5.2.</span> <span class="toc-text"> Github 部署</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By 4rozeN</div><div class="footer_custom_text"><span id="performance-info"></span>
-</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.umd.js"></script><script src="https://s4.zstatic.net/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://s4.zstatic.net/ajax/libs/vanilla-lazyload/19.1.3/lazyload.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"><script>(async () => {
-  const showKatex = () => {
-    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">4rozeN</div><div class="post-copyright__author_desc">历历浮生，无非败而后成。</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://4rozen.github.io/posts/31657">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://4rozen.github.io/posts/31657')">Vue 项目打包并部署到 GitHub 为 demo</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://4rozen.github.io/posts/31657"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Vue 项目打包并部署到 GitHub 为 demo&amp;url=https://4rozen.github.io/posts/31657&amp;pic=https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://4rozeN.github.io" target="_blank">林之介4rozeN</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/%E5%89%8D%E7%AB%AF/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>前端<span class="categoryesPageCount">9</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E7%AC%94%E8%AE%B0/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>笔记<span class="tagsPageCount">4</span></a><a class="post-meta__box__tags" href="/tags/Vue/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Vue<span class="tagsPageCount">2</span></a></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/29897"><img class="prev-cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/CTF-WP/ctf-wp.webp" onerror="onerror=null;src='/img/avatar/emo.webp'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">DASCTF X CBCTF 2022 九月挑战赛 dino3d</div></div></a></div><div class="next-post pull-right"><a href="/posts/47412"><img class="next-cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp" onerror="onerror=null;src='/img/avatar/emo.webp'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GO-SHOPPING 商城项目笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/47412" title="GO-SHOPPING 商城项目笔记"><img class="cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/vue%E7%AC%94%E8%AE%B0.webp" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-30</div><div class="title">GO-SHOPPING 商城项目笔记</div></div></a></div><div><a href="/posts/7498" title="uni-app 涉及到的生命周期小结"><img class="cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/uniapp%E7%AC%94%E8%AE%B0.webp" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-09-06</div><div class="title">uni-app 涉及到的生命周期小结</div></div></a></div><div><a href="/posts/35829" title="理解防抖"><img class="cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E9%98%B2%E6%8A%96.webp" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-07-06</div><div class="title">理解防抖</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)" rel="external nofollow noreferrer">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div><div class="comment-tips" id="comment-tips"><span>✅ 你无需删除空行，直接评论以获取最佳展示效果</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="avatar"/></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">设计、开发</b>相关的问题和看法，还有<b style="color:#fff">其他文章</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/about"><h1 class="author-info__name">4rozeN</h1><div class="author-info__desc">历历浮生，无非败而后成。</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/4rozeN" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E5%89%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text"> 打包前的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text"> 请求地址配置问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proxy-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text"> proxy 的缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E5%BC%95%E5%85%A5%E5%9C%B0%E5%9D%80%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text"> Js 引入地址配置问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E7%99%BD%E5%B1%8F%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> 解决打包后的白屏问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text"> 解决跨域问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">2.2.</span> <span class="toc-text"> 其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E5%88%B7%E6%96%B0-404-%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text"> 解决打包后的刷新 404 问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8-history-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text"> 怎么使用 history 模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#github-pages-%E4%B8%8A%E7%9A%84-history-%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="toc-number">4.1.</span> <span class="toc-text"> GitHub Pages 上的 history 路由模式可行性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%9C%8B%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text"> 我的看法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text"> 一个可能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8F%82%E8%80%83"><span class="toc-number">4.4.</span> <span class="toc-text"> 一个可能需要的配置参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0-github-pages"><span class="toc-number">5.</span> <span class="toc-text"> 部署到 GitHub Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE"><span class="toc-number">5.1.</span> <span class="toc-text"> 可选配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#github-%E9%83%A8%E7%BD%B2"><span class="toc-number">5.2.</span> <span class="toc-text"> Github 部署</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/24974" title="从 JS 属性描述符再看 Vue 数据响应式原理"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/Vue%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86v2.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="从 JS 属性描述符再看 Vue 数据响应式原理"/></a><div class="content"><a class="title" href="/posts/24974" title="从 JS 属性描述符再看 Vue 数据响应式原理">从 JS 属性描述符再看 Vue 数据响应式原理</a><time datetime="2025-09-04T03:46:56.828Z" title="发表于 2025-09-04 11:46:56">2025-09-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1303" title="浏览器渲染原理"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="浏览器渲染原理"/></a><div class="content"><a class="title" href="/posts/1303" title="浏览器渲染原理">浏览器渲染原理</a><time datetime="2025-09-01T12:09:13.000Z" title="发表于 2025-09-01 20:09:13">2025-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/13214" title="事件循环"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="事件循环"/></a><div class="content"><a class="title" href="/posts/13214" title="事件循环">事件循环</a><time datetime="2025-09-01T04:50:13.000Z" title="发表于 2025-09-01 12:50:13">2025-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1" title="JS 属性描述符"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="JS 属性描述符"/></a><div class="content"><a class="title" href="/posts/1" title="JS 属性描述符">JS 属性描述符</a><time datetime="2025-09-01T03:50:13.000Z" title="发表于 2025-09-01 11:50:13">2025-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9104" title="js+css 实现 Hexo 博客 ripple 水波切换主题效果"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/Hexo/Hexo%E7%BE%8E%E5%8C%96.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="js+css 实现 Hexo 博客 ripple 水波切换主题效果"/></a><div class="content"><a class="title" href="/posts/9104" title="js+css 实现 Hexo 博客 ripple 水波切换主题效果">js+css 实现 Hexo 博客 ripple 水波切换主题效果</a><time datetime="2025-07-22T02:50:13.000Z" title="发表于 2025-07-22 10:50:13">2025-07-22</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" title="email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a><a class="deal_link" href="/rss2.xml" title="RSS"><i class="anzhiyufont anzhiyu-icon-rss"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" size="50px"/><a class="deal_link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" href="/copyright" title="CC"><i class="anzhiyufont anzhiyu-icon-copyright-line"></i></a></div><div id="anzhiyu-footer"><div class="footer-group"><div class="footer-title">服务</div><div class="footer-links"><a class="footer-item" title="十年之约" target="_blank" rel="noopener external nofollow noreferrer" href="https://www.foreverblog.cn/">十年之约</a><a class="footer-item" title="开往" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/travellings-link/travellings">开往</a></div></div><div class="footer-group"><div class="footer-title">主题</div><div class="footer-links"><a class="footer-item" title="文档" href="/docs/">文档</a><a class="footer-item" title="源码" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu">源码</a><a class="footer-item" title="更新日志" href="/update/">更新日志</a></div></div><div class="footer-group"><div class="footer-title">导航</div><div class="footer-links"><a class="footer-item" title="友链文章" href="/fcircle/">友链文章</a><a class="footer-item" title="Static Badge" target="_blank" rel="noopener external nofollow noreferrer" href="https://shields.io/badges">Static Badge</a></div></div><div class="footer-group"><div class="footer-title">协议</div><div class="footer-links"><a class="footer-item" title="隐私协议" href="/privacy/">隐私协议</a><a class="footer-item" title="Cookies" href="/cookies/">Cookies</a><a class="footer-item" title="版权协议" href="/copyright/">版权协议</a></div></div><div class="footer-group"><div class="footer-title-group"><div class="footer-title">友链</div><a class="random-friends-btn" id="footer-random-friends-btn" href="javascript:addFriendLinksInFooter();" rel="external nofollow noreferrer" title="换一批友情链接"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right"></i></a></div><div class="footer-links" id="friend-links-in-footer"></div></div></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title="博客框架为Hexo_v5.4.0"><img src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v5.4.0"/></a><a class="github-badge" target="_blank" href="https://blog.anheyu.com/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://www.zstatic.net/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站使用Zstatic为静态资源提供CDN加速" title="本站使用Zstatic为静态资源提供CDN加速"><img src="https://gitee.com/CSJ021005/new-pic-bed/raw/main/img/202509151905840.svg" alt="本站使用Zstatic为静态资源提供CDN加速"/></a><a class="github-badge" target="_blank" href="https://github.com/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2024 - 2025 By <a class="footer-bar-link" href="/" title="4rozeN" target="_blank">4rozeN</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://icp.gov.moe/?keyword=20254070" title="萌ICP备-20254070号">萌ICP备-20254070号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">7</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" rel="external nofollow noreferrer" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.anheyu.com/" title="我的博客"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico" alt="我的博客"/><span class="back-menu-item-text">我的博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Simple-Animated-Guns-Fixed" title="MC枪械模组"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="MC枪械模组"/><span class="back-menu-item-text">MC枪械模组</span></a><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Datapack_S.A.G" title="SAG数据包"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="SAG数据包"/><span class="back-menu-item-text">SAG数据包</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Bootstrap/" style="font-size: 0.88rem;">Bootstrap<sup>1</sup></a><a href="/tags/CSS/" style="font-size: 0.88rem;">CSS<sup>2</sup></a><a href="/tags/CTF-WP/" style="font-size: 0.88rem;">CTF-WP<sup>1</sup></a><a href="/tags/DOH/" style="font-size: 0.88rem;">DOH<sup>1</sup></a><a href="/tags/Fabric/" style="font-size: 0.88rem;">Fabric<sup>3</sup></a><a href="/tags/Fluid/" style="font-size: 0.88rem;">Fluid<sup>1</sup></a><a href="/tags/Git/" style="font-size: 0.88rem;">Git<sup>1</sup></a><a href="/tags/Hexo/" style="font-size: 0.88rem;">Hexo<sup>6</sup></a><a href="/tags/JavaScript/" style="font-size: 0.88rem;">JavaScript<sup>5</sup></a><a href="/tags/Minecraft/" style="font-size: 0.88rem;">Minecraft<sup>5</sup></a><a href="/tags/Modding/" style="font-size: 0.88rem;">Modding<sup>1</sup></a><a href="/tags/Strapi/" style="font-size: 0.88rem;">Strapi<sup>1</sup></a><a href="/tags/Vue/" style="font-size: 0.88rem;">Vue<sup>2</sup></a><a href="/tags/ejs/" style="font-size: 0.88rem;">ejs<sup>1</sup></a><a href="/tags/fluid/" style="font-size: 0.88rem;">fluid<sup>2</sup></a><a href="/tags/styl/" style="font-size: 0.88rem;">styl<sup>1</sup></a><a href="/tags/%E6%97%A5%E5%A4%9C%E5%88%87%E6%8D%A2%E8%83%8C%E6%99%AF/" style="font-size: 0.88rem;">日夜切换背景<sup>1</sup></a><a href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/" style="font-size: 0.88rem;">模组开发<sup>1</sup></a><a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 0.88rem;">笔记<sup>4</sup></a><a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 0.88rem;">美化<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="438394768" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.2"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://music.163.com/playlist&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.umd.js"></script><script src="https://s4.zstatic.net/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script async src="/anzhiyu/random.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      onCommentLoaded: () => {
+        anzhiyu.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
   }
 
-  if (!window.katex_js_css) {
-    window.katex_js_css = true
-    await btf.getCSS('https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css')
-    if (true) {
-      await btf.getScript('https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/copy-tex.min.js')
-    }
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(runFn,0)
+    else getScript('https://s4.zstatic.net/ajax/libs/twikoo/1.6.44/twikoo.min.js').then(runFn)
   }
-
-  showKatex()
-})()</script><script>(() => {
-  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
-  const option = null
 
   const getCount = () => {
     const countELement = document.getElementById('twikoo-count')
@@ -559,67 +450,18 @@ btf.addGlobalFn('pjaxSend', () => {
     })
   }
 
-  const init = (el = document, path = location.pathname) => {
-    twikoo.init({
-      el: el.querySelector('#twikoo-wrap'),
-      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
-      region: '',
-      onCommentLoaded: () => {
-        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
-      },
-      ...option,
-      path: isShuoshuo ? path : (option && option.path) || path
-    })
-
+  const runFn = () => {
+    init();
     
-
-    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
-      if (el.children.length) {
-        el.innerHTML = ''
-        el.classList.add('no-comment')
-      }
-    })
-  }
-
-  const loadTwikoo = (el, path) => {
-    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
-    else btf.getScript('https://s4.zstatic.net/ajax/libs/twikoo/1.6.44/twikoo.min.js').then(() => init(el, path))
-  }
-
-  if (isShuoshuo) {
-    'Twikoo' === 'Twikoo'
-      ? window.shuoshuoComment = { loadComment: loadTwikoo }
-      : window.loadOtherComment = loadTwikoo
-    return
   }
 
   if ('Twikoo' === 'Twikoo' || !true) {
-    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
-    else loadTwikoo()
+    if (true) anzhiyu.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else {
+      loadTwikoo()
+    }
   } else {
     window.loadOtherComment = loadTwikoo
   }
-})()</script></div><script src="/js/rightmenu.js"></script><script src="https://s4.zstatic.net/ajax/libs/color-thief/2.6.0/color-thief.umd.js" integrity="sha512-Qsp00gBIzIqLPECogMy5bQ6uOsMig9lc37A8qEHMvSze65UK21DHONbfSTY09zE9V8C0tQN+ldPU6w0wlBSfcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="/js/dynamic-cover.js"></script><script src="/js/ripple-toggle.js"></script><script src="/js/watch.js"></script><script src="/js/butterfly.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://s4.zstatic.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
-<script src="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.js"></script>
-
-  <script>
-  const CODE_CONFIG = {
-    beautify: true,
-    highlightCopy: true,
-    highlightLang: true,
-    highlightHeightLimit: 360,
-    isHighlightShrink: false,
-    copy: {
-      success: '复制成功',
-      error: '复制失败',
-      noSupport: '浏览器不支持复制功能',
-    }
-  };
-  console.log(
-    `%c hexo-shiki-plugin %c v1.0.27 %c https://github.com/nova1751/hexo-shiki-plugin`,
-    "color: #fff; background: #5f5f5f",
-    "color: #fff; background: #80c8f8",
-    ""
-  );
-  </script>
-  <!-- hexo injector body_end end --></body></html>
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.0.0/waterfall/waterfall.min.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.min.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://s4.zstatic.net/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/meting/2.0.1/Meting.min.js"></script><script charset="UTF-8" src="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.1.5/accesskey/accesskey.min.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

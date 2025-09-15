@@ -1,201 +1,220 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置 | 林之介 | 4rozeN</title><meta name="author" content="4rozeN"><meta name="copyright" content="4rozeN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一直以来想学着做一个mod供自己玩，于是在此记录学习过程，鞭策自己学下去。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置">
-<meta property="og:url" content="https://4rozen.github.io/posts/21458">
-<meta property="og:site_name" content="林之介 | 4rozeN">
-<meta property="og:description" content="一直以来想学着做一个mod供自己玩，于是在此记录学习过程，鞭策自己学下去。">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp">
-<meta property="article:published_time" content="2025-07-05T00:50:13.000Z">
-<meta property="article:modified_time" content="2025-07-26T07:46:14.563Z">
-<meta property="article:author" content="4rozeN">
-<meta property="article:tag" content="Fabric">
-<meta property="article:tag" content="Minecraft">
-<meta property="article:tag" content="Modding">
-<meta property="article:tag" content="模组开发">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置",
-  "url": "https://4rozen.github.io/posts/21458",
-  "image": "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp",
-  "datePublished": "2025-07-05T00:50:13.000Z",
-  "dateModified": "2025-07-26T07:46:14.563Z",
-  "author": [
-    {
-      "@type": "Person",
-      "name": "4rozeN",
-      "url": "https://4rozen.github.io/"
-    }
-  ]
-}</script><link rel="shortcut icon" href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico"><link rel="canonical" href="https://4rozen.github.io/posts/21458"><link rel="preconnect" href="//cdn.jsdelivr.net"/><meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88"/><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
-    (() => {
-      
-    const saveToLocal = {
-      set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
-      },
-      get: key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return value
-      }
-    }
-
-    window.btf = {
-      saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
-        }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
-        }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
-      addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
-        const globalFn = parent.globalFn || {}
-        globalFn[key] = globalFn[key] || {}
-        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
-        parent.globalFn = globalFn
-      }
-    }
-  
-      
-      const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-
-      btf.activateDarkMode = activateDarkMode
-      btf.activateLightMode = activateLightMode
-
-      const theme = saveToLocal.get('theme')
-    
-          const hour = new Date().getHours()
-          const isNight = hour <= 6 || hour >= 18
-          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
-          else theme === 'light' ? activateLightMode() : activateDarkMode()
-        
-      
-      
-    const detectApple = () => {
-      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-  
-    })()
-  </script><script>const GLOBAL_CONFIG = {
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置 | 林之介4rozeN</title><meta name="keywords" content="Fabric,Minecraft,Modding,模组开发"><meta name="author" content="4rozeN"><meta name="copyright" content="4rozeN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置"><meta name="application-name" content="Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置"><meta property="og:url" content="https://4rozen.github.io/posts/21458.html"><meta property="og:site_name" content="林之介4rozeN"><meta property="og:description" content="前言 我重生了，上一世我没能坚持学习 Fabric Modding 导致未能幸存，这一世我要拿回属于我的一切😤 一直以来想学着做一个 mod 供自己玩，于是在此记录学习过程，鞭策自己学下去。  平台：Windows11 Java 版本：Java 21 Minecraft 版本：1.20.1 Gi"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp"><meta property="article:author" content="4rozeN"><meta property="article:tag" content="blog, programming, CTF, Vue, backend, Git, Uni-app"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp"><meta name="description" content="前言 我重生了，上一世我没能坚持学习 Fabric Modding 导致未能幸存，这一世我要拿回属于我的一切😤 一直以来想学着做一个 mod 供自己玩，于是在此记录学习过程，鞭策自己学下去。  平台：Windows11 Java 版本：Java 21 Minecraft 版本：1.20.1 Gi"><link rel="shortcut icon" href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico"><link rel="canonical" href="https://4rozen.github.io/posts/21458.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><meta name="google-site-verification" content="ggjgSh07y0_dbMruvoZhis-cgZn-t6ujdG7N1z7ZA88"/><meta name="msvalidate.01" content="F0E34077A7291AC38724F6A3804B1B29"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"等你回来(∠・ω< )⌒☆","backTitle":null},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
   root: '/',
+  preloader: {"source":1},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: undefined,
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
-  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
-  highlight: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"bottom","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
   copy: {
     success: '复制成功',
-    error: '复制失败',
+    error: '复制错误',
     noSupport: '浏览器不支持'
   },
   relativeDate: {
     homepage: false,
+    simplehomepage: true,
     post: false
   },
   runtime: '天',
-  dateSuffix: {
+  date_suffix: {
     just: '刚刚',
     min: '分钟前',
     hour: '小时前',
     day: '天前',
     month: '个月前'
   },
-  copyright: {"limitCount":100,"languages":{"author":"作者: 4rozeN","link":"链接: ","source":"来源: 林之介 | 4rozeN","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":120,"languages":{"author":"作者: 4rozeN","link":"链接: ","source":"来源: 林之介4rozeN","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
   lightbox: 'fancybox',
-  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1.2/dist/fjGallery.min.css'
+    }
   },
   isPhotoFigcaption: false,
-  islazyloadPlugin: true,
+  islazyload: false,
   isAnchor: true,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
+  shortcutKey: undefined,
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '林之介4rozeN',
   title: 'Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置',
+  postAI: '',
+  pageFillDescription: ' 前言,  Fabric 模板项目,  项目配置,  安装 Minecraft Developent 插件,  Mod ID,  修改 mod 版本（可选）,  Client 初始化,  生成 Minecraft 源码,  检查 JAVA_HOME 版本,  生成源码,  如何查看源码,  运行 Minecraft 测试,  Git 版本控制前言我重生了上一世我没能坚持学习导致未能幸存这一世我要拿回属于我的一切一直以来想学着做一个供自己玩于是在此记录学习过程鞭策自己学下去平台版本版本版本以下将简称为模板项目推荐使用官方提供的模板项目开始学习你可以点击进行跳转版本为并且在高级选项中将勾选上取消勾选能让我们可以构建合成配方等资源取消勾选拆分客户端和服务端代码是因为初学者基本搞不清哪部分是服务器端代码哪部分是客户端代码之后我们将手动进行拆解下载下来将压缩包解压将目录中的和删除前者为文件后者为文件夹接着我们用将其作为工程项目打开项目配置在使用将项目打开之后优先检查以下设置项目结构将设置为受支持的版本现在模板项目部分依赖已经要求为所以我们选择为设置将用户主目录从盘更改到其他你喜欢的路径并检查使用的版本是否为都确认无误之后别忘记点击应用并确定更改在打开项目配置设置的这段时间会自动触发下载依赖构建速度取决于你的网络链接状态构建完成时你将会在日志输出界面看到的字样若你的为或其他版本你可能会在构建的时候遇到下面的报错该报错的原因是插件版本内部依赖了的功能或库你可以在和中找到相关的版本说明为什么要使用该版本文档是这么写的推荐的版本是这通常定义在您的文件顶部附近既然使用了相对应的也把里面的相关配置项也修改为对应的版本好了接着在项目视图的选项中将平展相关选项和压缩空的中间软件包取消勾选这将使得不再将下的文件夹显示为格式方便我们掌握目录层级情况可选但推荐做的一件事默认使用来构建你的项目而这在是不必要的而且会导致构建时间变长以及热交换相关的种种问题以下是让使用默认编译器的步骤在页面里打开设置将使用此工具构建和运行和使用此工具运行测试选项改成不幸的是目前还不能给使用此工具构建和运行和使用此工具运行测试设置一个全内的默认值所以这些每创建一个新项目都得重复上述步骤安装插件如果你使用你可以使用插件该插件支持自动生成项目以及一些与有关的功能如检查生成访问器和影子字段复制目标参考描述符你可以在文件设置插件中打开内部插件浏览器找到并安装这个插件只需要在搜索框里搜索选择第一个结果安装即可的是该的唯一标识且该只能为数字小写字母下划线和短横线组成的字符串最小长度为在中检查是否已经将的进行引入关键语句此将在后面的开发过程中多次引用所以这一步骤十分重要接着在文件中查看是否正确相关配置是否正确和项暂不用修改等以后开发涉及到了视情况修改修改版本可选我比较喜欢语义化版本控制由于目前我们只是在配置初始化阶段所以在中将进行修改以为例这种命名的基本语法是名称含义主版本有不兼容性变更时递增比如移除重构核心逻辑次版本添加了新功能但向后兼容补丁版本修复了无新增功能向后兼容具体来说版本号说明主版本添加了个次要功能修复了个尚在早期开发阶段有了基本功能刚起步甚至还不一定稳定大版本更新可能有重大变更或破坏性更改对于我的版本号主要是为了声明所兼容的版本由于我们修改了文件这会影响到构建所以需要重新加载一遍项目这将花费一些时间初始化前面在模板项目生成的时候我们取消了勾选拆分客户端和服务器端这里尝试手动初始化客户端在中修改节点内容根据这项修改我们就需要在文件夹下新建类刚创建好该文件代码内容为我们将修改为实现接口的类方法暂时不需要做任何事生成源码的源码对我们的开发有着很高的参考价值这将帮助我们理解各种写法检查版本请确认自己的的值指向的是而非其他版本启动的时候默认使用自己找到的如果系统上现在有多个安装会优先使用以下路径之一来选择环境变量优先级最高中指定的系统中的版本最后才使用对我来说我的环境变量设为了这将和我的等格式的环境变量进行配合一般来说终端将会输出这是正常的输出但如果你的环境变量设置的是只是将中的相关配置为了的话那么可能在终端中执行相关命令例如此时读取到的还是而执行却能正确输出为版本这十分诡异对吧实际上和读取的项是不一样的这一点很容易搞混尤其是初学者具体来说读取的是环境变量的值如果是那么就会得到读取的是环境变量的值命令会从中按照先后顺序找到一个有效目录用以执行命令这与设置中设置的是不相关的如果你确实是上面的诡异情况请在更改指向的值之后重启再另起一个终端窗口生成源码唤起终端窗口默认唤起的是执行下面的命令下载成功将输出如何查看源码在文件中将鼠标选中并按下鼠标中键这将跳转至我们刚才下载的源码如下图所示注意打开的应该是带注释的源码如果你的版本和我不同可能打开的是默认的帮你反编译之后的代码你需要手动选择代码上方的蓝条的也就是选择源如果选择源之后代码上方的蓝条变成了红条这也是正常的运行测试现在我们就可以尝试运行一次来测试我们的一切配置代码是否正确了找到栏选择如下图所示不出意外出来的窗口之后我们创建一个存档进入存档试试功能只要在控制台中的日志没有什么错误就行版本控制我十分推荐对项目进行版本控制这里使用的是注册账号就不讲了自己搜索就行由于我们已经在使用那么直接用的版本控制选项就行旧版本可能叫将会弹出一个对话框让你填相关信息仓库私有与否顾名思义私有别人就看不到如果你想和别人协作或者有别的考虑就可以公开接着进行第一次提交确认文件无误就可以提交并推送了如果只是提交则是只提交到了本地仓库而是没有的此后每次对相关文件的更改都将进行记录',
+  isPost: true,
+  isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  pageType: 'post'
-}</script><meta name="referrer" content="no-referrer" /><link rel="shortcut icon" href="/img/ico/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@300..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/figure.css"><link rel="stylesheet" href="/css/butterfly.css"><link rel="stylesheet" href="/css/ripple-toggle.css"><link rel="stylesheet" href="/css/rightmenu.css"><!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.css">
-<style>:root{--hl-color:#abb2bf;--hl-bg:#282c34;--hltools-bg:#21252b;--hltools-color:#bbbbbc;--hlnumber-bg:#282c34;--hlnumber-color:#495162;--hlscrollbar-bg:#373c47;--hlexpand-bg:linear-gradient(180deg,rgba(40,44,52,0.1),rgba(40,44,52,0.9))}</style>
-    <style>
-    .code-expand-btn:not(.expand-done) ~ div.codeblock,
-    .code-expand-btn:not(.expand-done) ~ * div.codeblock {
-      overflow: hidden;
-      height: 360px;
-    }
-    </style>
-  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="林之介 | 4rozeN" type="application/rss+xml">
-</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  postUpdate: '2025-07-26 15:46:14',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 8 || hour >= 22
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="referrer" content="no-referrer" /><link rel="shortcut icon" href="/img/ico/favicon.ico" type="image/x-icon"><link rel="stylesheet" href="/css/anzhiyu.css"><link href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@300..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="林之介4rozeN" type="application/rss+xml">
+</head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
   endLoading: () => {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loading-box').classList.add("loaded")
+    document.getElementById('loading-box').classList.add("loaded");
   },
   initLoading: () => {
-    document.body.style.overflow = '';
     document.getElementById('loading-box').classList.remove("loaded")
-
   }
 }
 window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
 
 if (false) {
   document.addEventListener('pjax:send', () => { preloader.initLoading() })
   document.addEventListener('pjax:complete', () => { preloader.endLoading() })
-}</script><script>window.paceOptions = {
-  restartOnPushState: false
+}</script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.anheyu.com/" title="我的博客"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico" alt="我的博客"/><span class="back-menu-item-text">我的博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Simple-Animated-Guns-Fixed" title="MC枪械模组"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="MC枪械模组"/><span class="back-menu-item-text">MC枪械模组</span></a><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Datapack_S.A.G" title="SAG数据包"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="SAG数据包"/><span class="back-menu-item-text">SAG数据包</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">林之介4rozeN</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
 }
-
-btf.addGlobalFn('pjaxSend', () => {
-  Pace.restart()
-}, 'pace_restart')
-
-</script><link rel="stylesheet" href="/css/progress_bar.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="/img/nav/mySVG.svg" alt="Logo"></a><a class="nav-page-title" href="/"><span class="site-name">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类列表</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签列表</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 个人</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-05T00:50:13.000Z" title="发表于 2025-07-05 08:50:13">2025-07-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-26T07:46:14.563Z" title="更新于 2025-07-26 15:46:14">2025-07-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Minecraft/">Minecraft</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:15,&quot;messagePrev&quot;:&quot;文章最后编辑于&quot;,&quot;messageNext&quot;:&quot;天前。&quot;,&quot;postUpdate&quot;:&quot;2025-07-26 15:46:14&quot;}" hidden></div><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)" rel="external nofollow noreferrer">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/API/" style="font-size: 1.05rem;">API<sup>1</sup></a><a href="/tags/Bootstrap/" style="font-size: 1.05rem;">Bootstrap<sup>1</sup></a><a href="/tags/Bug/" style="font-size: 1.05rem;">Bug<sup>1</sup></a><a href="/tags/CSS/" style="font-size: 1.05rem;">CSS<sup>2</sup></a><a href="/tags/CTF-WP/" style="font-size: 1.05rem;">CTF-WP<sup>1</sup></a><a href="/tags/DOH/" style="font-size: 1.05rem;">DOH<sup>1</sup></a><a href="/tags/Fabric/" style="font-size: 1.05rem;">Fabric<sup>3</sup></a><a href="/tags/Fluid/" style="font-size: 1.05rem;">Fluid<sup>1</sup></a><a href="/tags/Git/" style="font-size: 1.05rem;">Git<sup>1</sup></a><a href="/tags/GitHubActions/" style="font-size: 1.05rem;">GitHubActions<sup>1</sup></a><a href="/tags/Hexo/" style="font-size: 1.05rem;">Hexo<sup>6</sup></a><a href="/tags/JS%E8%AE%A1%E6%97%B6%E5%99%A8/" style="font-size: 1.05rem;">JS计时器<sup>1</sup></a><a href="/tags/JavaScript/" style="font-size: 1.05rem;">JavaScript<sup>5</sup></a><a href="/tags/Minecraft/" style="font-size: 1.05rem;">Minecraft<sup>5</sup></a><a href="/tags/Modding/" style="font-size: 1.05rem;">Modding<sup>1</sup></a><a href="/tags/PHP/" style="font-size: 1.05rem;">PHP<sup>1</sup></a><a href="/tags/React/" style="font-size: 1.05rem;">React<sup>1</sup></a><a href="/tags/Strapi/" style="font-size: 1.05rem;">Strapi<sup>1</sup></a><a href="/tags/Vue/" style="font-size: 1.05rem;">Vue<sup>2</sup></a><a href="/tags/Windows11/" style="font-size: 1.05rem;">Windows11<sup>1</sup></a><a href="/tags/ejs/" style="font-size: 1.05rem;">ejs<sup>1</sup></a><a href="/tags/fluid/" style="font-size: 1.05rem;">fluid<sup>2</sup></a><a href="/tags/git/" style="font-size: 1.05rem;">git<sup>1</sup></a><a href="/tags/github/" style="font-size: 1.05rem;">github<sup>1</sup></a><a href="/tags/http/" style="font-size: 1.05rem;">http<sup>1</sup></a><a href="/tags/indexnow/" style="font-size: 1.05rem;">indexnow<sup>1</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>1</sup></a><a href="/tags/ssh/" style="font-size: 1.05rem;">ssh<sup>1</sup></a><a href="/tags/styl/" style="font-size: 1.05rem;">styl<sup>1</sup></a><a href="/tags/uni-app/" style="font-size: 1.05rem;">uni-app<sup>1</sup></a><a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" style="font-size: 1.05rem;">事件循环<sup>1</sup></a><a href="/tags/%E5%85%A8%E6%88%90%E5%B0%B1%E5%B8%AE%E6%89%8B/" style="font-size: 1.05rem;">全成就帮手<sup>1</sup></a><a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 1.05rem;">反序列化<sup>1</sup></a><a href="/tags/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/" style="font-size: 1.05rem;">属性描述符<sup>2</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5/" style="font-size: 1.05rem;">异步<sup>1</sup></a><a href="/tags/%E6%97%A5%E5%A4%9C%E5%88%87%E6%8D%A2%E8%83%8C%E6%99%AF/" style="font-size: 1.05rem;">日夜切换背景<sup>1</sup></a><a href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/" style="font-size: 1.05rem;">模组开发<sup>1</sup></a><a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 1.05rem;">笔记<sup>4</sup></a><a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 1.05rem;">美化<sup>3</sup></a><a href="/tags/%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%BE%93%E5%85%A5/" style="font-size: 1.05rem;">非预期输入<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date">九月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">六月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">十一月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);" rel="external nofollow noreferrer"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/Minecraft/" itemprop="url">Minecraft</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Fabric/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Fabric</span></a><a class="article-meta__tags" href="/tags/Minecraft/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Minecraft</span></a><a class="article-meta__tags" href="/tags/Modding/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Modding</span></a><a class="article-meta__tags" href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>模组开发</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-07-05T00:50:13.000Z" title="发表于 2025-07-05 08:50:13">2025-07-05</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-07-26T07:46:14.563Z" title="更新于 2025-07-26 15:46:14">2025-07-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">2.9k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>10分钟</span></span></div></div></div><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://4rozen.github.io/posts/21458"><header><a class="post-meta-categories" href="/categories/Minecraft/" itemprop="url">Minecraft</a><a href="/tags/Fabric/" tabindex="-1" itemprop="url">Fabric</a><a href="/tags/Minecraft/" tabindex="-1" itemprop="url">Minecraft</a><a href="/tags/Modding/" tabindex="-1" itemprop="url">Modding</a><a href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/" tabindex="-1" itemprop="url">模组开发</a><h1 id="CrawlerTitle" itemprop="name headline">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">4rozeN</span><time itemprop="dateCreated datePublished" datetime="2025-07-05T00:50:13.000Z" title="发表于 2025-07-05 08:50:13">2025-07-05</time><time itemprop="dateCreated datePublished" datetime="2025-07-26T07:46:14.563Z" title="更新于 2025-07-26 15:46:14">2025-07-26</time></header><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css"><h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
 <p><s>我重生了，上一世我没能坚持学习 Fabric Modding 导致未能幸存，这一世我要拿回属于我的一切😤</s></p>
 <p>一直以来想学着做一个 mod 供自己玩，于是在此记录学习过程，鞭策自己学下去。</p>
 <blockquote>
@@ -207,67 +226,33 @@ IDE：IntelliJ IDEA Community Edition 2025.1.3（以下将简称为 IDEA）</p>
 </blockquote>
 <h2 id="fabric模板项目"><a class="markdownIt-Anchor" href="#fabric模板项目"></a> Fabric 模板项目</h2>
 <p>推荐使用 Fabric 官方提供的模板项目开始学习。你可以<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fabricmc.net/develop/template/">点击</a>进行跳转：</p>
-<p><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231742309.png" alt="image-20250723174244140"></p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231742309.png" alt="image-20250723174244140"></p>
 <p>Minecraft 版本为 1.20.1 并且在高级选项中，将 <code>Data Generation</code> 勾选上，取消勾选 <code>Split client and common sources</code>。<code>Data Generation</code> 能让我们可以构建合成配方等资源，取消勾选拆分客户端和服务端代码是因为，初学者基本搞不清哪部分是服务器端代码哪部分是客户端代码，之后我们将手动进行拆解。</p>
 <p>下载下来将压缩包解压，将目录中的 <code>LICENSE</code> 和<code>.github</code> 删除（前者为文件，后者为文件夹）。接着我们用 IDEA 将其作为工程项目打开。</p>
 <h2 id="项目配置"><a class="markdownIt-Anchor" href="#项目配置"></a> 项目配置</h2>
 <p>在使用 IDEA 将项目打开之后，优先检查以下设置：</p>
 <ol>
 <li>项目结构：将 SDK 设置为受支持的版本，现在 Fabric 模板项目部分依赖已经要求 SDK 为 21 所以我们选择为 21<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231800157.png" alt="image-20250723180039128"></li>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231800157.png" alt="image-20250723180039128"></li>
 <li>IDEA 设置：将 Gradle 用户主目录从 C 盘更改到其他你喜欢的路径，并检查 Gradle 使用的 JVM 版本是否为 SDK 21<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231802505.png" alt="image-20250723180235470"></li>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231802505.png" alt="image-20250723180235470"></li>
 </ol>
 <p>都确认无误之后，别忘记点击应用并确定更改。</p>
 <p>在打开项目，配置设置的这段时间，IDEA 会自动触发 gradle 下载依赖，构建速度取决于你的网络链接状态。构建完成时，你将会在日志输出界面看到 <code>BUILD SUCCESSFUL</code> 的字样：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231805501.png" alt="image-20250723180551406"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231805501.png" alt="image-20250723180551406"></p>
 <p>若你的 SDK 为 java 17 或其他版本，你可能会在构建的时候遇到下面的报错：</p>
-<figure class="shiki sh"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">A</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">problem</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">occurred</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">configuring</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">root</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">project</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">'tutorial-mod-template-1.20.1'.</span></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Could not resolve all artifacts </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> configuration </span><span style="color: #CE9178">'classpath'</span><span style="color: #D4D4D4">.</span></span>
-<span class="line"><span style="color: #D4D4D4">   &gt; </span><span style="color: #DCDCAA">Could</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">not</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">resolve</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">net.fabricmc:fabric-loom:1.11-SNAPSHOT.</span></span>
-<span class="line"><span style="color: #D4D4D4">     </span><span style="color: #DCDCAA">Required</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">by:</span></span>
-<span class="line"><span style="color: #D4D4D4">         </span><span style="color: #DCDCAA">root</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">project</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">:</span><span style="color: #D4D4D4"> &gt; </span><span style="color: #CE9178">fabric-loom:fabric-loom.gradle.plugin:1.11-SNAPSHOT:20250708.081131-4</span></span>
-<span class="line"><span style="color: #D4D4D4">      &gt; </span><span style="color: #DCDCAA">Dependency</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">requires</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">at</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">least</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">JVM</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">runtime</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">version</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">21</span><span style="color: #CE9178">.</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">This</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">build</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">uses</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">a</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">Java</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">17</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">JVM.</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4">* Try:</span></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Run this build using a Java 21 or newer JVM.</span></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Run with --stacktrace option to get the stack trace.</span></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Run with --info or --debug option to get more log output.</span></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Run with --scan to get full insights.</span></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Get more help at https://help.gradle.org.</span></span></code></pre></div></div></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">A problem occurred configuring root project <span class="string">'tutorial-mod-template-1.20.1'</span>.</span><br><span class="line">&gt; Could not resolve all artifacts <span class="keyword">for</span> configuration <span class="string">'classpath'</span>.</span><br><span class="line">   &gt; Could not resolve net.fabricmc:fabric-loom:1.11-SNAPSHOT.</span><br><span class="line">     Required by:</span><br><span class="line">         root project : &gt; fabric-loom:fabric-loom.gradle.plugin:1.11-SNAPSHOT:20250708.081131-4</span><br><span class="line">      &gt; Dependency requires at least JVM runtime version 21. This build uses a Java 17 JVM.</span><br><span class="line"></span><br><span class="line">* Try:</span><br><span class="line">&gt; Run this build using a Java 21 or newer JVM.</span><br><span class="line">&gt; Run with --stacktrace option to get the stack trace.</span><br><span class="line">&gt; Run with --info or --debug option to get more <span class="built_in">log</span> output.</span><br><span class="line">&gt; Run with --scan to get full insights.</span><br><span class="line">&gt; Get more <span class="built_in">help</span> at https://help.gradle.org.</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>该报错的原因是 <code>fabric-loom</code> 插件版本内部依赖了 Java 21+ 的功能或库，你可以在 <code>build.gradle</code> 和 <code>gradle.properties</code> 中找到相关的 <code>fabric-loom</code> 版本说明：</p>
-<figure class="shiki"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">// build.gradle</span></span>
-<span class="line"><span style="color: #D4D4D4">plugins {</span></span>
-<span class="line"><span style="color: #D4D4D4">	id 'fabric-loom' version "${loom_version}"</span></span>
-<span class="line"><span style="color: #D4D4D4">	id 'maven-publish'</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span>
-<span class="line"><span style="color: #D4D4D4"></span></span>
-<span class="line"><span style="color: #D4D4D4">//gradle.properties</span></span>
-<span class="line"><span style="color: #D4D4D4">minecraft_version=1.20.1</span></span>
-<span class="line"><span style="color: #D4D4D4">yarn_mappings=1.20.1+build.10</span></span>
-<span class="line"><span style="color: #D4D4D4">loader_version=0.16.14</span></span>
-<span class="line"><span style="color: #D4D4D4">loom_version=1.11-SNAPSHOT</span></span></code></pre></div></div></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// build.gradle</span><br><span class="line">plugins {</span><br><span class="line">	id 'fabric-loom' version "${loom_version}"</span><br><span class="line">	id 'maven-publish'</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">//gradle.properties</span><br><span class="line">minecraft_version=1.20.1</span><br><span class="line">yarn_mappings=1.20.1+build.10</span><br><span class="line">loader_version=0.16.14</span><br><span class="line">loom_version=1.11-SNAPSHOT</span><br></pre></td></tr></tbody></table></figure>
 <p>为什么要使用该版本？<a target="_blank" rel="noopener external nofollow noreferrer" href="https://fabricmc.net/develop/">Fabric 文档</a>是这么写的…</p>
 <blockquote>
 <p>The recommended loom version is <strong>1.11-SNAPSHOT</strong>. This is usually defined near the top of your build.gradle file.<br>
 推荐的 loom 版本是 1.11-SNAPSHOT。这通常定义在您的 build.gradle 文件顶部附近。</p>
 </blockquote>
 <p>既然使用 Java21 了，相对应的也把 <code>build.gradle</code> 里面的相关配置项也修改为对应的版本：</p>
-<figure class="shiki diff"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">java {</span></span>
-<span class="line"><span style="color: #D4D4D4">     withSourcesJar()</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #CE9178">-    sourceCompatibility = JavaVersion.VERSION_17</span></span>
-<span class="line"><span style="color: #CE9178">-    targetCompatibility = JavaVersion.VERSION_17</span></span>
-<span class="line"><span style="color: #B5CEA8">+    sourceCompatibility = JavaVersion.VERSION_21</span></span>
-<span class="line"><span style="color: #B5CEA8">+    targetCompatibility = JavaVersion.VERSION_21</span></span>
-<span class="line"><span style="color: #D4D4D4"> }</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4"> tasks.withType(JavaCompile).configureEach {</span></span>
-<span class="line"><span style="color: #CE9178">-    it.options.release = 17</span></span>
-<span class="line"><span style="color: #B5CEA8">+    it.options.release = 21</span></span>
-<span class="line"><span style="color: #D4D4D4"> }</span></span></code></pre></div></div></figure>
+<figure class="highlight diff"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">java {</span><br><span class="line">     withSourcesJar()</span><br><span class="line"></span><br><span class="line"><span class="deletion">-    sourceCompatibility = JavaVersion.VERSION_17</span></span><br><span class="line"><span class="deletion">-    targetCompatibility = JavaVersion.VERSION_17</span></span><br><span class="line"><span class="addition">+    sourceCompatibility = JavaVersion.VERSION_21</span></span><br><span class="line"><span class="addition">+    targetCompatibility = JavaVersion.VERSION_21</span></span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> tasks.withType(JavaCompile).configureEach {</span><br><span class="line"><span class="deletion">-    it.options.release = 17</span></span><br><span class="line"><span class="addition">+    it.options.release = 21</span></span><br><span class="line"> }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>好了。接着，在项目视图的选项中，将平展相关选项和压缩空的中间软件包取消勾选，这将使得 IDEA 不再将 <code>com.frozen.tutorialmod</code> 下的 <code>mixin</code> 文件夹显示为 <code>com.frozen.tutorialmod.mixin</code> 格式，方便我们掌握目录层级情况。<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231810163.png" alt="image-20250723181055120"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231810163.png" alt="image-20250723181055120"></p>
 <p>可选，但推荐做的一件事： IDEA 默认使用 Gradle 来构建你的项目，而这在 Fabric 是不必要的，而且会导致构建时间变长以及热交换（hotswapping）相关的种种问题。以下是让 IDEA 使用默认编译器的步骤：</p>
 <ol>
 <li>在 Gradle 页面里打开 “Gradle 设置（Gradle Settings）”</li>
@@ -282,26 +267,14 @@ IDE：IntelliJ IDEA Community Edition 2025.1.3（以下将简称为 IDEA）</p>
 <p>mod 的 id 是该 mod 的唯一标识，且该 id <strong>只能为数字 <code>0-9</code>、小写字母 <code>a-z</code>、下划线<code>_</code>和短横线 <code>-</code> 组成的字符串</strong>，最小长度为 2。</p>
 </blockquote>
 <p>在 <code>java/com/frozen/tutorialmod/TutorialMod.java</code> 中，检查是否已经将 Mod 的 id 进行引入：</p>
-<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">TutorialMod</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">implements</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">ModInitializer</span><span style="color: #D4D4D4"> {</span></span>
-<span class="line"><span style="color: #D4D4D4">	</span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">final</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">String</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">MOD_ID</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">"tutorial-mod"</span><span style="color: #D4D4D4">; </span><span style="color: #6A9955">// 关键语句</span></span>
-<span class="line"><span style="color: #D4D4D4">	</span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">static</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">final</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Logger</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">LOGGER</span><span style="color: #D4D4D4"> = </span><span style="color: #9CDCFE">LoggerFactory</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">getLogger</span><span style="color: #D4D4D4">(MOD_ID);</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4">	@</span><span style="color: #4EC9B0">Override</span></span>
-<span class="line"><span style="color: #D4D4D4">	</span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">void</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">onInitialize</span><span style="color: #D4D4D4">() {</span></span>
-<span class="line"><span style="color: #D4D4D4">		</span><span style="color: #9CDCFE">LOGGER</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">info</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"Hello Fabric world!"</span><span style="color: #D4D4D4">);</span></span>
-<span class="line"><span style="color: #D4D4D4">	}</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TutorialMod</span> <span class="keyword">implements</span> <span class="title class_">ModInitializer</span> {</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">MOD_ID</span> <span class="operator">=</span> <span class="string">"tutorial-mod"</span>; <span class="comment">// 关键语句</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">LOGGER</span> <span class="operator">=</span> LoggerFactory.getLogger(MOD_ID);</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onInitialize</span><span class="params">()</span> {</span><br><span class="line">		LOGGER.info(<span class="string">"Hello Fabric world!"</span>);</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>此 ID 将在后面的开发过程中多次引用，所以这一步骤十分重要。</strong></p>
 <p>接着，在 <code>resources/fabric.mod.json</code> 文件中，查看 ID 是否正确，相关配置是否正确：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231919281.png" alt="image-20250723191927192"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231919281.png" alt="image-20250723191927192"></p>
 <p><code>depends</code> 和 <code>suggests</code> 项，暂不用修改，等以后开发涉及到了视情况修改。</p>
 <h2 id="修改mod版本可选"><a class="markdownIt-Anchor" href="#修改mod版本可选"></a> 修改 mod 版本（可选）</h2>
 <p>我比较喜欢语义化版本控制。由于目前我们只是在配置、初始化阶段，所以在 <code>gradle.properties</code> 中，将 <code>mod_version</code> 进行修改：</p>
-<figure class="shiki diff"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">  # Mod Properties</span></span>
-<span class="line"><span style="color: #CE9178">- mod_version=1.0.0</span></span>
-<span class="line"><span style="color: #B5CEA8">+ mod_version=0.0.1-1.20.1</span></span>
-<span class="line"><span style="color: #D4D4D4">  maven_group=com.frozen.tutorialmod</span></span>
-<span class="line"><span style="color: #D4D4D4">  archives_base_name=tutorial-mod</span></span></code></pre></div></div></figure>
+<figure class="highlight diff"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  # Mod Properties</span><br><span class="line"><span class="deletion">- mod_version=1.0.0</span></span><br><span class="line"><span class="addition">+ mod_version=0.0.1-1.20.1</span></span><br><span class="line">  maven_group=com.frozen.tutorialmod</span><br><span class="line">  archives_base_name=tutorial-mod</span><br></pre></td></tr></tbody></table></figure>
 <p>以 <code>0.0.1</code> 为例，这种命名的基本语法是：</p>
 <table>
 <thead>
@@ -354,38 +327,16 @@ IDE：IntelliJ IDEA Community Edition 2025.1.3（以下将简称为 IDEA）</p>
 </table>
 <p>对于我的 <code>0.0.1-1.20.1</code> 版本号，<code>-1.20.1</code> 主要是为了声明所兼容的 Minecraft 版本。</p>
 <p>由于我们修改了 <code>gradle.properties</code> 文件，这会影响到构建，所以需要重新加载一遍项目：</p>
-<p><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231954961.png" alt="image-20250723195416897"></p>
+<p><img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507231954961.png" alt="image-20250723195416897"></p>
 <p>这将花费一些时间。</p>
 <h2 id="client初始化"><a class="markdownIt-Anchor" href="#client初始化"></a> Client 初始化</h2>
 <p>前面在模板项目生成的时候，我们取消了勾选拆分客户端和服务器端，这里尝试手动初始化客户端。</p>
 <p>在 <code>resources/fabric.mod.json</code> 中，修改 <code>entrypoints</code> 节点内容：</p>
-<figure class="shiki diff"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4"> "entrypoints": {</span></span>
-<span class="line"><span style="color: #D4D4D4">   "main": [</span></span>
-<span class="line"><span style="color: #D4D4D4">     "com.frozen.tutorialmod.TutorialMod"</span></span>
-<span class="line"><span style="color: #D4D4D4">   ],</span></span>
-<span class="line"><span style="color: #B5CEA8">+  "client": [</span></span>
-<span class="line"><span style="color: #B5CEA8">+    "com.frozen.tutorialmod.TutorialModClient"</span></span>
-<span class="line"><span style="color: #B5CEA8">+  ],</span></span>
-<span class="line"><span style="color: #D4D4D4">   "fabric-datagen": [</span></span>
-<span class="line"><span style="color: #D4D4D4">     "com.frozen.tutorialmod.TutorialModDataGenerator"</span></span>
-<span class="line"><span style="color: #D4D4D4">   ]</span></span>
-<span class="line"><span style="color: #D4D4D4"> },</span></span></code></pre></div></div></figure>
+<figure class="highlight diff"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> "entrypoints": {</span><br><span class="line">   "main": [</span><br><span class="line">     "com.frozen.tutorialmod.TutorialMod"</span><br><span class="line">   ],</span><br><span class="line"><span class="addition">+  "client": [</span></span><br><span class="line"><span class="addition">+    "com.frozen.tutorialmod.TutorialModClient"</span></span><br><span class="line"><span class="addition">+  ],</span></span><br><span class="line">   "fabric-datagen": [</span><br><span class="line">     "com.frozen.tutorialmod.TutorialModDataGenerator"</span><br><span class="line">   ]</span><br><span class="line"> },</span><br></pre></td></tr></tbody></table></figure>
 <p>根据这项修改，我们就需要在 <code>com.frozen.tutorialmod</code> 文件夹下新建 Java 类 <code>TutorialModClient</code>，刚创建好该文件，代码内容为：</p>
-<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">package</span><span style="color: #D4D4D4"> com.frozen.tutorialmod;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">TutorialModClient</span><span style="color: #D4D4D4"> {</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.frozen.tutorialmod;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TutorialModClient</span> {</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>我们将 <code>TutorialModClient</code> 修改为实现 <code>ClientModInitializer</code> 接口的类：</p>
-<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #569CD6">package</span><span style="color: #D4D4D4"> com.frozen.tutorialmod;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #569CD6">import</span><span style="color: #D4D4D4"> net.fabricmc.api.ClientModInitializer;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">TutorialModClient</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">implements</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">ClientModInitializer</span><span style="color: #D4D4D4"> {</span></span>
-<span class="line"><span style="color: #D4D4D4">    @</span><span style="color: #4EC9B0">Override</span></span>
-<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">void</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">onInitializeClient</span><span style="color: #D4D4D4">() {</span></span>
-<span class="line"><span style="color: #D4D4D4">      </span></span>
-<span class="line"><span style="color: #D4D4D4">    }</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.frozen.tutorialmod;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.fabricmc.api.ClientModInitializer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TutorialModClient</span> <span class="keyword">implements</span> <span class="title class_">ClientModInitializer</span> {</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onInitializeClient</span><span class="params">()</span> {</span><br><span class="line">      </span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><code>onInitializeClient()</code> 方法暂时不需要做任何事。</p>
 <h2 id="生成minecraft源码"><a class="markdownIt-Anchor" href="#生成minecraft源码"></a> 生成 Minecraft 源码</h2>
 <p>Minecraft 的源码对我们的开发有着很高的参考价值，这将帮助我们理解各种写法。</p>
@@ -398,16 +349,10 @@ IDE：IntelliJ IDEA Community Edition 2025.1.3（以下将简称为 IDEA）</p>
 <li>系统 PATH 中的 Java 版本（最后才使用）</li>
 </ol>
 <p>对我来说，我的 <code>JAVA_HOME</code> 环境变量设为了 <code>%JAVA_HOME21%</code>，这将和我的 <code>JAVA_HOME17</code>、<code>JAVA_HOME21</code> 等 <code>JAVA_HOMExx</code> 格式的环境变量进行配合，一般来说，终端将会输出：</p>
-<figure class="shiki sh"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">PS</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">E:</span><span style="color: #D7BA7D">\C</span><span style="color: #CE9178">oding</span><span style="color: #D7BA7D">\F</span><span style="color: #CE9178">abric</span><span style="color: #D7BA7D">\t</span><span style="color: #CE9178">utorial-mod-template-1.20.</span><span style="color: #D4D4D4">1&gt; </span><span style="color: #CE9178">echo</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">$env</span><span style="color: #CE9178">:JAVA_HOME</span></span>
-<span class="line"><span style="color: #DCDCAA">E:\Program</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">Files</span><span style="color: #D7BA7D">\j</span><span style="color: #CE9178">dk-21.0.7</span></span>
-<span class="line"><span style="color: #DCDCAA">PS</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">E:</span><span style="color: #D7BA7D">\C</span><span style="color: #CE9178">oding</span><span style="color: #D7BA7D">\F</span><span style="color: #CE9178">abric</span><span style="color: #D7BA7D">\t</span><span style="color: #CE9178">utorial-mod-template-1.20.</span><span style="color: #D4D4D4">1&gt; </span><span style="color: #CE9178">java</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-version</span></span>
-<span class="line"><span style="color: #DCDCAA">java</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">version</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">"21.0.7"</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">2025</span><span style="color: #CE9178">-04-15</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">LTS</span></span>
-<span class="line"><span style="color: #DCDCAA">Java(TM</span><span style="color: #D4D4D4">) SE Runtime Environment (</span><span style="color: #DCDCAA">build</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">21.0</span><span style="color: #CE9178">.7+8-LTS-245</span><span style="color: #D4D4D4">)</span></span>
-<span class="line"><span style="color: #DCDCAA">Java</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">HotSpot</span><span style="color: #D4D4D4">(</span><span style="color: #DCDCAA">TM</span><span style="color: #D4D4D4">) </span><span style="color: #B5CEA8">64</span><span style="color: #CE9178">-Bit</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">Server</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">VM</span><span style="color: #D4D4D4"> (build </span><span style="color: #B5CEA8">21.0</span><span style="color: #CE9178">.7+8-LTS-245,</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">mixed</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">mode,</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">sharing</span><span style="color: #D4D4D4">)</span></span>
-<span class="line"><span style="color: #DCDCAA">PS</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">E:</span><span style="color: #D7BA7D">\C</span><span style="color: #CE9178">oding</span><span style="color: #D7BA7D">\F</span><span style="color: #CE9178">abric</span><span style="color: #D7BA7D">\t</span><span style="color: #CE9178">utorial-mod-template-1.20.</span><span style="color: #D4D4D4">1&gt;</span></span></code></pre></div></div></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS E:\Coding\Fabric\tutorial-mod-template-1.20.1&gt; <span class="built_in">echo</span> <span class="variable">$env</span>:JAVA_HOME</span><br><span class="line">E:\Program Files\jdk-21.0.7</span><br><span class="line">PS E:\Coding\Fabric\tutorial-mod-template-1.20.1&gt; java -version</span><br><span class="line">java version <span class="string">"21.0.7"</span> 2025-04-15 LTS</span><br><span class="line">Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)</span><br><span class="line">PS E:\Coding\Fabric\tutorial-mod-template-1.20.1&gt;</span><br></pre></td></tr></tbody></table></figure>
 <p>这是正常的输出。</p>
 <p>但如果，你的 <code>JAVA_HOME</code> 环境变量设置的是 <code>%JAVA_HOME17%</code>，<strong>只是将 IDEA 中的相关配置为了 Java21</strong> 的话，那么可能在终端中执行 <code>gradle</code> 相关命令，例如：</p>
-<figure class="shiki sh"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">.</span><span style="color: #D4D4D4">\gradlew </span><span style="color: #569CD6">-v</span></span></code></pre></div></div></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\gradlew -v</span><br></pre></td></tr></tbody></table></figure>
 <p>此时读取到的还是 17，而执行 <code>java -version</code> 却能正确输出为 java21 版本，这十分诡异对吧？</p>
 <p>实际上，<code>$env:JAVA_HOME</code> 和 <code>java -version</code> 读取的项是<strong>不一样</strong>的。这一点很容易搞混，尤其是初学者。具体来说：</p>
 <ol>
@@ -415,73 +360,81 @@ IDE：IntelliJ IDEA Community Edition 2025.1.3（以下将简称为 IDEA）</p>
 <li><code>java -version</code>：读取的是环境变量 <code>PATH</code> 的值，<code>java</code> 命令会从 <code>PATH</code> 中按照先后顺序找到一个 <code>java</code> 有效目录，用以执行命令。</li>
 </ol>
 <p>这与 IDEA 设置中设置的 Java21 是不相关的：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232056342.png" alt="image-20250723205656287"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232056342.png" alt="image-20250723205656287"></p>
 <p>如果你确实是上面的诡异情况，请在更改 <code>JAVA_HOME</code> 指向的值之后，重启 IDEA 再另起一个终端窗口。</p>
 <h3 id="生成源码"><a class="markdownIt-Anchor" href="#生成源码"></a> 生成源码</h3>
 <p>唤起终端窗口（默认唤起的是 PowerShell），执行下面的命令：</p>
-<figure class="shiki sh"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #DCDCAA">./gradlew</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">genSources</span></span></code></pre></div></div></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew genSources</span><br></pre></td></tr></tbody></table></figure>
 <p>下载成功将输出：</p>
-<figure class="shiki powershell"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">PS E:\Coding\Fabric\tutorial-mod-template-</span><span style="color: #B5CEA8">1.20</span><span style="color: #D4D4D4">.1&gt; ./gradlew genSources</span></span>
-<span class="line"><span style="color: #D4D4D4">Starting a Gradle Daemon, </span><span style="color: #B5CEA8">4</span><span style="color: #D4D4D4"> stopped Daemons could not be reused, use --status </span><span style="color: #C586C0">for</span><span style="color: #D4D4D4"> details</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Configure project :</span></span>
-<span class="line"><span style="color: #D4D4D4">Fabric Loom: </span><span style="color: #B5CEA8">1.11</span><span style="color: #D4D4D4">.</span><span style="color: #B5CEA8">4</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4">&gt; Task :genSourcesWithVineflower</span></span>
-<span class="line"><span style="color: #D4D4D4">Decompile cache stats: </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4"> hits, </span><span style="color: #B5CEA8">4786</span><span style="color: #D4D4D4"> misses</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #D4D4D4">BUILD SUCCESSFUL </span><span style="color: #C586C0">in</span><span style="color: #D4D4D4"> 42s</span></span>
-<span class="line"><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4"> actionable task: </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4"> executed</span></span>
-<span class="line"><span style="color: #D4D4D4">PS E:\Coding\Fabric\tutorial-mod-template-</span><span style="color: #B5CEA8">1.20</span><span style="color: #D4D4D4">.1&gt;</span></span></code></pre></div></div></figure>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\Coding\Fabric\tutorial<span class="literal">-mod-template-1</span>.<span class="number">20.1</span>&gt; ./gradlew genSources</span><br><span class="line">Starting a Gradle Daemon, <span class="number">4</span> stopped Daemons could not be reused, use <span class="literal">--status</span> <span class="keyword">for</span> details</span><br><span class="line"></span><br><span class="line">&gt; Configure project :</span><br><span class="line">Fabric Loom: <span class="number">1.11</span>.<span class="number">4</span></span><br><span class="line"></span><br><span class="line">&gt; Task :genSourcesWithVineflower</span><br><span class="line">Decompile cache stats: <span class="number">0</span> hits, <span class="number">4786</span> misses</span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL <span class="keyword">in</span> <span class="number">42</span>s</span><br><span class="line"><span class="number">1</span> actionable task: <span class="number">1</span> executed</span><br><span class="line"><span class="built_in">PS</span> E:\Coding\Fabric\tutorial<span class="literal">-mod-template-1</span>.<span class="number">20.1</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="如何查看源码"><a class="markdownIt-Anchor" href="#如何查看源码"></a> 如何查看源码</h3>
 <p>在 <code>java/com/frozen/tutorialmod/mixin/ExampleMixin.java</code> 文件中，将鼠标选中 <code>MinecraftServer</code> 并按下鼠标中键：</p>
-<figure class="shiki java"><div class="codeblock"><div class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div><div class="code"><pre class="shiki dark-plus"><code><span class="line"><span style="color: #D4D4D4">@</span><span style="color: #4EC9B0">Mixin</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">MinecraftServer</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">class</span><span style="color: #D4D4D4">)</span></span>
-<span class="line"><span style="color: #569CD6">public</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">ExampleMixin</span><span style="color: #D4D4D4"> {</span></span>
-<span class="line"><span style="color: #D4D4D4">	@</span><span style="color: #4EC9B0">Inject</span><span style="color: #D4D4D4">(at = @</span><span style="color: #4EC9B0">At</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">"HEAD"</span><span style="color: #D4D4D4">), method = </span><span style="color: #CE9178">"loadWorld"</span><span style="color: #D4D4D4">)</span></span>
-<span class="line"><span style="color: #D4D4D4">	</span><span style="color: #569CD6">private</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">void</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">init</span><span style="color: #D4D4D4">(</span><span style="color: #4EC9B0">CallbackInfo</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">info</span><span style="color: #D4D4D4">) {</span></span>
-<span class="line"><span style="color: #D4D4D4">		</span><span style="color: #6A9955">// This code is injected into the start of MinecraftServer.loadWorld()V</span></span>
-<span class="line"><span style="color: #D4D4D4">	}</span></span>
-<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre></div></div></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mixin(MinecraftServer.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ExampleMixin</span> {</span><br><span class="line">	<span class="meta">@Inject(at = @At("HEAD"), method = "loadWorld")</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(CallbackInfo info)</span> {</span><br><span class="line">		<span class="comment">// This code is injected into the start of MinecraftServer.loadWorld()V</span></span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>这将跳转至我们刚才下载的 Minecraft 源码，如下图所示：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232136079.png" alt="image-20250723213650992"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232136079.png" alt="image-20250723213650992"></p>
 <p>注意，打开的应该是带注释的源码！如果你的 IDEA 版本和我不同，可能打开的是默认的 IDEA 帮你反编译之后的代码，你需要手动选择代码上方的蓝条的 <code>Choose Sources</code> 也就是选择源：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232143275.png" alt="image-20250723214304170"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232143275.png" alt="image-20250723214304170"></p>
 <p>如果选择源之后，代码上方的蓝条变成了红条，这也是正常的。</p>
 <h2 id="运行minecraft测试"><a class="markdownIt-Anchor" href="#运行minecraft测试"></a> 运行 Minecraft 测试</h2>
 <p>现在，我们就可以尝试运行一次 Minecraft 来测试我们的一切配置、代码是否正确了。<br>
 找到 Gradle 栏，选择 <code>Tasks/fabric/runClient</code>，如下图所示：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232147538.png" alt="image-20250723214701481"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232147538.png" alt="image-20250723214701481"></p>
 <p>不出意外出来 Minecraft 的窗口之后，我们创建一个存档，进入存档试试功能：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232149661.png" alt="image-20250723214902547"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232149661.png" alt="image-20250723214902547"></p>
 <p>只要在控制台中的日志没有什么 error 错误就行。</p>
 <h2 id="git版本控制"><a class="markdownIt-Anchor" href="#git版本控制"></a> Git 版本控制</h2>
 <p>我十分推荐对项目进行版本控制，这里使用的是 GitHub。<br>
 注册账号就不讲了，自己搜索就行。由于我们已经在使用 IDEA，那么直接用 IDEA 的版本控制选项就行（旧版本可能叫 VCS）：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232210705.png" alt="image-20250723221011632"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232210705.png" alt="image-20250723221011632"></p>
 <p>IDEA 将会弹出一个对话框，让你填相关信息：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232212822.png" alt="image-20250723221203767"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232212822.png" alt="image-20250723221203767"></p>
 <p>仓库私有与否，顾名思义，私有别人就看不到，如果你想和别人协作或者有别的考虑就可以公开。<br>
 接着进行第一次提交：<br>
-<img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232215286.png" alt="image-20250723221513229"></p>
+<img src="https://gitee.com/CSJ021005/f0ur_lin_-picgo/raw/master/202507232215286.png" alt="image-20250723221513229"></p>
 <p>确认文件无误就可以提交并推送了（如果只是提交，则是只提交到了本地仓库而 GitHub 是没有的）。此后，每次对相关文件的更改都将进行记录。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/">4rozeN</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://4rozen.github.io/posts/21458">https://4rozen.github.io/posts/21458</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://4rozeN.github.io" target="_blank">林之介 | 4rozeN</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Fabric/">Fabric</a><a class="post-meta__tags" href="/tags/Minecraft/">Minecraft</a><a class="post-meta__tags" href="/tags/Modding/">Modding</a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/">模组开发</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/posts/18029" title="【Bug】Windows11 23-24h2 输入首个字母变成英文无法打出汉字"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/WindowsBug.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【Bug】Windows11 23-24h2 输入首个字母变成英文无法打出汉字</div></div></div></a><a class="pagination-related  no-desc" href="/posts/14171" title="Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" onerror="onerror=null;src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related no-desc" href="/posts/14171" title="Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-06</div><div class="info-item-2">Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品</div></div></div></a><a class="pagination-related no-desc" href="/posts/36729" title="Fabric 模组开发 - Minecraft1.20.1：#3. 创造模式物品组"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-08</div><div class="info-item-2">Fabric 模组开发 - Minecraft1.20.1：#3. 创造模式物品组</div></div></div></a><a class="pagination-related no-desc" href="/posts/63649" title="Simple Animated Guns 游玩指南 &#x2F; 教程"><img class="cover" src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAGtutorial.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-20</div><div class="info-item-2">Simple Animated Guns 游玩指南 &#x2F; 教程</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loading/loading.gif" data-lazy-src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/emo.webp'" alt="avatar"/></div><div class="author-info-name">4rozeN</div><div class="author-info-description">Coding noob 自进阶</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="/rss2.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #ff6600;"></i></a><a class="social-icon" href="https://github.com/4rozeN" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="https://steamcommunity.com/id/430426/" rel="external nofollow noreferrer" target="_blank" title="Steam"><i class="fab fa-steam" style="color: #5F6E7CFF;"></i></a><a class="social-icon" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">最近在努力学习Fabric modding和其他内容，不知天地为何物。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text"> Fabric 模板项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text"> 项目配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-minecraft-developent-%E6%8F%92%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text"> 安装 Minecraft Developent 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mod-id"><span class="toc-number">5.</span> <span class="toc-text"> Mod ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9mod%E7%89%88%E6%9C%AC%E5%8F%AF%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text"> 修改 mod 版本（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#client%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">7.</span> <span class="toc-text"> Client 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90minecraft%E6%BA%90%E7%A0%81"><span class="toc-number">8.</span> <span class="toc-text"> 生成 Minecraft 源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5java_home%E7%89%88%E6%9C%AC"><span class="toc-number">8.1.</span> <span class="toc-text"> 检查 JAVA_HOME 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%BA%90%E7%A0%81"><span class="toc-number">8.2.</span> <span class="toc-text"> 生成源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E6%BA%90%E7%A0%81"><span class="toc-number">8.3.</span> <span class="toc-text"> 如何查看源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8Cminecraft%E6%B5%8B%E8%AF%95"><span class="toc-number">9.</span> <span class="toc-text"> 运行 Minecraft 测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">10.</span> <span class="toc-text"> Git 版本控制</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By 4rozeN</div><div class="footer_custom_text"><span id="performance-info"></span>
-</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.umd.js"></script><script src="https://s4.zstatic.net/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://s4.zstatic.net/ajax/libs/vanilla-lazyload/19.1.3/lazyload.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"><script>(async () => {
-  const showKatex = () => {
-    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script></article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">4rozeN</div><div class="post-copyright__author_desc">历历浮生，无非败而后成。</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://4rozen.github.io/posts/21458">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://4rozen.github.io/posts/21458')">Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/loveU/wx.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://4rozen.github.io/posts/21458"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Fabric 模组开发 - Minecraft1.20.1：#1. 初始化工作区布置&amp;url=https://4rozen.github.io/posts/21458&amp;pic=https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://4rozeN.github.io" target="_blank">林之介4rozeN</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/Minecraft/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>Minecraft<span class="categoryesPageCount">5</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/Fabric/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Fabric<span class="tagsPageCount">3</span></a><a class="post-meta__box__tags" href="/tags/Minecraft/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Minecraft<span class="tagsPageCount">5</span></a><a class="post-meta__box__tags" href="/tags/Modding/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Modding<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>模组开发<span class="tagsPageCount">1</span></a></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/18029"><img class="prev-cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E9%9A%8F%E6%83%B3%E9%9A%8F%E8%AE%B0/WindowsBug.webp" onerror="onerror=null;src='/img/avatar/emo.webp'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【Bug】Windows11 23-24h2 输入首个字母变成英文无法打出汉字</div></div></a></div><div class="next-post pull-right"><a href="/posts/14171"><img class="next-cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" onerror="onerror=null;src='/img/avatar/emo.webp'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/36729" title="Fabric 模组开发 - Minecraft1.20.1：#3. 创造模式物品组"><img class="cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-07-08</div><div class="title">Fabric 模组开发 - Minecraft1.20.1：#3. 创造模式物品组</div></div></a></div><div><a href="/posts/14171" title="Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品"><img class="cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/Fabric-cover.webp" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-07-06</div><div class="title">Fabric 模组开发 - Minecraft1.20.1：#2. 创建第一个物品</div></div></a></div><div><a href="/posts/63649" title="Simple Animated Guns 游玩指南 &#x2F; 教程"><img class="cover" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAGtutorial.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-07-20</div><div class="title">Simple Animated Guns 游玩指南 &#x2F; 教程</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)" rel="external nofollow noreferrer">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div><div class="comment-tips" id="comment-tips"><span>✅ 你无需删除空行，直接评论以获取最佳展示效果</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="avatar"/></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">设计、开发</b>相关的问题和看法，还有<b style="color:#fff">其他文章</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/about"><h1 class="author-info__name">4rozeN</h1><div class="author-info__desc">历历浮生，无非败而后成。</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/4rozeN" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text"> Fabric 模板项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text"> 项目配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-minecraft-developent-%E6%8F%92%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text"> 安装 Minecraft Developent 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mod-id"><span class="toc-number">5.</span> <span class="toc-text"> Mod ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9mod%E7%89%88%E6%9C%AC%E5%8F%AF%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text"> 修改 mod 版本（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#client%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">7.</span> <span class="toc-text"> Client 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90minecraft%E6%BA%90%E7%A0%81"><span class="toc-number">8.</span> <span class="toc-text"> 生成 Minecraft 源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5java_home%E7%89%88%E6%9C%AC"><span class="toc-number">8.1.</span> <span class="toc-text"> 检查 JAVA_HOME 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%BA%90%E7%A0%81"><span class="toc-number">8.2.</span> <span class="toc-text"> 生成源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E6%BA%90%E7%A0%81"><span class="toc-number">8.3.</span> <span class="toc-text"> 如何查看源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8Cminecraft%E6%B5%8B%E8%AF%95"><span class="toc-number">9.</span> <span class="toc-text"> 运行 Minecraft 测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">10.</span> <span class="toc-text"> Git 版本控制</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/24974" title="从 JS 属性描述符再看 Vue 数据响应式原理"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/Vue%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86v2.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="从 JS 属性描述符再看 Vue 数据响应式原理"/></a><div class="content"><a class="title" href="/posts/24974" title="从 JS 属性描述符再看 Vue 数据响应式原理">从 JS 属性描述符再看 Vue 数据响应式原理</a><time datetime="2025-09-04T03:46:56.828Z" title="发表于 2025-09-04 11:46:56">2025-09-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1303" title="浏览器渲染原理"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="浏览器渲染原理"/></a><div class="content"><a class="title" href="/posts/1303" title="浏览器渲染原理">浏览器渲染原理</a><time datetime="2025-09-01T12:09:13.000Z" title="发表于 2025-09-01 20:09:13">2025-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/13214" title="事件循环"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="事件循环"/></a><div class="content"><a class="title" href="/posts/13214" title="事件循环">事件循环</a><time datetime="2025-09-01T04:50:13.000Z" title="发表于 2025-09-01 12:50:13">2025-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1" title="JS 属性描述符"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E5%89%8D%E7%AB%AF/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="JS 属性描述符"/></a><div class="content"><a class="title" href="/posts/1" title="JS 属性描述符">JS 属性描述符</a><time datetime="2025-09-01T03:50:13.000Z" title="发表于 2025-09-01 11:50:13">2025-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9104" title="js+css 实现 Hexo 博客 ripple 水波切换主题效果"><img src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/Hexo/Hexo%E7%BE%8E%E5%8C%96.webp" onerror="this.onerror=null;this.src='/img/avatar/emo.webp'" alt="js+css 实现 Hexo 博客 ripple 水波切换主题效果"/></a><div class="content"><a class="title" href="/posts/9104" title="js+css 实现 Hexo 博客 ripple 水波切换主题效果">js+css 实现 Hexo 博客 ripple 水波切换主题效果</a><time datetime="2025-07-22T02:50:13.000Z" title="发表于 2025-07-22 10:50:13">2025-07-22</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" href="mailto:mail4chen@foxmail.com" rel="external nofollow noreferrer" title="email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a><a class="deal_link" href="/rss2.xml" title="RSS"><i class="anzhiyufont anzhiyu-icon-rss"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/avatar/avatar.jpg" size="50px"/><a class="deal_link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" href="/copyright" title="CC"><i class="anzhiyufont anzhiyu-icon-copyright-line"></i></a></div><div id="anzhiyu-footer"><div class="footer-group"><div class="footer-title">服务</div><div class="footer-links"><a class="footer-item" title="十年之约" target="_blank" rel="noopener external nofollow noreferrer" href="https://www.foreverblog.cn/">十年之约</a><a class="footer-item" title="开往" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/travellings-link/travellings">开往</a></div></div><div class="footer-group"><div class="footer-title">主题</div><div class="footer-links"><a class="footer-item" title="文档" href="/docs/">文档</a><a class="footer-item" title="源码" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu">源码</a><a class="footer-item" title="更新日志" href="/update/">更新日志</a></div></div><div class="footer-group"><div class="footer-title">导航</div><div class="footer-links"><a class="footer-item" title="友链文章" href="/fcircle/">友链文章</a><a class="footer-item" title="Static Badge" target="_blank" rel="noopener external nofollow noreferrer" href="https://shields.io/badges">Static Badge</a></div></div><div class="footer-group"><div class="footer-title">协议</div><div class="footer-links"><a class="footer-item" title="隐私协议" href="/privacy/">隐私协议</a><a class="footer-item" title="Cookies" href="/cookies/">Cookies</a><a class="footer-item" title="版权协议" href="/copyright/">版权协议</a></div></div><div class="footer-group"><div class="footer-title-group"><div class="footer-title">友链</div><a class="random-friends-btn" id="footer-random-friends-btn" href="javascript:addFriendLinksInFooter();" rel="external nofollow noreferrer" title="换一批友情链接"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right"></i></a></div><div class="footer-links" id="friend-links-in-footer"></div></div></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title="博客框架为Hexo_v5.4.0"><img src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v5.4.0"/></a><a class="github-badge" target="_blank" href="https://blog.anheyu.com/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://www.zstatic.net/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站使用Zstatic为静态资源提供CDN加速" title="本站使用Zstatic为静态资源提供CDN加速"><img src="https://gitee.com/CSJ021005/new-pic-bed/raw/main/img/202509151905840.svg" alt="本站使用Zstatic为静态资源提供CDN加速"/></a><a class="github-badge" target="_blank" href="https://github.com/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2024 - 2025 By <a class="footer-bar-link" href="/" title="4rozeN" target="_blank">4rozeN</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://icp.gov.moe/?keyword=20254070" title="萌ICP备-20254070号">萌ICP备-20254070号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">7</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" rel="external nofollow noreferrer" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.anheyu.com/" title="我的博客"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/ico/favicon.ico" alt="我的博客"/><span class="back-menu-item-text">我的博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Simple-Animated-Guns-Fixed" title="MC枪械模组"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="MC枪械模组"/><span class="back-menu-item-text">MC枪械模组</span></a><a class="back-menu-item" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/4rozeN/Datapack_S.A.G" title="SAG数据包"><img class="back-menu-item-icon" src="https://ali-4rozen-oss.oss-cn-guangzhou.aliyuncs.com/blog/cover/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/SAG.jpg" alt="SAG数据包"/><span class="back-menu-item-text">SAG数据包</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Bootstrap/" style="font-size: 0.88rem;">Bootstrap<sup>1</sup></a><a href="/tags/CSS/" style="font-size: 0.88rem;">CSS<sup>2</sup></a><a href="/tags/CTF-WP/" style="font-size: 0.88rem;">CTF-WP<sup>1</sup></a><a href="/tags/DOH/" style="font-size: 0.88rem;">DOH<sup>1</sup></a><a href="/tags/Fabric/" style="font-size: 0.88rem;">Fabric<sup>3</sup></a><a href="/tags/Fluid/" style="font-size: 0.88rem;">Fluid<sup>1</sup></a><a href="/tags/Git/" style="font-size: 0.88rem;">Git<sup>1</sup></a><a href="/tags/Hexo/" style="font-size: 0.88rem;">Hexo<sup>6</sup></a><a href="/tags/JavaScript/" style="font-size: 0.88rem;">JavaScript<sup>5</sup></a><a href="/tags/Minecraft/" style="font-size: 0.88rem;">Minecraft<sup>5</sup></a><a href="/tags/Modding/" style="font-size: 0.88rem;">Modding<sup>1</sup></a><a href="/tags/Strapi/" style="font-size: 0.88rem;">Strapi<sup>1</sup></a><a href="/tags/Vue/" style="font-size: 0.88rem;">Vue<sup>2</sup></a><a href="/tags/ejs/" style="font-size: 0.88rem;">ejs<sup>1</sup></a><a href="/tags/fluid/" style="font-size: 0.88rem;">fluid<sup>2</sup></a><a href="/tags/styl/" style="font-size: 0.88rem;">styl<sup>1</sup></a><a href="/tags/%E6%97%A5%E5%A4%9C%E5%88%87%E6%8D%A2%E8%83%8C%E6%99%AF/" style="font-size: 0.88rem;">日夜切换背景<sup>1</sup></a><a href="/tags/%E6%A8%A1%E7%BB%84%E5%BC%80%E5%8F%91/" style="font-size: 0.88rem;">模组开发<sup>1</sup></a><a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 0.88rem;">笔记<sup>4</sup></a><a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 0.88rem;">美化<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="438394768" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.2"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://music.163.com/playlist&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://s4.zstatic.net/ajax/libs/fancyapps-ui/6.0.30/fancybox/fancybox.umd.js"></script><script src="https://s4.zstatic.net/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://s4.zstatic.net/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script async src="/anzhiyu/random.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      onCommentLoaded: () => {
+        anzhiyu.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
   }
 
-  if (!window.katex_js_css) {
-    window.katex_js_css = true
-    await btf.getCSS('https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css')
-    if (true) {
-      await btf.getScript('https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/copy-tex.min.js')
-    }
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(runFn,0)
+    else getScript('https://s4.zstatic.net/ajax/libs/twikoo/1.6.44/twikoo.min.js').then(runFn)
   }
-
-  showKatex()
-})()</script><script>(() => {
-  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
-  const option = null
 
   const getCount = () => {
     const countELement = document.getElementById('twikoo-count')
@@ -498,67 +451,18 @@ IDE：IntelliJ IDEA Community Edition 2025.1.3（以下将简称为 IDEA）</p>
     })
   }
 
-  const init = (el = document, path = location.pathname) => {
-    twikoo.init({
-      el: el.querySelector('#twikoo-wrap'),
-      envId: 'https://4rozen-blog.netlify.app/.netlify/functions/twikoo',
-      region: '',
-      onCommentLoaded: () => {
-        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
-      },
-      ...option,
-      path: isShuoshuo ? path : (option && option.path) || path
-    })
-
+  const runFn = () => {
+    init();
     
-
-    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
-      if (el.children.length) {
-        el.innerHTML = ''
-        el.classList.add('no-comment')
-      }
-    })
-  }
-
-  const loadTwikoo = (el, path) => {
-    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
-    else btf.getScript('https://s4.zstatic.net/ajax/libs/twikoo/1.6.44/twikoo.min.js').then(() => init(el, path))
-  }
-
-  if (isShuoshuo) {
-    'Twikoo' === 'Twikoo'
-      ? window.shuoshuoComment = { loadComment: loadTwikoo }
-      : window.loadOtherComment = loadTwikoo
-    return
   }
 
   if ('Twikoo' === 'Twikoo' || !true) {
-    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
-    else loadTwikoo()
+    if (true) anzhiyu.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else {
+      loadTwikoo()
+    }
   } else {
     window.loadOtherComment = loadTwikoo
   }
-})()</script></div><script src="/js/rightmenu.js"></script><script src="https://s4.zstatic.net/ajax/libs/color-thief/2.6.0/color-thief.umd.js" integrity="sha512-Qsp00gBIzIqLPECogMy5bQ6uOsMig9lc37A8qEHMvSze65UK21DHONbfSTY09zE9V8C0tQN+ldPU6w0wlBSfcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="/js/dynamic-cover.js"></script><script src="/js/ripple-toggle.js"></script><script src="/js/watch.js"></script><script src="/js/butterfly.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://s4.zstatic.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
-<script src="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.js"></script>
-
-  <script>
-  const CODE_CONFIG = {
-    beautify: true,
-    highlightCopy: true,
-    highlightLang: true,
-    highlightHeightLimit: 360,
-    isHighlightShrink: false,
-    copy: {
-      success: '复制成功',
-      error: '复制失败',
-      noSupport: '浏览器不支持复制功能',
-    }
-  };
-  console.log(
-    `%c hexo-shiki-plugin %c v1.0.27 %c https://github.com/nova1751/hexo-shiki-plugin`,
-    "color: #fff; background: #5f5f5f",
-    "color: #fff; background: #80c8f8",
-    ""
-  );
-  </script>
-  <!-- hexo injector body_end end --></body></html>
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.0.0/waterfall/waterfall.min.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.min.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://s4.zstatic.net/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/meting/2.0.1/Meting.min.js"></script><script charset="UTF-8" src="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.1.5/accesskey/accesskey.min.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
