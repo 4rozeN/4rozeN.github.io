@@ -294,6 +294,27 @@
     </item>
     
     <item>
+      <title>Webpack 基础入门</title>
+      <link>https://4rozen.github.io/posts/37010</link>
+      <guid>https://4rozen.github.io/posts/37010</guid>
+      <pubDate>Sun, 02 Mar 2025 00:50:13 GMT</pubDate>
+      
+      <description>本篇文章是Webpack的入门学习笔记，详细记录了从零开始配置Webpack工程的完整过程。内容包含处理TypeScript、JavaScript兼容性（Babel）、CSS/Sass、图片字体等静态资源的方法，以及搭建开发环境（webpack-dev-server, ESLint）和生产环境优化（CSS提取、兼容性处理、代码压缩）的基础配置，帮助前端开发者夯实构建工具基础。</description>
+      
+      
+      
+      
+      <category domain="https://4rozeN.github.io/categories/%E5%89%8D%E7%AB%AF/">前端</category>
+      
+      
+      <category domain="https://4rozeN.github.io/tags/webpack/">webpack</category>
+      
+      
+      <comments>https://4rozen.github.io/posts/37010#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
       <title>Hexo 通过 git 的 ssh 链接 github 超时 (time out)</title>
       <link>https://4rozen.github.io/posts/10729</link>
       <guid>https://4rozen.github.io/posts/10729</guid>
@@ -521,27 +542,6 @@
       
       
       <comments>https://4rozen.github.io/posts/45101#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Simple Animated Guns 游玩指南 / 教程</title>
-      <link>https://4rozen.github.io/posts/63649</link>
-      <guid>https://4rozen.github.io/posts/63649</guid>
-      <pubDate>Sat, 20 Jul 2024 08:50:13 GMT</pubDate>
-      
-      <description>怎么合成？怎么使用配件？这一篇文章教会你关于Simple Animated Guns的一些技巧。</description>
-      
-      
-      
-      
-      <category domain="https://4rozeN.github.io/categories/Minecraft/">Minecraft</category>
-      
-      
-      <category domain="https://4rozeN.github.io/tags/Minecraft/">Minecraft</category>
-      
-      
-      <comments>https://4rozen.github.io/posts/63649#disqus_thread</comments>
       
     </item>
     
